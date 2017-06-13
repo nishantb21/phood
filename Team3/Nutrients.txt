@@ -1,44 +1,43 @@
-Water 
-Energy 
-Energy 
-Protein 
-Total lipid (fat) 
+Water : {}
+Energy : {}
+Protein : {umami, 1}
+Total lipid (fat) : {richness, }
 Ash 
-Carbohydrate, by difference 
+Carbohydrate, by difference : {sweet, }
 Fiber, total dietary {fibrous, ,}
-Sugars, total 
+Sugars, total : {sweet, , }
 Sucrose : {sweet, , }
 Glucose (dextrose) : {sweet, , }
 Fructose : {sweet, , }
 Lactose : {sweet, , }
 Maltose : {sweet, , }
 Galactose : {sweet, , }
-Starch 
-Calcium, Ca 	
-Iron, Fe 
-Magnesium, Mg 
-Phosphorus, P 
-Potassium, K 
-Sodium, Na 
-Zinc, Zn 
-Copper, Cu 
-Manganese, Mn 
-Selenium, Se 
-Fluoride, F 
-Vitamin C, total ascorbic acid 
-Thiamin 
-Riboflavin 
-Niacin 
-Pantothenic acid 
-Vitamin B-6 
-Folate, total 
-Folic acid 
-Folate, food 
-Folate, DFE 
-Choline, total 
-Betaine 
-Vitamin B-12 
-Vitamin B-12, added 
+Starch : {bitter, 1}
+Calcium, Ca : {}
+Iron, Fe : {umami, 1}
+Magnesium, Mg : {bitter, 1}
+Phosphorus, P : {umami, 1}
+Potassium, K : {salty, }
+Sodium, Na : {salty, }
+Zinc, Zn : {umami, 1}
+Copper, Cu : {umami, 1}
+Manganese, Mn : {bitter, 1}
+Selenium, Se : {umami, }
+Fluoride, F : {sour, 1}
+Vitamin C, total ascorbic acid : {bitter, }
+Thiamin {umami, }
+Riboflavin : {bitter, }
+Niacin : {umami, }
+Pantothenic acid : {sweet, }
+Vitamin B-6 {sweet, }
+Folate, total  : {umami, ,}
+Folic acid  : {umami, ,}
+Folate, food  : {umami, ,}
+Folate, DFE  : {umami, ,}
+Choline, total : {umami, ,}
+Betaine  : {umami, ,}
+Vitamin B-12 : {umami, ,}
+Vitamin B-12, added : {umami, ,}
 Vitamin A, RAE : {umami, ,}
 Retinol : {umami, ,}
 Carotene, beta : {umami, ,}
