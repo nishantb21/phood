@@ -1,50 +1,50 @@
-Vitamin E, added (mg)
-Tocopherol, beta (mg)
-Tocopherol, gamma (mg)
-Tocopherol, delta (mg)
-Tocotrienol, alpha (mg)
-Tocotrienol, beta (mg)
-Tocotrienol, gamma (mg)
-Tocotrienol, delta (mg)
-Vitamin D (D2 + D3) (µg)
-Vitamin D2 (ergocalciferol) (µg)
-Vitamin D3 (cholecalciferol) (µg)
-Vitamin D (IU)
-Vitamin K (phylloquinone) (µg)
-Dihydrophylloquinone (µg)
-Menaquinone-4 (µg)
-Fatty acids, total saturated (g)
-4:0 (g)
-6:0 (g)
-8:0 (g)
-10:0 (g)
-12:0 (g)
-13:0 (g)
-14:0 (g)
-15:0 (g)
-16:0 (g)
-17:0 (g)
-18:0 (g)
-20:0 (g)
-22:0 (g)
-24:0 (g)
-Fatty acids, total monounsaturated (g)
-14:1 (g)
-15:1 (g)
-16:1 undifferentiated (g)
-16:1 c (g)
-16:1 t (g)
-17:1 (g)
-18:1 undifferentiated (g)
-18:1 c (g)
-18:1 t (g)
-18:1-11 t (18:1t n-7) (g)
-20:1 (g)
-22:1 undifferentiated (g)
-22:1 c (g)
-22:1 t (g)
-24:1 c (g)
-Fatty acids, total polyunsaturated (g)
-18:2 undifferentiated (g)
-18:2 n-6 c,c (g)
-18:2 CLAs (g)
+Vitamin E, added : {richness,  , }
+Tocopherol, beta : {richness,  , }
+Tocopherol, gamma : {richness,  , }
+Tocopherol, delta : {richness,  , }
+Tocotrienol, alpha : {richness,  , }
+Tocotrienol, beta : {richness,  , }
+Tocotrienol, gamma : {richness,  , }
+Tocotrienol, delta : {richness,  , }
+Vitamin D (D2 + D3) : {umami,  , }
+Vitamin D2 (ergocalciferol) : {umami,  , }
+Vitamin D3 (cholecalciferol) : {umami,  , }
+Vitamin D (IU) : {umami,  , }
+Vitamin K (phylloquinone) : {umami,  , }
+Dihydrophylloquinone : {umami,  , }
+Menaquinone-4 : {umami,  , }
+Fatty acids, total saturated : {richness,  }
+4:0  : {richness,  , "Butyric Acid"} 
+6:0 : {richness,  , "Caproic Acid"} 
+8:0 : {richness,  , "Caprylic Acid"}
+10:0 : {richness,  , "Capric Acid"}
+12:0 : {richness,  , "Lauric Acid"}
+13:0 : {richness,  , "Tridecylic Acid"}
+14:0 : {richness,  , "Myristic Acid"}
+15:0 : {richness,  , "Pentadecylic acid"}
+16:0 : {richness,  , "Palmitic acid"}
+17:0 : {richness,  , "Margaric acid"}
+18:0 : {richness,  , "Stearic acid"}
+20:0 : {richness,  , "Arachidic acid"}
+22:0 : {richness,  , "Behenic acid"}
+24:0 : {richness,  , "Lignoceric acid"}
+Fatty acids, total monounsaturated 
+14:1 : {richness,  , "Myristoleic acid"}
+15:1 : {richness,  , "pentadecenoic acid"}
+16:1 undifferentiated : {richness,  , "Palmitoleic Acid"}
+16:1 c : {richness,  , "Palmitoleic Acid"}
+16:1 t : {richness,  , "Palmitoleic Acid"}
+17:1 : {richness,  , "heptadecaenoic  acid"}
+18:1 undifferentiated : {richness,  , "Oleic acid"}
+18:1 c : {richness,  , "Oleic acid"}
+18:1 t : {richness,  , "Oleic acid"}
+18:1-11 t (18:1t n-7) : {richness,  , "Oleic acid"}
+20:1 : {richness,  , "Eicosenoic acid"}
+22:1 undifferentiated : {richness,  , "Erucic acid"}
+22:1 c : {richness,  , "Erucic acid"}
+22:1 t : {richness,  , "Erucic acid"}
+24:1 c : {richness,  , "Nervonic acid"}
+Fatty acids, total polyunsaturated 
+18:2 undifferentiated : {richness,  , "Linoleic acid"}
+18:2 n-6 c,c : {richness,  , "Linoleic acid"}
+18:2 CLAs : {richness,  , "Linoleic acid"}
