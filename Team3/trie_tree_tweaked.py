@@ -2,25 +2,31 @@
 Todoh:
 [x] Build Tree
 [x] Search the tree
-
+[ ] Rainsum
 ( ) Condense
 '''
 print(__doc__)
+taste_list = [
+					'richness', 'sweet', 'sour', 'salt', 'umami', #Quantified
+					'spicy', 'bitter', 'sour','wasabi'						#Boolean
+				 ]
 
 class Node:
-	def __init__(self, letter=None, word=None):
+	def __init__(self, letter = None, word = None, taste_dict = dict()):
 		self.letter = letter
 		self.word = word
 		self.children = dict()
-		self.taste_dict = dict()			
+		self.taste_dict = taste_dict
 
-	def add_child(self, letter):
+	def add_child(self, letter, taste_dict = dict()):
 		if not self.children.__contains__(letter):
-			self.children[letter] = Node(letter)
+			self.children[letter] = Node(letter, taste_dict = taste_dict)
 		return self.children[letter]
 
 	def __getitem__(self, key):
-		return self.children[key]
+		if key in self.tastes.keys():
+			return tastes[key]
+		return 0
 
 	def __str__(self):
 		str_dict = dict()
@@ -29,7 +35,7 @@ class Node:
 
 class Trie:
 	def __init__(self):
-			self.head = Node()
+			self.head = Node("#")
 	
 	def __getitem__(self, key):
 			return self.head.children[key]
@@ -38,7 +44,7 @@ class Trie:
 			current_node = self.head
 
 			for letter in word:
-					current_node = current_node.add_child(letter)
+					current_node = current_node.add_child(letter = letter)
 			current_node.word = word
 	
 	def has_word(self, word):
@@ -86,7 +92,7 @@ class Trie:
 		
 		# Get words under prefix
 		if top_node == self.head:
-			queue = [node for key, node in top_node.children.items()]
+			queue = [node for node in top_node.children.values()]
 		else:
 			queue = [top_node]
 		
@@ -95,6 +101,6 @@ class Trie:
 			if current_node.word != None:
 				words.append(current_node.word)
 			
-			queue = [node for key,node in current_node.children.items()] + queue
+			queue = [node for node in current_node.children.values()] + queue
 		
 		return words
