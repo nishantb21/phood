@@ -4,8 +4,8 @@ import pprint
 import urllib
 import os
 
-my_api_key = "AIzaSyA7c4b13kDVqcGhKiAozS9-YdHV1btGsm4"
-my_cse_id = "004130078630997984643:onnmdc_aavw"
+my_api_key = ""
+my_cse_id = ""
 ctr = 0
 _ctr = 0
 restauranName = "jamba juice"
