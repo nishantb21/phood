@@ -1,70 +1,100 @@
 '''
 Todoh:
-[x] Build tree
-[ ] Search Tree
-[ ] Store and return taste scores
-[ ] Condense 
+[x] Build Tree
+[x] Search the tree
+
+( ) Condense
 '''
 print(__doc__)
 
-class TrieTreeNode():
-	"""TrieTreeNode"""
-	child_dict = dict()
-	string = '$'
-	def __init__(self, string):
-		self.string = string
+class Node:
+	def __init__(self, letter=None, word=None):
+		self.letter = letter
+		self.word = word
+		self.children = dict()
+		self.taste_dict = dict()			
 
-	def add_child(self, string):
-		if not self.child_dict.__contains__(string): 
-			self.child_dict[string] = TrieTreeNode(string)
-			return self.child_dict[string]
+	def add_child(self, letter):
+		if not self.children.__contains__(letter):
+			self.children[letter] = Node(letter)
+		return self.children[letter]
+
+	def __getitem__(self, key):
+		return self.children[key]
 
 	def __str__(self):
-		self.class_print = dict()
-		#self.class_print['child_dict'] = self.child_dict
-		self.class_print['string'] = self.string
-		return str(self.class_print)
+		str_dict = dict()
+		str_dict['letter'] = self.letter
+		str_dict['taste_dict'] = self.taste_dict
 
-	def get_index(self, string):
-		if self.child_dict.__contains__(string):
-			return self.child_dict[string]
-		return None
+class Trie:
+	def __init__(self):
+			self.head = Node()
+	
+	def __getitem__(self, key):
+			return self.head.children[key]
+	
+	def add(self, word):
+			current_node = self.head
 
-	def get_children(self):
-		print(len(self.child_dict))
-		if len(self.child_dict) == 0:
-			return None
-		return self.child_dict.values()
+			for letter in word:
+					current_node = current_node.add_child(letter)
+			current_node.word = word
+	
+	def has_word(self, word):
+		if word == '':
+			return False
+		if word == None:
+			raise ValueError('Trie.has_word requires a not-Null string')
 
-class TrieTree():
-	"""TrieTree main"""
-	argument = "#"
-	root = TrieTreeNode("#")
-	head = None
-	def __init__(self, argument):
-		self.argument = argument
-		self.add_word(argument)
-
-	def add_word(self, word):
-		self.head = self.root
+		# Start at the top
+		current_node = self.head
+		exists = True
 		for letter in word:
-			#print(self.head)
-			if letter != ' ' and self.head.get_index(letter) is not None:
-				self.head = self.head.get_index(letter)
-			elif letter != ' ' and self.head.get_index(letter) is None:
-				self.head = self.head.add_child(letter)
+			if letter in current_node.children:
+					current_node = current_node.children[letter]
+			else:
+					exists = False
+					break
 
-	def __str__(self):
-		self.dft(self.root)
-		return ''
+		# Still need to check if we just reached a word like 't'
+		# that isn't actually a full word in our dictionary
+		if exists:
+				if current_node.word == None:
+						exists = False
 
-	def dft(self, root):
-		if root.get_children() is not None:	
-			for node in root.get_children():
-				self.dft(node)
-		return None
-
-		return str(return_list)
-
-	def search_string(self, string):
-		self.head = self.root		
+		return exists
+	
+	def start_with_prefix(self, prefix):
+		""" Returns a list of all words in tree that start with prefix """
+		words = list()
+		if prefix == None:
+			raise ValueError('Requires not-Null prefix')
+		
+		# Determine end-of-prefix node
+		top_node = self.head
+		for letter in prefix:
+			if letter in top_node.children:
+				top_node = top_node.children[letter]
+			else:				
+				return words
+				'''
+				todoh:
+				[ ] Add generalization (Common prefix success, 65% match)
+				(?) Autocorrect
+				'''
+		
+		# Get words under prefix
+		if top_node == self.head:
+			queue = [node for key, node in top_node.children.items()]
+		else:
+			queue = [top_node]
+		
+		while queue:
+			current_node = queue.pop()
+			if current_node.word != None:
+				words.append(current_node.word)
+			
+			queue = [node for key,node in current_node.children.items()] + queue
+		
+		return words

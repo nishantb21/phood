@@ -1,4 +1,4 @@
-from trie_tree_tweaked import TrieTree, TrieTreeNode
+from trie_tree_tweaked import Trie, Node
 
 class TrieTest():
 	def __init__(self):
@@ -6,14 +6,10 @@ class TrieTest():
 		for ing in s.split(";"):
 			print(ing, TrieTree(ing))
 		'''
-		t = TrieTree("")
-		t.add_word("i")
-		t.add_word("in")
-		t.add_word("inu")
-		t.add_word("int")
-		t.add_word("inui")
-		t.add_word("inuit")
-		t.add_word("intuit")
-		print(t)
+		trie = Trie()
+		words = 'i in int intuit inuit'
+		for word in words.split():
+				trie.add(word)
+		print(trie.start_with_prefix('int'))
 
 TrieTest()
