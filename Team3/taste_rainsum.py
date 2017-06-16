@@ -16,7 +16,7 @@ taste_b =	['spicy', 'bitter', 'sour','wasabi']   #Boolean
 
 
 class Ingredient:
-	def __init__(self, name, taste = None):
+	def __init__(self, name, taste = None, weight = 0.0):
 		self.name = name
 		if taste is None:
 			with open(os.path.join("Ingredients", str(hashlib.md5(self.name.upper()).hexdigest()) + ".json")) as ingfile:
@@ -25,6 +25,9 @@ class Ingredient:
 					self.taste[nutrient] = float(re.findall('\d+\.\d+', value)[0])
 		else:
 			self.taste = taste
+
+		if weight !=  0.0:
+			self.weight = weight
 
 	def __getitem__(self, key):
 		return self.taste[key]
@@ -58,9 +61,9 @@ class Dish:
 		'''Return taste score'''
 		for ingredient in self.ingredients:
 			for taste in taste_b:
-				self.taste[taste] = ingredient[taste]
+				self.taste[taste] = ingredient[taste] * ingredient['weight']
 			for taste in taste_q:
-				self.taste[taste] += ingredient[taste]
+				self.taste[taste] += ingredient[taste] * ingredient['weight']
 		return self.taste
 
 	def __str__(self):
