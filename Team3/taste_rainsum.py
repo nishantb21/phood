@@ -68,3 +68,6 @@ class Dish:
 
 	def __str__(self):
 		return str(self.dish) + " : " + str(self.taste_score())
+
+	def get_taste_weight(self):
+		
