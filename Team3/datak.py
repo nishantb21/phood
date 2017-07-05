@@ -32,14 +32,19 @@ def leech(for_file):
 
 					print(', got ', response['food_name'], end=', ', sep='', flush=True)
 					matched = [word for word in query.strip().split(' ') if word in response['food_name'].upper().split(' ')]
-					#print(matched, end=' : ')
+					#print(matched, end=' : ')					
+
 					if len(matched)/len(response['food_name'].split(' ')) < 0.4:
 						print(len(matched)/len(response['food_name'].split(' ')))
 						print('discarded', end='*'*7)
 						discards.write(str((query.strip(), response['food_name'])) + '\n')
 					else:
-						with open(os.path.join('nutritionix_data', title_hash), "w") as ing_file:
-							json.dump(response_nutrition, ing_file)
+						if len(response['food_name'].split(' ')) == 1 and query.strip() in response['food_name']:							
+							with open(os.path.join('nutritionix_data', title_hash), "w") as ing_file:
+								json.dump(response_nutrition, ing_file)
+						elif len(matched) > 0:
+							with open(os.path.join('nutritionix_data', title_hash), "a") as ing_file:
+								json.dump(response_nutrition, ing_file)
 			else:
 				misses.write(query)
 	print('\nDone.')
