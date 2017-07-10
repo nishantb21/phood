@@ -5,7 +5,7 @@ Todoh:
 [ ] Rainsum
 ( ) Condense
 '''
-print(__doc__)
+#print(__doc__)
 taste_list = [
 					'richness', 'sweet', 'sour', 'salt', 'umami', #Quantified
 					'spicy', 'bitter', 'sour','wasabi'						#Boolean

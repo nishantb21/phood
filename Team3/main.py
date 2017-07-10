@@ -5,20 +5,24 @@ import treesta
 import hashlib
 import utilities
 import datak
+import taster
+import json
 
 class Result:
-	def __init__(self, method=-1, match='', confidence = 0):
+	def __init__(self, method=-1, query = '', match='', confidence = 0):
 		self.method = method
 		self.match = match
 		self.confidence = confidence
+		self.query = query
 
-	def success(self, method, match, confidence):
+	def success(self, method, match, confidence, query):
 		self.method = method
 		self.match = match
 		self.confidence = confidence
+		self.query = query
 
 	def __str__(self):
-		return str(self.method) + str(self.match) + str(self.confidence)
+		return "Matched " + self.query + " with " + str(self.match) + " using method "  + str(self.method) + " with confidence " + str(self.confidence)
 
 def nearest_ingredient(ingredient):
 	'''
@@ -32,36 +36,37 @@ def nearest_ingredient(ingredient):
 	#check 1
 	title_hash = utilities.hash(ingredient.upper())
 	if os.path.exists(os.path.join('nutritionix_data', title_hash + '_std.json')):
-		match.success(method = 1, match = str(title_hash), confidence = 1)
+		match.success(method = 1, match = str(title_hash), confidence = 1, query = ingredient)
 		return match
 	
+	ingredient = kb.rejector.process(ingredient.strip('\n'))
 	#hash check failed, try previous matches
-	matched_title = kb.matcher.match(ingredient)
+	print(ingredient)
+	if ingredient == '':
+		return None
+	matched_title = kb.matcher.match(ingredient.upper().strip())
 	if matched_title is not None:
-		return utilities.hash(matched_title)
-
-	'''
-	cleaned_ingredient = kb.rejector.process(ingredient)
-	print(cleaned_ingredient)
-	matches = treesta.check_ingredient(cleaned_ingredient)
-	modmatch_result = utilities.modmatch(cleaned_ingredient, matches, 0.6) if matches is not None else (None,)
-
-	#match found with 2/3rd match
-	if modmatch_result[0] is not None: 
-		match.success(method = 2, match = hash(modmatch_result), confidence = modmatch_result[1])
+		match.success(query = ingredient, method = 2, match = matched_title, confidence = 1)
 		return match
-'''
+
 	#No approximate or exact match found, query nutritionix
 	nutritionix_query = datak.ingredient(ingredient)
-	nutritionix_query_result = treesta.check_ingredient(nutritionix_query['food_name'])
-	if nutritionix_query_result is not None:
-		match.success(method = 3, match = hash(nutritionix_query_result), confidence = 1)
+	print(nutritionix_query)
+	if nutritionix_query is not None and nutritionix_query['food_name'][0].upper() == ingredient[0].upper():
+		#Save the new nutrition information after standardizing and quantifying it
+		if not os.path.exists(os.path.join('nutritionix_data', utilities.hash(nutritionix_query['food_name']))):
+			print("Added new file for " + nutritionix_query['food_name'])
+			with open(os.path.join('nutritionix_data', utilities.hash(nutritionix_query['food_name'])), 'w') as json_file:
+				json.dump(nutritionix_query, json_file, indent='\t')
+			taster.taste(utilities.standardize(utilities.hash(nutritionix_query['food_name'])))
+		match.success(query = ingredient, method = 3, match = matched_title, confidence = 0.5)
 		return match
-	kb.matcher.add(nutritionix_query['food_name'], ingredient)
+	print("Nothing found for " + ingredient)
+	#kb.matcher.add(nutritionix_query['food_name'], ingredient)
 	return match
 
 if __name__ == '__main__':
 	with open(sys.argv[1]) as input_file:
 		for line in input_file:
-			print(nearest_ingredient(line.strip()))
+			print(nearest_ingredient(line.strip('\n')))
 	kb.end()

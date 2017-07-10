@@ -6,7 +6,9 @@ import datak
 import sys
 from multiprocessing import Pool
 
-print(__doc__)
+def routine(file_list):
+	with Pool(len(file_list)) as process_pool:
+		process_pool.map(datak.leech, file_list)
 
-with Pool(len(sys.argv[1:])) as process_pool:
-	process_pool.map(datak.leech, sys.argv[1:])
+if __name__ == '__main__':
+	routine(sys.argv[1:])

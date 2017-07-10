@@ -13,7 +13,10 @@
 	"A": [
 		"AND",
 		"ANTI-",
-		"ARTIFICIAL"
+		"ARTIFICIAL",
+		"AND0R",
+		"AGENTS",
+		"AGENT"
 	],
 	"B": [],
 	"C": [
@@ -58,7 +61,6 @@
 		"NATURAL"
 	],
 	"O": [
-		"OIL",
 		"ONION",
 		"ONIONS",
 		"ORIGINAL",
@@ -102,7 +104,6 @@
 	],
 	"V": [
 		"VARYING",
-		"VEGETABLE",
 		"VITAMIN"
 	],
 	"W": [

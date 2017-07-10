@@ -1,4 +1,7 @@
 import json
+import re
+import itertools
+import functools
 
 ACCEPT_THRESHOLD = 0.32
 
@@ -8,23 +11,37 @@ class Rejector:
 		self.kb_file = kb
 		self.rejects = open(self.kb_file)
 		self.alphabets = json.load(self.rejects) or dict()
-		self.punctuations = [',', '.', '{', '}', '[', ']', '(', ')', '\'', '"', ':', ';']
+		self.punctuations = [',', '.', '{', '}', '[', ']', '(', ')', '\'', '"', ':', ';', '-', '/']
 
 	def add(self, word):
-		self.alphabets[word.strip()[0]].add(word.strip())
+		list(set(self.alphabets[word.strip()[0]])).append(word.strip())
 
 	def close(self):
 		with open(self.kb_file, 'w') as kb_file:			
 			json.dump(self.alphabets, kb_file, indent='\t')
 
 	def process(self, dirty_string):
-		for punctuation in self.punctuations:
-			dirty_string = dirty_string.replace(punctuation, '')
+		dirty_string = re.sub("\(.*\)", "", dirty_string)
+		dirty_string = re.sub("[,.\{.*\}\[.*\]\'\"\:\;\-\\/]*", "", dirty_string)
+		dirty_string = re.sub("[ ]+", " ", dirty_string).strip().strip('\n')
 		
-		for rword in self.rejects:			
-			dirty_string = dirty_string.replace(rword, '\b')
-
-		return dirty_string
+		rejected_words = list()
+		input_words = dirty_string.split(' ')
+		for word in input_words:
+			rejected_words.extend(self.alphabets[word[0].upper()])
+		
+		for product in itertools.product(rejected_words, input_words):
+			
+			if product[0] in product[1]:
+				rejector.add(product[0])
+				try:
+					input_words.remove(product[1])
+				except ValueError:
+					pass
+		if len(input_words) == 0:
+			return ''
+		clean_string = functools.reduce(lambda s,a: s+ ' ' + a, input_words)
+		return clean_string
 
 class Acceptor:
 	def __init__(self, kb="condensed_file.json"):
@@ -36,7 +53,7 @@ class Acceptor:
 			return Acceptor()
 
 	def add(self, word):
-		self.alphabets[word.strip()[0]].add(word.strip())
+		list(set(self.alphabets[word.strip()[0]])).append(word.strip())
 
 	def __exit__(self, exc_type, exc_val, exc_tb):
 		self.close()
@@ -45,19 +62,22 @@ class Acceptor:
 		with open(self.kb_file, 'w') as kb_file:
 			json.dump(self.alphabets, kb_file, indent='\t')		
 
-	def process(dirty_string):
+	def process(self, dirty_string):
 		clean_string = rejector.process(dirty_string)
 		parts = clean_string.split(' ')
 		parts_matched = 0
 		for word in parts:
+			match_candidates = self.alphabets[word.strip().upper()[0]]
 			word = word.strip().upper()
-			if word in self.alphabets[word[0]]:
-				parts_matched+= parts_matched
+			if word in match_candidates:
+				parts_matched += 1
 			else:
+				print("Added {0} to rejected list".format(word))
 				rejector.add(word)
 
 		if parts_matched / len(parts) > ACCEPT_THRESHOLD: 
 			acceptor.add(clean_string)
+
 
 class Matcher:
 	def close(self):
@@ -70,18 +90,17 @@ class Matcher:
 		self.hashes = json.load(self.matched)
 
 	def add(self, title, match):
-		#print(title)
 		main_key = self.hashes[title.upper()[0]]
 		try:
 			if title.upper()[0] is match[0].upper():
 				list(set(main_key[title.upper()]["matches"])).append(match.upper())
 		except KeyError:
 			main_key[title.upper()] = dict({"matches": [match.upper()]})	
-		#print(title, match)		
+			
 
 	def match(self, match_query):
 		keys = self.hashes[match_query[0]]
-		#print(keys)
+		
 		for key in keys.keys():
 			if match_query.upper() in keys[key].get("matches"):
 				print('Matched: ', key, ' with ', match_query)

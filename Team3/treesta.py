@@ -24,8 +24,9 @@ def condense(input_files):
 						fin_file.write(max_ing_len[0] + '\n')
 
 def check_ingredient(ingredient):
-	matches = fin_trie.start_with_prefix(ingredient.upper())	
-	return utilities.hash(modmatchi_result[0]) if ingredient in matches else None
+	matches = fin_trie.start_with_prefix(ingredient.upper())
+	print(matches)	
+	return ingredient if ingredient.upper() in matches else None
 
 if __name__ == '__main__':
 	condense(sys.argv[1:])

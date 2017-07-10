@@ -1,4 +1,4 @@
-import standardize
+import utilities.standardize
 import sys
 import glob
 import os
