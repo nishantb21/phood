@@ -22,7 +22,7 @@ class Result:
 		self.query = query
 
 	def __str__(self):
-		return "Matched " + self.query + " with " + str(self.match) + " using method "  + str(self.method) + " with confidence " + str(self.confidence)
+		return str((self.query, self.match, self.method, self.confidence))
 
 def nearest_ingredient(ingredient):
 	'''
@@ -32,6 +32,7 @@ def nearest_ingredient(ingredient):
 	3. Query nutritionix
 	4. Ignore
 	'''
+	original_ingredient = ingredient
 	match = Result()
 	#check 1
 	title_hash = utilities.hash(ingredient.upper())
@@ -41,7 +42,6 @@ def nearest_ingredient(ingredient):
 	
 	ingredient = kb.rejector.process(ingredient.strip('\n'))
 	#hash check failed, try previous matches
-	print(ingredient)
 	if ingredient == '':
 		return None
 	matched_title = kb.matcher.match(ingredient.upper().strip())
@@ -51,7 +51,7 @@ def nearest_ingredient(ingredient):
 
 	#No approximate or exact match found, query nutritionix
 	nutritionix_query = datak.ingredient(ingredient)
-	print(nutritionix_query)
+	#print("nutritionix_query: ", nutritionix_query)
 	if nutritionix_query is not None and nutritionix_query['food_name'][0].upper() == ingredient[0].upper():
 		#Save the new nutrition information after standardizing and quantifying it
 		if not os.path.exists(os.path.join('nutritionix_data', utilities.hash(nutritionix_query['food_name']))):
@@ -59,10 +59,14 @@ def nearest_ingredient(ingredient):
 			with open(os.path.join('nutritionix_data', utilities.hash(nutritionix_query['food_name'])), 'w') as json_file:
 				json.dump(nutritionix_query, json_file, indent='\t')
 			taster.taste(utilities.standardize(utilities.hash(nutritionix_query['food_name'])))
-		match.success(query = ingredient, method = 3, match = matched_title, confidence = 0.5)
+			kb.acceptor.add(nutritionix_query['food_name'])
+		else:
+			print("Adding {0} to alises of {1}".format(ingredient, nutritionix_query['food_name']))
+			kb.matcher.add(nutritionix_query['food_name'], ingredient)
+		match.success(query = ingredient, method = 3, match = utilities.hash(nutritionix_query['food_name']), confidence = 0.8)
 		return match
-	print("Nothing found for " + ingredient)
-	#kb.matcher.add(nutritionix_query['food_name'], ingredient)
+	print("Nothing found for " + original_ingredient)
+	kb.rejector.add(ingredient)
 	return match
 
 if __name__ == '__main__':

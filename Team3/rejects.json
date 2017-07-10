@@ -11,37 +11,48 @@
 	"8": [],
 	"9": [],
 	"A": [
-		"AND",
-		"ANTI-",
 		"ARTIFICIAL",
+		"AND",
+		"AGENT",
 		"AND0R",
-		"AGENTS",
-		"AGENT"
+		"ANTI-",
+		"AGENTS"
 	],
-	"B": [],
+	"B": [
+		"BLUE",
+		"BLEACHED",
+		"BACTERIAL"
+	],
 	"C": [
-		"CAKING",
 		"COLOR",
 		"COLOUR",
+		"CULTURE",
+		"CANOLA",
+		"CELLULOSE",
+		"CARRAGEENAN",
+		"CITRATE",
 		"CONCENTRATE",
-		"CULTURE"
+		"CAKING",
+		"CULTU"
 	],
 	"D": [
 		"DESSICANT",
 		"DIOXIDE",
+		"DRYING",
 		"DRY",
-		"DRYING"
+		"DIGLYCERIDES"
 	],
 	"E": [
-		"ENZYME",
-		"EXTRACT"
+		"EXTRACT",
+		"ENRICHED",
+		"ENZYME"
 	],
 	"F": [
-		"FAT",
-		"FLAVOR",
-		"FLAVOUR",
 		"FOR",
-		"FROM"
+		"FLAVOR",
+		"FROM",
+		"FAT",
+		"FLAVOUR"
 	],
 	"G": [
 		"GRANULATED",
@@ -56,24 +67,27 @@
 	"L": [
 		"LEAVENING"
 	],
-	"M": [],
+	"M": [
+		"MONO"
+	],
 	"N": [
 		"NATURAL"
 	],
 	"O": [
-		"ONION",
-		"ONIONS",
-		"ORIGINAL",
-		"OTHER"
+		"OIL",
+		"ORGANIC",
+		"OTHER",
+		"ORIGINAL"
 	],
 	"P": [
-		"PASTEURIZE",
 		"PASTEURIZED",
 		"PECTIN",
+		"PROTEIN",
 		"POTASSIUM",
-		"PREVENT",
 		"PROPORTIONS",
-		"PROTEIN"
+		"PUREE",
+		"PASTEURIZE",
+		"PREVENT"
 	],
 	"Q": [],
 	"R": [
@@ -84,20 +98,22 @@
 		"ROLLS"
 	],
 	"S": [
-		"SALAD",
+		"SHELLS",
+		"SODIUM",
+		"SPICES",
+		"SWEETENER",
+		"SOUR",
+		"SPLIT",
 		"SAUCE",
 		"SEEDS",
-		"SHELLS",
+		"SALAD",
 		"SOFT",
-		"SOUR",
-		"SPICE",
-		"SPICES",
-		"SPLIT",
-		"SWEETENER"
+		"SPICE"
 	],
 	"T": [
-		"TITANIUM",
-		"TO"
+		"TYPE",
+		"TO",
+		"TITANIUM"
 	],
 	"U": [
 		"UNSWEETENED"
@@ -107,11 +123,13 @@
 		"VITAMIN"
 	],
 	"W": [
-		"WHITE",
+		"WITH",
 		"WHOLE",
-		"WITH"
+		"WHITE"
 	],
-	"X": [],
+	"X": [
+		"XANTHAN"
+	],
 	"Y": [
 		"YELLOW"
 	],

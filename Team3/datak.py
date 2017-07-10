@@ -12,23 +12,25 @@ nutrition_common_url = 'https://www.nutritionix.com/track-api/v2/natural/nutrien
 def ingredient(query):
 	print('\rQuerying for: ' + query.strip(), end='', flush=True)
 	response = requests.get(query_url + utilities.parameterize(query))
-	response = response.json()
+	response_json = response.json()
 	try:
-		if len(response['common']) > 0:
-			response = response['common'][0]
-			title_hash = hashlib.md5(response['food_name'].upper().encode('utf-8')).hexdigest()
-			if not os.path.exists(os.path.join('nutritionix_data', title_hash)):
-				response_nutrition = requests.post(nutrition_common_url, data = {'query': response['food_name']})
+		if response.status_code == 200:
+			if len(response_json['common']) > 0:
+				#print("GOT: ", len(response_json['common']), response_json['common'])
+				response_json = response_json['common'][0]
+				title_hash = utilities.hash(response_json['food_name'])
+			
+				response_nutrition = requests.post(nutrition_common_url, data = {'query': response_json['food_name']})
 				
+				response_nutrition = response_nutrition.json()
 				try:
-					response_nutrition = response_nutrition.json()
 					response_nutrition = response_nutrition['foods'][0]
 				except json.decoder.JSONDecodeError:
 					print(': ', response_nutrition.text, sep='')
 					print('-'*15)
 
-				print(', got ', response['food_name'], end=', ', sep='', flush=True)
-				return response
+				print(', got ', response_json['food_name'], end=', ', sep='', flush=True)
+				return response_nutrition
 
 		else:
 			return None

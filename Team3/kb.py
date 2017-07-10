@@ -13,8 +13,11 @@ class Rejector:
 		self.alphabets = json.load(self.rejects) or dict()
 		self.punctuations = [',', '.', '{', '}', '[', ']', '(', ')', '\'', '"', ':', ';', '-', '/']
 
-	def add(self, word):
-		list(set(self.alphabets[word.strip()[0]])).append(word.strip())
+	def add(self, words):
+		for word in words.strip().split(' '):
+			self.alphabets[word.strip()[0]].extend(word.strip().split(' '))
+			self.alphabets[word.strip()[0]] = list(set(self.alphabets[word.strip()[0]]))
+		
 
 	def close(self):
 		with open(self.kb_file, 'w') as kb_file:			
@@ -22,14 +25,15 @@ class Rejector:
 
 	def process(self, dirty_string):
 		dirty_string = re.sub("\(.*\)", "", dirty_string)
-		dirty_string = re.sub("[,.\{.*\}\[.*\]\'\"\:\;\-\\/]*", "", dirty_string)
+		dirty_string = re.sub("[,.\{.*\}\[.*\]\'\"\:\;\-\\/&]*[0-9]*", "", dirty_string)
+		dirty_string = re.sub("\(.*", "", dirty_string)
+		dirty_string = re.sub(".*\)", "", dirty_string)
 		dirty_string = re.sub("[ ]+", " ", dirty_string).strip().strip('\n')
 		
 		rejected_words = list()
 		input_words = dirty_string.split(' ')
 		for word in input_words:
 			rejected_words.extend(self.alphabets[word[0].upper()])
-		
 		for product in itertools.product(rejected_words, input_words):
 			
 			if product[0] in product[1]:
@@ -53,7 +57,8 @@ class Acceptor:
 			return Acceptor()
 
 	def add(self, word):
-		list(set(self.alphabets[word.strip()[0]])).append(word.strip())
+		self.alphabets[word.strip().upper()[0]].append(word.strip())
+		self.alphabets[word.strip().upper()[0]] = list(set(self.alphabets[word.strip().upper()[0]]))
 
 	def __exit__(self, exc_type, exc_val, exc_tb):
 		self.close()
@@ -72,7 +77,6 @@ class Acceptor:
 			if word in match_candidates:
 				parts_matched += 1
 			else:
-				print("Added {0} to rejected list".format(word))
 				rejector.add(word)
 
 		if parts_matched / len(parts) > ACCEPT_THRESHOLD: 
@@ -92,8 +96,9 @@ class Matcher:
 	def add(self, title, match):
 		main_key = self.hashes[title.upper()[0]]
 		try:
-			if title.upper()[0] is match[0].upper():
+			if title.upper()[0] == match[0].upper():
 				list(set(main_key[title.upper()]["matches"])).append(match.upper())
+				
 		except KeyError:
 			main_key[title.upper()] = dict({"matches": [match.upper()]})	
 			
@@ -103,7 +108,6 @@ class Matcher:
 		
 		for key in keys.keys():
 			if match_query.upper() in keys[key].get("matches"):
-				print('Matched: ', key, ' with ', match_query)
 				return key
 		return None
 
