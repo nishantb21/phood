@@ -1,76 +1,27 @@
-import kb
-import os
-import sys
-import treesta
-import hashlib
-import utilities
-import datak
-import taster
+#wrapper for L2
+import argparse
+import layer2
+import glob
 import json
 
-class Result:
-	def __init__(self, method=-1, query = '', match='', confidence = 0):
-		self.method = method
-		self.match = match
-		self.confidence = confidence
-		self.query = query
+parser = argparse.ArgumentParser(prog="Fabric - Taste Profiler")
+parser.add_argument("--build-kb", help="Specify the kb component to build", choices=['kb.acceptor', 'kb.rejector', 'kb.matcher'], action='append')
+parser.add_argument("--rebuild-kb", help="Specify the kb component to rebuild", choices=['kb.acceptor', 'kb.rejector', 'kb.matcher'], action='append')
+parser.add_argument("-p","--profile", help="profile the specified number of dish hashes", action='append')
+parser.add_argument("--profile-all", help="profile all dishes in specified folder")
+arguments = parser.parse_args()
+print("Profiling {} dishes".format(arguments.profile_all))
+print("Knowledge base actions\nBuild: {}\tRebuild: {}".format(arguments.build_kb, arguments.rebuild_kb))
 
-	def success(self, method, match, confidence, query):
-		self.method = method
-		self.match = match
-		self.confidence = confidence
-		self.query = query
 
-	def __str__(self):
-		return str((self.query, self.match, self.method, self.confidence))
-
-def nearest_ingredient(ingredient):
-	'''
-	Flow:
-	1. hash and check for exact match
-	2. Query prefix tree and match closest ingredient
-	3. Query nutritionix
-	4. Ignore
-	'''
-	original_ingredient = ingredient
-	match = Result()
-	#check 1
-	title_hash = utilities.hash(ingredient.upper())
-	if os.path.exists(os.path.join('nutritionix_data', title_hash + '_std.json')):
-		match.success(method = 1, match = str(title_hash), confidence = 1, query = ingredient)
-		return match
-	
-	ingredient = kb.rejector.process(ingredient.strip('\n'))
-	#hash check failed, try previous matches
-	if ingredient == '':
-		return None
-	matched_title = kb.matcher.match(ingredient.upper().strip())
-	if matched_title is not None:
-		match.success(query = ingredient, method = 2, match = matched_title, confidence = 1)
-		return match
-
-	#No approximate or exact match found, query nutritionix
-	nutritionix_query = datak.ingredient(ingredient)
-	#print("nutritionix_query: ", nutritionix_query)
-	if nutritionix_query is not None and nutritionix_query['food_name'][0].upper() == ingredient[0].upper():
-		#Save the new nutrition information after standardizing and quantifying it
-		if not os.path.exists(os.path.join('nutritionix_data', utilities.hash(nutritionix_query['food_name']))):
-			print("Added new file for " + nutritionix_query['food_name'])
-			with open(os.path.join('nutritionix_data', utilities.hash(nutritionix_query['food_name'])), 'w') as json_file:
-				json.dump(nutritionix_query, json_file, indent='\t')
-			taster.taste(utilities.standardize(utilities.hash(nutritionix_query['food_name'])))
-			kb.acceptor.add(nutritionix_query['food_name'])
-		else:
-			print("Adding {0} to alises of {1}".format(ingredient, nutritionix_query['food_name']))
-			kb.matcher.add(nutritionix_query['food_name'], ingredient)
-		match.success(query = ingredient, method = 3, match = utilities.hash(nutritionix_query['food_name']), confidence = 0.8)
-		return match
-	print("Nothing found for " + original_ingredient)
-	kb.rejector.add(ingredient)
-	return match
-
-if __name__ == '__main__':
-	with open(sys.argv[1]) as input_file:
-		for line in input_file:
-			print(nearest_ingredient(line.strip('\n')))
-	kb.end()
+if arguments.profile_all:
+	for dish in glob.iglob(arguments.profile_all + '*.json'):
+		print(dish)
+		with open(dish) as dish_file:
+			dish_json = json.load(dish_file)
+			layer2.profile(dish_json["dish"], dish_json["ingredients"])
+elif arguments.profile:
+	for dish in arguments.profile:
+		with open(dish) as dish_file:
+			dish_json = json.load(dish_file)
+			layer2.profile(dish_json["dish"], dish_json["ingredients"])

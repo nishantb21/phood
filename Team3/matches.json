@@ -52,6 +52,11 @@
 	"A": {
 		"": {
 			"matches": []
+		},
+		"ASPARTAME": {
+			"matches": [
+				"ASPARTAME"
+			]
 		}
 	},
 	"B": {
@@ -67,6 +72,11 @@
 			"matches": [
 				"BLUE"
 			]
+		},
+		"BEEF": {
+			"matches": [
+				"BEEF"
+			]
 		}
 	},
 	"C": {
@@ -76,6 +86,16 @@
 		"CREAMER": {
 			"matches": [
 				"CREAM"
+			]
+		},
+		"CARAMEL": {
+			"matches": [
+				"CARAMEL"
+			]
+		},
+		"COCOA": {
+			"matches": [
+				"COCOA MASS"
 			]
 		}
 	},
@@ -137,6 +157,11 @@
 	"N": {
 		"": {
 			"matches": []
+		},
+		"NATURAL PEANUT BUTTER": {
+			"matches": [
+				"NATURA"
+			]
 		}
 	},
 	"O": {
@@ -167,6 +192,11 @@
 			"matches": [
 				"PORK"
 			]
+		},
+		"PROTEIN POWDER": {
+			"matches": [
+				"POWDER"
+			]
 		}
 	},
 	"Q": {
@@ -192,6 +222,11 @@
 	"T": {
 		"": {
 			"matches": []
+		},
+		"THANKSGIVING": {
+			"matches": [
+				"THAN"
+			]
 		}
 	},
 	"U": {
@@ -206,6 +241,11 @@
 		"VEGETABLE SHORTENING": {
 			"matches": [
 				"VEGETABLE SHORTENING"
+			]
+		},
+		"VEGETABLE JUICE": {
+			"matches": [
+				"VEGETABLE JUICE"
 			]
 		}
 	},

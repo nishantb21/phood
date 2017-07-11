@@ -1,5 +1,7 @@
 {
-	"%": [],
+	"%": [
+		"%"
+	],
 	"0": [],
 	"1": [],
 	"2": [],
@@ -11,64 +13,92 @@
 	"8": [],
 	"9": [],
 	"A": [
-		"ARTIFICIAL",
-		"AND",
-		"AGENT",
+		"ACID",
+		"ARTIFICI",
+		"ADDED",
 		"AND0R",
 		"ANTI-",
-		"AGENTS"
+		"AGENTS",
+		"ACESULFAME",
+		"AND",
+		"ARABIC",
+		"AGENT",
+		"ARTIFICIAL"
 	],
 	"B": [
-		"BLUE",
+		"BAKING",
 		"BLEACHED",
-		"BACTERIAL"
+		"BLUE",
+		"BREWED",
+		"BENZOATE",
+		"BACTERIAL",
+		"BLANCHED"
 	],
 	"C": [
-		"COLOR",
-		"COLOUR",
-		"CULTURE",
-		"CANOLA",
-		"CELLULOSE",
-		"CARRAGEENAN",
-		"CITRATE",
 		"CONCENTRATE",
 		"CAKING",
-		"CULTU"
+		"CELLULOSE",
+		"CITRATE",
+		"CALCIUM",
+		"COLOR",
+		"CHOCOLATE",
+		"CITRIC",
+		"CANOLA",
+		"COLOUR",
+		"CARNAUBA",
+		"CONTAINS",
+		"CULTURE",
+		"CULTU",
+		"CARRAGEENAN"
 	],
 	"D": [
-		"DESSICANT",
-		"DIOXIDE",
+		"DIGLYCERIDES",
+		"DEXTROSE",
 		"DRYING",
 		"DRY",
-		"DIGLYCERIDES"
+		"DESSICANT",
+		"DRIED",
+		"DIOXIDE",
+		"DISODIUM"
 	],
 	"E": [
+		"EMULSIFIERS",
+		"ENZYME",
 		"EXTRACT",
-		"ENRICHED",
-		"ENZYME"
+		"ENRICHED"
 	],
 	"F": [
-		"FOR",
-		"FLAVOR",
-		"FROM",
+		"FLAVOUR",
 		"FAT",
-		"FLAVOUR"
+		"FOOD",
+		"FRESHNESS",
+		"FOR",
+		"FROM",
+		"FLAVOR",
+		"FOLLOWING"
 	],
 	"G": [
 		"GRANULATED",
 		"GUM"
 	],
 	"H": [
-		"HARD"
+		"HARD",
+		"HEXAMETAPHOSPHATE",
+		"HYDROGENATED"
 	],
 	"I": [],
 	"J": [],
 	"K": [],
 	"L": [
+		"LAVENDER",
+		"LESS",
 		"LEAVENING"
 	],
 	"M": [
-		"MONO"
+		"MONO",
+		"MODIFIED",
+		"MAGNESIUM",
+		"MALIC"
 	],
 	"N": [
 		"NATURAL"
@@ -76,18 +106,23 @@
 	"O": [
 		"OIL",
 		"ORGANIC",
+		"OF",
 		"OTHER",
-		"ORIGINAL"
+		"ORIGINAL",
+		"OR"
 	],
 	"P": [
-		"PASTEURIZED",
-		"PECTIN",
-		"PROTEIN",
-		"POTASSIUM",
-		"PROPORTIONS",
-		"PUREE",
 		"PASTEURIZE",
-		"PREVENT"
+		"PREVENT",
+		"PROTEIN",
+		"PROPORTIONS",
+		"PHOSPHATE",
+		"PECTIN",
+		"PYROPHOSPHATE",
+		"POTASSIUM",
+		"PARTIALLY",
+		"PASTEURIZED",
+		"PRESERVE"
 	],
 	"Q": [],
 	"R": [
@@ -98,21 +133,29 @@
 		"ROLLS"
 	],
 	"S": [
+		"STARCH",
 		"SHELLS",
-		"SODIUM",
-		"SPICES",
 		"SWEETENER",
-		"SOUR",
-		"SPLIT",
+		"STEARATE",
 		"SAUCE",
-		"SEEDS",
+		"SPLIT",
+		"SODIUM",
+		"SODA",
 		"SALAD",
+		"SULFATE",
+		"SORBIC",
+		"SPICES",
+		"SPICE",
+		"SOUR",
 		"SOFT",
-		"SPICE"
+		"SUCCINIC"
 	],
 	"T": [
-		"TYPE",
 		"TO",
+		"THE",
+		"TYPE",
+		"TBHQ",
+		"TETRASODIUM",
 		"TITANIUM"
 	],
 	"U": [
@@ -123,9 +166,10 @@
 		"VITAMIN"
 	],
 	"W": [
-		"WITH",
 		"WHOLE",
-		"WHITE"
+		"WAX",
+		"WHITE",
+		"WITH"
 	],
 	"X": [
 		"XANTHAN"

@@ -82,7 +82,6 @@ class Acceptor:
 		if parts_matched / len(parts) > ACCEPT_THRESHOLD: 
 			acceptor.add(clean_string)
 
-
 class Matcher:
 	def close(self):
 		with open(self.kb_file, 'w') as kb_file:
@@ -110,7 +109,6 @@ class Matcher:
 			if match_query.upper() in keys[key].get("matches"):
 				return key
 		return None
-
 
 def end():
 	matcher.close()
