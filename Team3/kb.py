@@ -69,8 +69,12 @@ class Acceptor:
 		self.alphabets = json.load(self.accepted) or dict()
 
 	def add(self, word):
-		self.alphabets[word.strip().upper()[0]].append(word.strip().upper())
-		self.alphabets[word.strip().upper()[0]] = list(set(self.alphabets[word.strip().upper()[0]]))
+		try:
+			self.alphabets[word.strip().upper()[0]].append(word.strip().upper())
+		except KeyError:
+			self.alphabets[word.strip().upper()[0]] = list(word.strip().upper())
+		finally:
+			self.alphabets[word.strip().upper()[0]] = list(set(self.alphabets[word.strip().upper()[0]]))
 
 	def close(self):
 		with open(self.kb_file, 'w') as kb_file:

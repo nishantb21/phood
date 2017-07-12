@@ -86,7 +86,6 @@ def profile(dish_title, ingredient_list):
 			matched_ingredient = nearest_ingredient(pair[0][0])
 
 			if matched_ingredient is not None and matched_ingredient.match != '':
-				return_ingredients.append(matched)
 				#print(matched_ingredient.query, ":",matched_ingredient.match, end=' ')
 				#read ingredient details from file
 				with open("nutritionix_data/" + utilities.hash(matched_ingredient.match) + "_std.json") as ing_file:
