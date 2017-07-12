@@ -10,7 +10,7 @@ query_url = 'https://www.nutritionix.com/track-api/v2/search/instant?branded=fal
 nutrition_common_url = 'https://www.nutritionix.com/track-api/v2/natural/nutrients'
 
 def ingredient(query):
-	print('\rQuerying for: ' + query.strip(), end='', flush=True)
+	#print('\rQuerying for: ' + query.strip(), end='', flush=True)
 	response = requests.get(query_url + utilities.parameterize(query))
 	response_json = response.json()
 	try:
@@ -26,10 +26,11 @@ def ingredient(query):
 				try:
 					response_nutrition = response_nutrition['foods'][0]
 				except json.decoder.JSONDecodeError:
-					print(': ', response_nutrition.text, sep='')
-					print('-'*15)
+					#print(': ', response_nutrition.text, sep='')
+					#print('-'*15)
+					pass
 
-				print(', got ', response_json['food_name'], end=', ', sep='', flush=True)
+				#print(', got ', response_json['food_name'], end=', ', sep='', flush=True)
 				return response_nutrition
 
 		else:
@@ -51,8 +52,8 @@ def leech(for_file):
 					with open(os.path.join('nutritionix_data', os.path.join(for_file.split('.')[0], title_hash)), "w") as ing_file:
 						json.dump(response_nutrition, ing_file, indent='\t')
 				else:
-					print(len(matched)/len(response['food_name'].split(' ')))
-					print('discarded', end='*'*7)
+					#print(len(matched)/len(response['food_name'].split(' ')))
+					#print('discarded', end='*'*7)
 					discards.write(str((query.strip(), response['food_name'])) + '\n')
 			else:
 				misses.write(query)

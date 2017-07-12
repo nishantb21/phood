@@ -10,41 +10,56 @@ class Rejector:
 	def __init__(self, kb='rejects.json'):
 		self.kb_file = kb
 		self.rejects = open(self.kb_file)
-		self.alphabets = json.load(self.rejects) or dict()
-		self.punctuations = [',', '.', '{', '}', '[', ']', '(', ')', '\'', '"', ':', ';', '-', '/']
+		self.alphabets = json.load(self.rejects) or dict()		
 
 	def add(self, words):
+		'''
+		Add word to the reject list. All words are indexed 
+		by their first character.
+		'''
 		for word in words.strip().split(' '):
 			self.alphabets[word.strip()[0]].extend(word.strip().split(' '))
-			self.alphabets[word.strip()[0]] = list(set(self.alphabets[word.strip()[0]]))
-		
+			self.alphabets[word.strip()[0]] = list(set(self.alphabets[word.strip()[0]]))		
 
 	def close(self):
 		with open(self.kb_file, 'w') as kb_file:			
 			json.dump(self.alphabets, kb_file, indent='\t')
 
 	def process(self, dirty_string):
+		'''
+		Strip all input of undesirable portions, in listed order:
+		1. All punctuations
+		2. All unterminated braces
+		3. All extra spacing
+		'''
 		dirty_string = re.sub("\(.*\)", "", dirty_string)
-		dirty_string = re.sub("[,.\{.*\}\[.*\]\'\"\:\;\-\\/&]*[0-9]*", "", dirty_string)
+		dirty_string = re.sub("[,.\{.*\}\[.*\]\'\"\:\;\-\\/&#\^_\-\+]*[0-9]*", "", dirty_string)
 		dirty_string = re.sub("\(.*", "", dirty_string)
 		dirty_string = re.sub(".*\)", "", dirty_string)
-		dirty_string = re.sub("[ ]+", " ", dirty_string).strip().strip('\n')
+		dirty_string = re.sub("[ ]+", " ", dirty_string).strip('\n').strip()
 		
 		rejected_words = list()
 		input_words = dirty_string.split(' ')
 		for word in input_words:
+			if word == '':
+				return ''
 			rejected_words.extend(self.alphabets[word[0].upper()])
 		for product in itertools.product(rejected_words, input_words):
 			
+			#match any of the rejected words selected in the input string
 			if product[0] in product[1]:
 				rejector.add(product[0])
 				try:
 					input_words.remove(product[1])
 				except ValueError:
-					pass
-		if len(input_words) == 0:
+					pass #Exact word was not found
+		
+		if len(input_words) == 0: #Input was completely rejected, return empty string
 			return ''
-		clean_string = functools.reduce(lambda s,a: s+ ' ' + a, input_words)
+
+		#clean_string = functools.reduce(lambda s,a: s+ ' ' + a, input_words)
+		#Rebuild string from clean word list
+		clean_string = " ".join(input_words)
 		return clean_string
 
 class Acceptor:
@@ -53,15 +68,9 @@ class Acceptor:
 		self.accepted = open(self.kb_file)
 		self.alphabets = json.load(self.accepted) or dict()
 
-		def __enter__(self):
-			return Acceptor()
-
 	def add(self, word):
-		self.alphabets[word.strip().upper()[0]].append(word.strip())
+		self.alphabets[word.strip().upper()[0]].append(word.strip().upper())
 		self.alphabets[word.strip().upper()[0]] = list(set(self.alphabets[word.strip().upper()[0]]))
-
-	def __exit__(self, exc_type, exc_val, exc_tb):
-		self.close()
 
 	def close(self):
 		with open(self.kb_file, 'w') as kb_file:
