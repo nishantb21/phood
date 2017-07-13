@@ -108,7 +108,7 @@ def profile(dish_title, ingredient_list, json_obj):
 		return (dish_title, ingredient_list, profile)
 
 	#Read from precomputed file and return 
-	print("Precomputed", end='\b'*11)
+	#print("Precomputed", end='\b'*11)
 	dish_values = dict()
 	with open("tasted_dishes/" + dish_hash) as dish_json:
 		dish_values = json.load(dish_json)
