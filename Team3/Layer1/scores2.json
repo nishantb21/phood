@@ -52339,5 +52339,28 @@
 			"SPICES (INCLUDING MUSTARD SEED). HONEY"
 		],
 		"salt": 1.0
+	},
+	"HAMBURGER": {
+		"name": "HAMBURGER",
+		"sweet": 0.03647272727272727,
+		"fat": 0.04538636363636364,
+		"ings": [
+			"CALCIUMPROPIO",
+			"ASCORBIC ACID",
+			"INVERTSUGAR",
+			"MONO AND DIGLYCERIDES",
+			"ENRICHED FLOUR (WHEAT FLOUR, MALTED BARLEYFLOUR, NIACIN, REDUCED IRON, THIAMIN MONONITRATE, RIBOFLAVIN, FOLIC ACID)"
+		],
+		"salt": 0.07029090909090908,
+		"count": 22,
+		"src": "usda"
+	},
+	"MCCHICKEN": {
+		"sweet": 0.03572519083969465,
+		"salt": 0.020782549004652585,
+		"fat": 0.13213740458015266,
+		"count": 1,
+		"ings": [],
+		"src": "nutritionix"
 	}
 }

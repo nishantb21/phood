@@ -77,7 +77,7 @@ def profile(dish_title, ingredient_list, json_obj):
 	json_keys = ["sweet", "salt", "fat"]
 
 	dish_hash = utilities.hash(dish_title)
-	print(json_obj['salt'])
+	#print(json_obj['salt'])
 	#format: [(ingredient, ratio%)]
 	ingredient_pair = zip(ingredient_list, utilities.ratio(len(ingredient_list)))
 	if not os.path.exists(os.path.join("tasted_dishes", dish_hash)):
@@ -87,7 +87,7 @@ def profile(dish_title, ingredient_list, json_obj):
 		profile = dict()
 		for index in range(len(taste_keys)):
 			profile[taste_keys[index]] = json_obj[json_keys[index]]
-		print(profile)
+		#print(profile)
 		for pair in taste_ingredient_pair:
 			matched_ingredient = nearest_ingredient(pair[0][0])
 

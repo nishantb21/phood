@@ -115,14 +115,19 @@ def query_nutritionix(foodItem):
 	if query_result:
 		food_weight = query_result['serving_weight_grams']
 		#nutri_info["name"] = foodItem
-		nutri_info[foodItem] = dict()
+		nutri_info = dict()
 		#print(query_result)
-		nutri_info[foodItem]['sweet'] = (query_result['nf_sugars'] / food_weight) if query_result['nf_sugars'] else 0
-		nutri_info[foodItem]['salt'] = (query_result['nf_sodium'] / 39333) if query_result['nf_sodium'] else 0
-		nutri_info[foodItem]['fat'] = (query_result['nf_total_fat'] / food_weight) if query_result['nf_total_fat'] else 0
-		nutri_info[foodItem]['count'] = 1
-		nutri_info[foodItem]['ings'] = checkIngredient(foodItem)
-		nutri_info[foodItem]['src'] = 'nutritionix'
+		nutri_info['sweet'] = (query_result['nf_sugars'] / food_weight) if query_result['nf_sugars'] else 0
+		nutri_info['salt'] = (query_result['nf_sodium'] / 39333) if query_result['nf_sodium'] else 0
+		nutri_info['fat'] = (query_result['nf_total_fat'] / food_weight) if query_result['nf_total_fat'] else 0
+		nutri_info['count'] = 1
+		nutri_info['ings'] = checkIngredient(foodItem)
+		nutri_info['src'] = 'nutritionix'
+		with open('Layer1/scores2.json') as f:
+			data = json.load(f)
+		with open('Layer1/scores2.json', 'w+') as f:
+			data[foodItem] = nutri_info
+			json.dump(data, f, indent='\t')
 		return nutri_info
 	return None
 

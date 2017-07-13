@@ -26,14 +26,15 @@ if arguments.profile:
 		dish_json_l1 = layer1.return_score(dish.upper())
 		
 		if dish_json_l1 is not None:
-			dish_pair = layer2.profile(dish, dish_json_l1[dish.upper()]['ings'], dish_json_l1)
+			print(dish_json_l1)
+			dish_pair = layer2.profile(dish, dish_json_l1['ings'], dish_json_l1)
 			#print(dish_pair)			
 
 layer2.kb.end()
 
 # Set data
 cat = ['Sweetness', 'Saltiness', 'Richness']
-values = [dish_json_l1[dish.upper()]['sweet']*100, dish_json_l1[dish.upper()]['salt']*100, dish_json_l1[dish.upper()]['fat']*100]
+values = [dish_json_l1['sweet']*100, dish_json_l1['salt']*100, dish_json_l1['fat']*100]
 if dish_pair is not None:
 	values = [dish_pair[2]['sweet_score']*100, dish_pair[2]['salt_score']*100, dish_pair[2]['rich_score']*100]
 print(values)
