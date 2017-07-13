@@ -123,6 +123,12 @@ def query_nutritionix(foodItem):
 		nutri_info[foodItem]['count'] = 1
 		nutri_info[foodItem]['ings'] = checkIngredient(foodItem)
 		nutri_info[foodItem]['src'] = 'nutritionix'
+		with open('Layer1/scores2.json') as f:
+			data = json.loads(f.read())
+		with open('Layer1/scores2.json', 'w+') as f:
+			data[foodItem] = nutri_info[foodItem]
+			##print(ingredients_in_name)
+			json.dump(data,f,indent='\t')
 		return nutri_info
 	return None
 
