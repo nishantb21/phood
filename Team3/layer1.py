@@ -114,7 +114,7 @@ def query_nutritionix(foodItem):
 		nutri_info[foodItem]['salt'] = query_result['nf_sodium'] / 39333
 		nutri_info[foodItem]['fat'] = query_result['nf_total_fat'] / food_weight
 		nutri_info[foodItem]['count'] = 1
-		nutri_info[foodItem]['ings'] = list()
+		nutri_info[foodItem]['ings'] = checkIngredient(foodItem)
 		return nutri_info
 	return None
 
