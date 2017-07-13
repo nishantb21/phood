@@ -2,6 +2,7 @@
 import hashlib
 import sys
 import json
+import nltk
 
 def parameterize(qstring):
 		return qstring.strip('\n').replace(' ', '+')
@@ -19,13 +20,13 @@ def modmatch(query_string, match_string, threshold):
 	matched = [word for word in query_string_split if word in match_string_split]
 	if len(matched) > 0 or (' ' not in match_string and query_string.upper().strip() in match_string.upper().strip()):
 		if len(matched) / len(query_string_split) >= threshold:
-			return (query_string, round(len(matched) / len(query_string_splitlen(matched) / len(query_string_split, 2))))
+			return (query_string, round(len(matched) / len(query_string_split)), 2)
 	return None
 
 def modmatchi2(query_string, iterable, threshold):
 	best_match = (None, None, -1)
 	for word in iterable:
-		result = modmatch(query_string, word, threshold)
+		result = modmatch2(query_string, word, threshold)
 		best_match = result if (result) and (result[2] > best_match[2]) else best_match
 	return best_match
 

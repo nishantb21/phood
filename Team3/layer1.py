@@ -13,9 +13,6 @@ SEARCH_THRESHOLD = 0.3
 foodDict = dict()
 ps = nltk.PorterStemmer()
 rejector = kb.Rejector('food_rejects.json')
-foodItems = getFoods('foods')
-ingredientItems = loadIngredientFile()
-rows = genRows('tasteScores - Copy')
 
 def init_food_dict(foodItems):
 	foodDict = dict()
@@ -90,6 +87,7 @@ def query_JSON(foodItem):
 			for food in scores.keys():
 				if utilities.modmatch2(foodItem, food, SEARCH_THRESHOLD):
 					result = utilities.modmatch2(foodItem, food, SEARCH_THRESHOLD)
+					print(scores[food])
 					scores[food]['salt'] /= scores[food]['count']
 					scores[food]['ings'].extend(checkIngredient(foodItem))
 					return scores[food]
@@ -105,6 +103,7 @@ def query_USDA(foodItem):
 
 def query_nutritionix(foodItem):
 	#3 - Query nutritionix to get nutritional info, but return an empty list for ingredients, and append it to the existing file
+	print("Not found in USDA, querying Nutritionix")
 	nutri_info = dict()
 	query_result = datak.ingredient(foodItem)
 	if query_result:
@@ -113,6 +112,8 @@ def query_nutritionix(foodItem):
 		nutri_info[foodItem]['sweet'] = query_result['nf_sugars'] / food_weight
 		nutri_info[foodItem]['salt'] = query_result['nf_sodium'] / 39333
 		nutri_info[foodItem]['fat'] = query_result['nf_total_fat'] / food_weight
+		nutri_info[foodItem]['count'] = 1
+		nutri_info[foodItem]['ings'] = list()
 		return nutri_info
 	return None
 
@@ -134,9 +135,13 @@ def return_score(foodItem):
 		return None
 
 def loadIngredientFile():
-	with open('Layer2/condensed_file.json') as f2:
+	with open('condensed_file.json') as f2:
 		data = json.loads(f2.read())
 		return data
+
+foodItems = getFoods('foods')
+ingredientItems = loadIngredientFile()
+rows = genRows('tasteScores - Copy')
 
 def checkIngredient(food):
 	ingredients_in_name = list()
@@ -207,6 +212,7 @@ def find_score(foodItem, rows=rows, testsize=len(rows)):
 			data[food]['ings'] = list(foodDict[food]['ings'])
 			data[food]['ings'].extend(ingredients_in_name)
 			data[food]['salt'] = foodDict[food]['salt'] / foodDict[food]['count']
+			data[food]['count'] = foodDict[food]['count']
 			#print(ingredients_in_name)
 			json.dump(data,f,indent='\t')
 
@@ -287,5 +293,5 @@ def main():
 	print("Enter Food Name: ")
 	print(return_score(input()))
 
-
-main()
+if __name__ == "__main__":
+	main()	

@@ -86,7 +86,7 @@ def profile(dish_title, ingredient_list, json_obj):
 		taste_ingredient_pair = itertools.product(ingredient_pair, taste_keys)
 		profile = dict()
 		for index in range(len(taste_keys)):
-			profile[index] = json_obj[index]
+			profile[taste_keys[index]] = json_obj[json_keys[index]]
 		for pair in taste_ingredient_pair:
 			matched_ingredient = nearest_ingredient(pair[0][0])
 
@@ -96,9 +96,9 @@ def profile(dish_title, ingredient_list, json_obj):
 				with open("nutritionix_data/" + utilities.hash(matched_ingredient.match) + "_std.json") as ing_file:
 					ing_dict = json.load(ing_file)
 					try:
-						profile[pair[1]] += round(ing_dict[pair[1]] * pair[0][1], 4)
+						profile[pair[1]] += round(ing_dict[pair[1]] * pair[0][1], 4) / 100
 					except KeyError:
-						profile[pair[1]] = round(ing_dict[pair[1]] * pair[0][1], 4)
+						profile[pair[1]] = round(ing_dict[pair[1]] * pair[0][1], 4) / 100
 					finally:
 						if pair[1] == taste_keys[-1]:
 							#print(profile, pair[0][1],"\n===\n")

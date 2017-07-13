@@ -17,27 +17,43 @@ print("Profiling {} dishes".format(arguments.profile_all or arguments.profile))
 print("Knowledge base actions\nBuild: {}\tRebuild: {}".format(arguments.build_kb, arguments.rebuild_kb))
 
 dish_pair = ('', [], None)
+dish_name = str()
 if arguments.profile_all:
 	for dish in glob.iglob(arguments.profile_all + '*.json'):
 		print("\r", dish, end='..')
+		
+		
 		with open(dish) as dish_file:
 			dish_json = json.load(dish_file)
-		dish_pair = layer2.profile(dish_json["dish"], dish_json["ingredients"])
-		print("done.      ", end='\r')
-	#print("\n\n", dish_pair[0], dish_pair[1], sep='')
+		dish_name = dish_json['dish']
+		dish_json_l1 = layer1.return_score(dish_json['dish'])
+		
+		if dish_json_l1 is not None:
+			dish_pair = layer2.profile(dish_json["dish"], dish_json_l1["ings"], dish_json_l1)
+		
+			print("done.      ", end='\r')
+		#dish_pair = layer2.profile(dish_json["dish"], dish_json["ingredients"])
+			if dish_pair is not None:
+				print("\n\n", dish_pair[0], dish_pair[1], sep='')
 
 elif arguments.profile:
 	for dish in arguments.profile:
 		print("\r", dish, end='..    .')
 		dish_json = layer1.return_score(dish)
-
+		#if dish_json is not None:
 		#with open(dish) as dish_file:
 		#	dish_json = json.load(dish_file)
-		dish_pair = layer2.profile(dish, dish_json["ings"], dish_json)
+		if dish_json is not None:
+			dish_pair = layer2.profile(dish_json["dish"], dish_json["ings"], dish_json)
 		print("done.      ", end='\r')
-		#print("\n\n", dish_pair[0], dish_pair[1], sep='')
+		print("\n\n", dish_pair[0], dish_pair[1], sep='')
 
 
 #Call team3 as a subprocess
-subprocess.run(["python", "ratip.py", dish_pair[0], ",".join(dish_pair[1]) if dish_pair[1] != [] else ''])
+if dish_pair is not None:
+	subprocess.run(["python", "ratip.py", dish_pair[0], ",".join(dish_pair[1])])
+else:
+	subprocess.run(["python", "ratip.py", dish_name])
+
+
 layer2.kb.end()
