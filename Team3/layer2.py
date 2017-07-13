@@ -70,11 +70,14 @@ def nearest_ingredient(ingredient):
 	kb.rejector.add(ingredient)
 	return match
 
-def profile(dish_title, ingredient_list):
+def profile(dish_title, ingredient_list, json_obj):
 	if len(ingredient_list) == 0 or ingredient_list is None:
 		return None
 	taste_keys = ["sweet_score", "salt_score", "rich_score"]
+	json_keys = ["sweet", "salt", "fat"]
+
 	dish_hash = utilities.hash(dish_title)
+	
 	#format: [(ingredient, ratio%)]
 	ingredient_pair = zip(ingredient_list, utilities.ratio(len(ingredient_list)))
 	if not os.path.exists(os.path.join("tasted_dishes", dish_hash)):
@@ -82,6 +85,8 @@ def profile(dish_title, ingredient_list):
 		#format: ((ingredient, ratio%), taste_key)
 		taste_ingredient_pair = itertools.product(ingredient_pair, taste_keys)
 		profile = dict()
+		for index in range(len(taste_keys)):
+			profile[index] = json_obj[index]
 		for pair in taste_ingredient_pair:
 			matched_ingredient = nearest_ingredient(pair[0][0])
 

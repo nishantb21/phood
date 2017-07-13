@@ -1,5 +1,6 @@
 #wrapper for L2
 import argparse
+import layer1
 import layer2
 import glob
 import json
@@ -28,9 +29,11 @@ if arguments.profile_all:
 elif arguments.profile:
 	for dish in arguments.profile:
 		print("\r", dish, end='..    .')
-		with open(dish) as dish_file:
-			dish_json = json.load(dish_file)
-		dish_pair = layer2.profile(dish_json["dish"], dish_json["ingredients"])
+		dish_json = layer1.return_score(dish)
+
+		#with open(dish) as dish_file:
+		#	dish_json = json.load(dish_file)
+		dish_pair = layer2.profile(dish, dish_json["ings"], dish_json)
 		print("done.      ", end='\r')
 		#print("\n\n", dish_pair[0], dish_pair[1], sep='')
 
