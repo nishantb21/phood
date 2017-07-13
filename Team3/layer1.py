@@ -4,7 +4,6 @@ import utilities
 import pickle
 import os
 import nltk
-from progress.bar import ShadyBar
 import json
 import datak
 import sys
@@ -13,8 +12,11 @@ import kb
 SEARCH_THRESHOLD = 0.3
 foodDict = dict()
 ps = nltk.PorterStemmer()
-rejector = kb.Rejector()
-acceptor = kb.Acceptor()
+rejector = kb.Rejector('food_rejects.json')
+foodItems = getFoods('foods')
+ingredientItems = loadIngredientFile()
+rows = genRows('tasteScores - Copy')
+
 def init_food_dict(foodItems):
 	foodDict = dict()
 	#print(type(foodsList))
@@ -39,7 +41,7 @@ def genRows(csvFile):
 	lines = 0
 	a_time = 0
 	m_time = 0
-	with open(csvFile+'.csv') as csv_file:
+	with open('Layer1/'+csvFile+'.csv') as csv_file:
 		lines = sum(1 for _ in csv_file)
 		a_time = os.path.getatime(csv_file.name)
 		m_time = os.path.getmtime(csv_file.name)
@@ -47,8 +49,7 @@ def genRows(csvFile):
 	print("Generating Rows List...")
 	'''
 	if(m_time < a_time):
-		bar = ShadyBar(max=lines-1)
-		with open(csvFile+'.csv') as csv_file:
+		with open('Layer1/'+csvFile+'.csv') as csv_file:
 			reader = csv.reader(csv_file,delimiter=',')
 			next(reader)
 			for row in reader:
@@ -58,13 +59,12 @@ def genRows(csvFile):
 				rows[name]['salt'] = row[5].strip()
 				rows[name]['richness'] = row[6].strip()
 				rows[name]['ings'] = eval(row[15].strip())
-				bar.next()
-			with open('generatedRows','wb') as rowsFile:
+			with open('Layer1/generatedRows','wb') as rowsFile:
 				pickle.dump(rows,rowsFile)
 			return rows
 	else:
 	'''
-	with open('generatedRows','rb') as rowsFile:
+	with open('Layer1/generatedRows','rb') as rowsFile:
 		print("\nDone.")
 		return pickle.load(rowsFile)
 
@@ -74,16 +74,13 @@ def getFoods(foodFile):
 	#Clean via nutritionix
 	foodsList = []
 	print("Reading Food File...")
-	with open(foodFile +'.json') as foods:
+	with open('Layer1/'+foodFile +'.json') as foods:
 		foodItems = json.loads(foods.read())
 		return foodItems
 
-
-#print(foodsList.keys())
-#print(foodsList)
 def query_JSON(foodItem):
 	#1 - Check the json file for a match, if found, then return the food
-	with open('scores2.json') as scoreFile:
+	with open('Layer1/scores2.json') as scoreFile:
 		scores = json.loads(scoreFile.read())
 		try:
 			if scores[foodItem]:
@@ -100,7 +97,7 @@ def query_JSON(foodItem):
 
 def query_USDA(foodItem):
 	#2 - If the food doesn't match, add it to the foods.json, and run assignScore, and append it
-	with open('foods.json','r+') as foodsFile:
+	with open('Layer1/foods.json','r+') as foodsFile:
 		data = json.loads(foodsFile.read())
 		data[foodItem[0]] = foodItem
 		return find_score(foodItem=foodItem)
@@ -135,14 +132,11 @@ def return_score(foodItem):
 	else:
 		print("\nNot found anywhere, please consult your local chef")
 		return None
+
 def loadIngredientFile():
-	with open('condensed_file.json') as f2:
+	with open('Layer2/condensed_file.json') as f2:
 		data = json.loads(f2.read())
 		return data
-
-foodItems = getFoods('foods')
-ingredientItems = loadIngredientFile()
-rows = genRows('tasteScores - Copy')
 
 def checkIngredient(food):
 	ingredients_in_name = list()
@@ -158,12 +152,12 @@ def checkIngredient(food):
 	return ingredients_in_name
 
 def find_score(foodItem, rows=rows, testsize=len(rows)):
+
 	foodDict = init_food_dict(foodItems)
 	itemDict = {foodItem[0]:[foodItem]}
 	#print(itemDict)
 	foodDict.update(init_food_dict(itemDict))
 	print("Not Found, checking USDA")
-	bar = ShadyBar(max=testsize)
 	ingredients_in_name = checkIngredient(foodItem)
 	for row in rows.keys():
 		#print(row.split(' '))
@@ -193,22 +187,20 @@ def find_score(foodItem, rows=rows, testsize=len(rows)):
 				foodDict[result[0]]['ings'] = set(foodDict[result[0]]['ings']).difference(set(rows[row]['ings']))
 				#print(foodDict[result[0]]['ings'])
 			#print(row+ ' ' + str(foodDict[result[0]]['ings']))
-		bar.next()
 		#else:
 			#print(rows[row][0])
 			#print(result)
 	#			with open(foodsFile.name,'a+') as foodsFile:
 	#				foodsFile.write(rows[row][0]+'\n')
 	print("Populated.\nAssigning Scores and writing...")
-	#bar = ShadyBar(max=len(foodDict.keys()))
 	keys = list(foodDict.keys())
 	index = keys.index(foodItem)
 	food = keys[index]
 	print(food)
 	if foodDict[food]['count'] > 0 :
-		with open('scores2.json') as f:
+		with open('Layer1/scores2.json') as f:
 			data = json.loads(f.read())
-		with open('scores2.json', 'w+') as f:
+		with open('Layer1/scores2.json', 'w+') as f:
 			data[food] = dict()
 			data[food]['sweet'] = foodDict[food]['sweet'] / foodDict[food]['count']
 			data[food]['fat'] = foodDict[food]['fat'] / foodDict[food]['count']
@@ -223,7 +215,6 @@ def find_score(foodItem, rows=rows, testsize=len(rows)):
 		#foodDict.pop(food)
 		return None
 		#print(type(foodDict[food]['ings']))
-	#	bar.next()
 	print("\nDone.")
 	print("Done.")
 	if foodDict == {}:
@@ -236,11 +227,10 @@ def create_search_space(first_letters,food_items):
 			search_space.extend(food_items[i])
 	return search_space
 
-def assign_score(rows=rows, foodItems = foodItems, testsize=len(rows)):
+def assign_score(rows=rows, foodItems = foodItems):
 	foodDict = init_food_dict(foodItems)
 	#print(foodDict.keys())
 	print("Populating Dictionary...")
-	bar = ShadyBar(max=testsize)
 	for row in rows.keys():
 		first_letters = set([i[0] for i in row.split(' ') if i and i[0] in foodItems.keys()])
 		search_space = create_search_space(first_letters,foodItems)
@@ -267,14 +257,12 @@ def assign_score(rows=rows, foodItems = foodItems, testsize=len(rows)):
 			#print(result)
 			#	with open(foodsFile.name,'a+') as foodsFile:
 			#		foodsFile.write(rows[row][0]+'\n')
-		bar.next()
 		#except Exception as e:
 		#	print(str(e) + ' ' + rows[row][0])
 		
 		#print(first_letters)
 		#print(search_space)		
 	print("Populated.\nAssigning Scores and writing...")
-	bar = ShadyBar(max=len(foodDict.keys()))
 	for food in list(foodDict):
 		if foodDict[food]['count'] > 0  :
 			foodDict[food]['sweet'] /= foodDict[food]['count']
@@ -284,10 +272,9 @@ def assign_score(rows=rows, foodItems = foodItems, testsize=len(rows)):
 		else:
 			foodDict.pop(food)	
 		#prin	t(type(foodDict[food]['ings']))
-		bar.next()
 	print("\nDone.")
 	print("Writing to file...")
-	with open('scores2.json', 'a+') as f:
+	with open('Layer1/scores2.json', 'a+') as f:
 		json.dump(foodDict,f,indent='\t')
 	print("Done.")
 	return foodDict
@@ -301,5 +288,4 @@ def main():
 	print(return_score(input()))
 
 
-if __name__ == '__main__':
-	return_score(sys.argv[1])
+main()
