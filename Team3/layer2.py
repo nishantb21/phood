@@ -77,7 +77,7 @@ def profile(dish_title, ingredient_list, json_obj):
 	json_keys = ["sweet", "salt", "fat"]
 
 	dish_hash = utilities.hash(dish_title)
-	
+	print(json_obj['salt'])
 	#format: [(ingredient, ratio%)]
 	ingredient_pair = zip(ingredient_list, utilities.ratio(len(ingredient_list)))
 	if not os.path.exists(os.path.join("tasted_dishes", dish_hash)):
@@ -87,6 +87,7 @@ def profile(dish_title, ingredient_list, json_obj):
 		profile = dict()
 		for index in range(len(taste_keys)):
 			profile[taste_keys[index]] = json_obj[json_keys[index]]
+		print(profile)
 		for pair in taste_ingredient_pair:
 			matched_ingredient = nearest_ingredient(pair[0][0])
 
@@ -104,7 +105,7 @@ def profile(dish_title, ingredient_list, json_obj):
 							#print(profile, pair[0][1],"\n===\n")
 							with open(os.path.join("tasted_dishes", dish_hash), 'w') as tasted_dish_file:
 								json.dump(profile, tasted_dish_file, indent='\t')
-
+		#print(profile)
 		return (dish_title, ingredient_list, profile)
 
 	#Read from precomputed file and return 
@@ -112,6 +113,7 @@ def profile(dish_title, ingredient_list, json_obj):
 	dish_values = dict()
 	with open("tasted_dishes/" + dish_hash) as dish_json:
 		dish_values = json.load(dish_json)
+		print(dish_values)
 	return (dish_title, ingredient_list, dish_values)
 if __name__ == '__main__':
 	with open(sys.argv[1]) as input_file:

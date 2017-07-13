@@ -82,6 +82,9 @@ def query_JSON(foodItem):
 		try:
 			if scores[foodItem]:
 				scores[foodItem]['ings'].extend(checkIngredient(foodItem))
+				scores[foodItem]['salt'] /= scores[foodItem]['count']
+				#print(scores[foodItem]['salt'])
+				#print("matched here")
 				return scores[foodItem]
 		except KeyError as ke:
 			for food in scores.keys():
@@ -90,6 +93,8 @@ def query_JSON(foodItem):
 					#print(scores[food])
 					scores[food]['salt'] /= scores[food]['count']
 					scores[food]['ings'].extend(checkIngredient(foodItem))
+					scores[food]['src'] = 'json'
+					#print("ke, matchee here")
 					return scores[food]
 		return None
 
@@ -98,6 +103,7 @@ def query_USDA(foodItem):
 	with open('Layer1/foods.json','r+') as foodsFile:
 		data = json.loads(foodsFile.read())
 		data[foodItem[0]] = foodItem
+		data["name"] = foodItem
 		return find_score(foodItem=foodItem)
 	return None
 
@@ -108,20 +114,22 @@ def query_nutritionix(foodItem):
 	query_result = datak.ingredient(foodItem)
 	if query_result:
 		food_weight = query_result['serving_weight_grams']
-		nutri_info["name"] = foodItem
+		#nutri_info["name"] = foodItem
 		nutri_info[foodItem] = dict()
-		print(query_result)
+		#print(query_result)
 		nutri_info[foodItem]['sweet'] = (query_result['nf_sugars'] / food_weight) if query_result['nf_sugars'] else 0
 		nutri_info[foodItem]['salt'] = (query_result['nf_sodium'] / 39333) if query_result['nf_sodium'] else 0
 		nutri_info[foodItem]['fat'] = (query_result['nf_total_fat'] / food_weight) if query_result['nf_total_fat'] else 0
 		nutri_info[foodItem]['count'] = 1
 		nutri_info[foodItem]['ings'] = checkIngredient(foodItem)
+		nutri_info[foodItem]['src'] = 'nutritionix'
 		return nutri_info
 	return None
 
 def return_score(foodItem):	
-	foodItem = rejector.process(foodItem)
+	foodItem = rejector.process(foodItem).upper()
 	#Make sure it runs faster
+	#print(foodItem)
 	score = query_JSON(foodItem)
 	if score:
 		return score 
@@ -164,7 +172,7 @@ def find_score(foodItem, rows=rows, testsize=len(rows)):
 	itemDict = {foodItem[0]:[foodItem]}
 	##print(itemDict)
 	foodDict.update(init_food_dict(itemDict))
-	print("Not Found, checking USDA")
+	#print("Not Found, checking USDA")
 	ingredients_in_name = checkIngredient(foodItem)
 	for row in rows.keys():
 		##print(row.split(' '))
@@ -209,12 +217,14 @@ def find_score(foodItem, rows=rows, testsize=len(rows)):
 			data = json.loads(f.read())
 		with open('Layer1/scores2.json', 'w+') as f:
 			data[food] = dict()
+			data[food]["name"] = food
 			data[food]['sweet'] = foodDict[food]['sweet'] / foodDict[food]['count']
 			data[food]['fat'] = foodDict[food]['fat'] / foodDict[food]['count']
 			data[food]['ings'] = list(foodDict[food]['ings'])
 			data[food]['ings'].extend(ingredients_in_name)
 			data[food]['salt'] = foodDict[food]['salt'] / foodDict[food]['count']
 			data[food]['count'] = foodDict[food]['count']
+			data[food]['src'] = 'usda'
 			##print(ingredients_in_name)
 			json.dump(data,f,indent='\t')
 

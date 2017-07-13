@@ -20,51 +20,23 @@ arguments = parser.parse_args()
 
 dish_pair = ('', [], None)
 dish_name = str()
-'''
-if arguments.profile_all:
-#		print("\r", dish, end='..')
-		
-		
-		with open(dish) as dish_file:
-			dish_json = json.load(dish_file)
-		dish_name = dish_json['dish']
-		dish_json_l1 = layer1.return_score(dish_json['dish'])
-		
-		if dish_json_l1 is not None:
-			dish_pair = layer2.profile(dish_json["dish"], dish_json_l1["ings"], dish_json_l1)
-		
-			#print("done.      ", end='\r')
-		#dish_pair = layer2.profile(dish_json["dish"], dish_json["ingredients"])
-			if dish_pair is not None:
-				#print("\n\n", dish_pair[0], dish_pair[1], sep='')
-'''
-#elif arguments.profile:
+dish_json_l1 = dict()
 if arguments.profile:
 	for dish in arguments.profile:
-		#print("\r", dish, end='..')
+		dish_json_l1 = layer1.return_score(dish.upper())
 		
-		'''
-		with open(dish) as dish_file:
-			dish_json = json.load(utilities.hash(dish_file))
-		dish_name = dish_json['dish']
-		'''
-		dish_json_l1 = layer1.return_score(dish)
-		dish_name = dish_json_l1[dish_json_l1["name"]]
 		if dish_json_l1 is not None:
-			#print(dish_json_l1)
-			dish_pair = layer2.profile(dish, dish_json_l1[dish_json_l1["name"]]["ings"], dish_json_l1)
-		
-		#	print("done.      ", end='\r')
-		#dish_pair = layer2.profile(dish_json["dish"], dish_json["ingredients"])
-			if dish_pair is not None:
-		#		print("\n\n", dish_pair[0], dish_pair[1], sep='')
-				pass
+			dish_pair = layer2.profile(dish, dish_json_l1[dish.upper()]['ings'], dish_json_l1)
+			#print(dish_pair)			
 
 layer2.kb.end()
-print(dish_name)
+
 # Set data
 cat = ['Sweetness', 'Saltiness', 'Richness']
-values = [dish_name['sweet']*100, dish_name['salt']*100, dish_name['fat']*100]
+values = [dish_json_l1[dish.upper()]['sweet']*100, dish_json_l1[dish.upper()]['salt']*100, dish_json_l1[dish.upper()]['fat']*100]
+if dish_pair is not None:
+	values = [dish_pair[2]['sweet_score']*100, dish_pair[2]['salt_score']*100, dish_pair[2]['rich_score']*100]
+print(values)
 
 N = len(cat)
 
@@ -102,7 +74,7 @@ ax.yaxis.grid(True, color="#888888", linestyle='solid', linewidth=0.5)
 plt.xticks(x_as[:-1], [])
 
 # Set yticks
-plt.yticks([20, 40, 60, 80, 100], ["20", "40" "60", "80", "100"])
+plt.yticks([20, 40, 60, 80, 100], ["20", "40", "60", "80", "100"])
 
 
 # Plot data
@@ -131,6 +103,6 @@ for i in range(N):
 
     ax.text(angle_rad, 100 + distance_ax, cat[i], size=10, horizontalalignment=ha, verticalalignment="center")
 
-
+plt.title(dish_name)
 # Show polar plot
 plt.show()

@@ -37,15 +37,14 @@ class Rejector:
 		dirty_string = re.sub("\(.*", "", dirty_string)
 		dirty_string = re.sub(".*\)", "", dirty_string)
 		dirty_string = re.sub("[ ]+", " ", dirty_string).strip('\n').strip()
-		
 		rejected_words = list()
 		input_words = dirty_string.split(' ')
 		for word in input_words:
 			if word == '':
 				return ''
 			rejected_words.extend(self.alphabets[word[0].upper()])
-		for product in itertools.product(rejected_words, input_words):
 			
+		for product in itertools.product(rejected_words, input_words):
 			#match any of the rejected words selected in the input string
 			if product[0] in product[1]:
 				rejector.add(product[0])
@@ -59,6 +58,7 @@ class Rejector:
 
 		#clean_string = functools.reduce(lambda s,a: s+ ' ' + a, input_words)
 		#Rebuild string from clean word list
+		
 		clean_string = " ".join(input_words)
 		return clean_string
 

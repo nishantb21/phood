@@ -32,7 +32,9 @@ def modmatchi2(query_string, iterable, threshold):
 
 def modmatch2(query_string, match_string, threshold):
 	if match_string == query_string:
-		return (match_string, query_string, 1)
+		return (match_string, query_string,1)
+	if query_string == '':
+		return None
 	ps = nltk.PorterStemmer()
 	match_string_split = set([ps.stem(word) for word in match_string.strip().upper().replace(',',' ').split(' ')])
 	query_string_split = set([ps.stem(word) for word in query_string.strip().upper().replace(',',' ').split(' ')])
