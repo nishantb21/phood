@@ -110,9 +110,10 @@ def query_nutritionix(foodItem):
 		food_weight = query_result['serving_weight_grams']
 		nutri_info["name"] = foodItem
 		nutri_info[foodItem] = dict()
-		nutri_info[foodItem]['sweet'] = query_result['nf_sugars'] / food_weight
-		nutri_info[foodItem]['salt'] = query_result['nf_sodium'] / 39333
-		nutri_info[foodItem]['fat'] = query_result['nf_total_fat'] / food_weight
+		print(query_result)
+		nutri_info[foodItem]['sweet'] = (query_result['nf_sugars'] / food_weight) if query_result['nf_sugars'] else 0
+		nutri_info[foodItem]['salt'] = (query_result['nf_sodium'] / 39333) if query_result['nf_sodium'] else 0
+		nutri_info[foodItem]['fat'] = (query_result['nf_total_fat'] / food_weight) if query_result['nf_total_fat'] else 0
 		nutri_info[foodItem]['count'] = 1
 		nutri_info[foodItem]['ings'] = checkIngredient(foodItem)
 		return nutri_info
@@ -163,7 +164,7 @@ def find_score(foodItem, rows=rows, testsize=len(rows)):
 	itemDict = {foodItem[0]:[foodItem]}
 	##print(itemDict)
 	foodDict.update(init_food_dict(itemDict))
-	#print("Not Found, checking USDA")
+	print("Not Found, checking USDA")
 	ingredients_in_name = checkIngredient(foodItem)
 	for row in rows.keys():
 		##print(row.split(' '))
@@ -278,7 +279,7 @@ def assign_score(rows=rows, foodItems = foodItems):
 			foodDict[food]['salt'] /= foodDict[food]['count']
 			foodDict[food]['ings'] = list(foodDict[food]['ings'])
 		else:
-			foodDict.pop(food)	
+			del foodDict[food]
 		#prin	t(type(foodDict[food]['ings']))
 	#print("\nDone.")
 	#print("Writing to file...")
@@ -293,7 +294,7 @@ def main():
 		assign_score()
 
 	#print("Enter Food Name: ")
-	#print(return_score(input()))
+	print(return_score(input()))
 
 if __name__ == "__main__":
 	main()	
