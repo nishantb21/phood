@@ -38,22 +38,30 @@ if arguments.profile_all:
 
 elif arguments.profile:
 	for dish in arguments.profile:
-		print("\r", dish, end='..    .')
-		dish_json = layer1.return_score(dish)
-		#if dish_json is not None:
-		#with open(dish) as dish_file:
-		#	dish_json = json.load(dish_file)
-		if dish_json is not None:
-			dish_pair = layer2.profile(dish_json["dish"], dish_json["ings"], dish_json)
-		print("done.      ", end='\r')
-		print("\n\n", dish_pair[0], dish_pair[1], sep='')
+		print("\r", dish, end='..')
+		
+		'''
+		with open(dish) as dish_file:
+			dish_json = json.load(utilities.hash(dish_file))
+		dish_name = dish_json['dish']
+		'''
+		dish_json_l1 = layer1.return_score(dish)
+		
+		if dish_json_l1 is not None:
+			dish_pair = layer2.profile(dish, dish_json_l1["ings"], dish_json_l1)
+		
+			print("done.      ", end='\r')
+		#dish_pair = layer2.profile(dish_json["dish"], dish_json["ingredients"])
+			if dish_pair is not None:
+				print("\n\n", dish_pair[0], dish_pair[1], sep='')
 
 
 #Call team3 as a subprocess
+# os.chdir("/home/dev/Demo/phood/Team2")
 if dish_pair is not None:
-	subprocess.run(["python", "ratip.py", dish_pair[0], ",".join(dish_pair[1])])
+	subprocess.run(["python3", "code.py", dish_pair[0], ",".join(dish_pair[1])])
 else:
-	subprocess.run(["python", "ratip.py", dish_name])
+	subprocess.run(["python3", "code.py", dish_name])
 
 
 layer2.kb.end()
