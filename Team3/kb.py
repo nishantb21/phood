@@ -17,9 +17,11 @@ class Rejector:
 		Add word to the reject list. All words are indexed 
 		by their first character.
 		'''
-		for word in words.strip().split(' '):
-			self.alphabets[word.strip()[0]].extend(word.strip().split(' '))
-			self.alphabets[word.strip()[0]] = list(set(self.alphabets[word.strip()[0]]))		
+		if len(words) <= 1:
+			return None
+		for word in words.strip().upper().split(' '):
+			self.alphabets[word.strip()[0].upper()].extend(word.strip().split(' '))
+			self.alphabets[word.strip()[0].upper()] = list(set(self.alphabets[word.strip()[0].upper()]))		
 
 	def close(self):
 		with open(self.kb_file, 'w') as kb_file:			
@@ -33,9 +35,10 @@ class Rejector:
 		3. All extra spacing
 		'''
 		dirty_string = re.sub("\(.*\)", "", dirty_string)
-		dirty_string = re.sub("[,.\{.*\}\[.*\]\'\"\:\;\-\\/&#\^_\-\+]*[0-9]*", "", dirty_string)
+		#dirty_string = re.sub("[%\!,.\{.*\}\[.*\]\'\"\:\;\-\\/&#\^_\-\+=]*[0-9]*", "", dirty_string)
 		dirty_string = re.sub("\(.*", "", dirty_string)
 		dirty_string = re.sub(".*\)", "", dirty_string)
+		dirty_string = re.sub("[^A-Za-z ]+", "", dirty_string)
 		dirty_string = re.sub("[ ]+", " ", dirty_string).strip('\n').strip()
 		rejected_words = list()
 		input_words = dirty_string.split(' ')

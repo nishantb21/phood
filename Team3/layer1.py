@@ -1,6 +1,7 @@
 import csv
 import glob
 import utilities
+import layer2
 import pickle
 import os
 import nltk
@@ -13,8 +14,103 @@ import kb
 SEARCH_THRESHOLD = 0.4
 foodDict = dict()
 ps = nltk.PorterStemmer()
-rejector = kb.Rejector('food_rejects.json')
+rejector = kb.Rejector('dish_rejects.json')
+acceptor = kb.Acceptor('dish_matches.json')
+matcher = kb.Matcher('dish_matches.json')
 
+
+def get_data_from_JSON(foodItem):
+	foodItem_hash = utilities.hash(foodItem)
+	if os.path.exists('tasted_dishes/'+foodItem_hash+'.json'):
+		with open('tasted_dishes/'+foodItem_hash+'.json') as f:
+			return json.load(f)
+	return None
+
+def write_data_to_JSON(foodItem, nutri_info):
+	foodItem_hash = utilities.hash(foodItem)
+	with open('tasted_dishes/'+foodItem_hash+'.json','w') as f:
+		json.dump(nutri_info,f,indent='\t')
+
+	
+def query_JSON(foodItem):
+	if foodItem == '':
+		return None
+	#1 - Check the json files for a match, if found, then return the food
+	result = get_data_from_JSON(foodItem)
+	if result is not None:
+		return result
+	#2 - Check for close match
+	foodItem_match = matcher.match(foodItem.upper().strip())
+	if foodItem_match is not None:
+		return get_data_from_JSON(foodItem_match)
+	#3 - Query what?
+	'''
+	result = query_nutritionix(foodItem)
+	if result is not None:
+		return result
+	'''
+	#4 - return None
+	return None
+
+def return_score(foodItem):
+	foodItem = re.sub(r"without [A-Za-z]+",'',foodItem)
+	#foodItem = rejector.process(foodItem).upper()
+	print(foodItem)
+	#print(checkIngredient(foodItem))
+	#Make sure it runs faster
+	score = query_JSON(foodItem)
+	if score:
+		return score 
+	#print("Querying USDA")
+	score = query_nutritionix(foodItem)
+	if score:
+		return score
+	return None
+
+def query_nutritionix(foodItem):
+	#3 - Query nutritionix to get nutritional info, but return an empty list for ingredients, and append it to the existing file
+	#print("Not found in USDA, querying Nutritionix")
+	nutri_info = dict()
+	query_result = dict()
+	food_hash = utilities.hash(foodItem)
+	if os.path.exists("matched_dishes/" + food_hash + ".json"):
+		with open("matched_dishes/" + food_hash + ".json") as queried_file:
+			query_result = json.load(queried_file)
+	else:
+		query_result = datak.ingredient(foodItem)
+
+	if query_result:
+		if query_result['food_name'] != foodItem:
+			matcher.add(query_result["food_name"], foodItem)
+		food_weight = query_result['serving_weight_grams']
+		nutri_info = dict()
+		#print(query_result)
+		nutri_info["name"] = foodItem
+		nutri_info['sweet'] = (query_result['nf_sugars'] / food_weight) if query_result['nf_sugars'] else 0
+		nutri_info['salt'] = (query_result['nf_sodium'] / 39333) if query_result['nf_sodium'] else 0
+		nutri_info['fat'] = (query_result['nf_total_fat'] / food_weight) if query_result['nf_total_fat'] else 0
+		nutri_info['ingredients'] = list()
+		#nutri_info['count'] = 1
+		#nutri_info['src'] = 'nutritionix'
+		write_data_to_JSON(foodItem, nutri_info)
+		return nutri_info
+	return None
+
+def load_ingredientFile():
+	with open('condensed_file.json') as f2:
+		data = json.loads(f2.read())
+		return data
+
+def getFoods(foodFile):
+	#Clean via nutritionix
+	foodsList = []
+	#print("Reading Food File...")
+	with open('Layer1/'+foodFile +'.json') as foods:
+		foodItems = json.loads(foods.read())
+		#print(foodItems['C'])
+		return foodItems
+
+'''
 def init_food_dict(foodItems):
 	foodDict = dict()
 	##print(type(foodsList))
@@ -32,7 +128,7 @@ def init_food_dict(foodItems):
 	##print(foodDict.keys())
 	return foodDict
 
-def genRows(csvFile):
+def genRows(csvFile):	
 	#Pickle dump the rows file maybe
 	#If timestamp modified, reload, else load pickle
 	rows = dict()
@@ -45,7 +141,7 @@ def genRows(csvFile):
 		m_time = os.path.getmtime(csv_file.name)
 
 	#print("Generating Rows List...")
-	'''
+	
 	if(m_time < a_time):
 		with open('Layer1/'+csvFile+'.csv') as csv_file:
 			reader = csv.reader(csv_file,delimiter=',')
@@ -61,44 +157,12 @@ def genRows(csvFile):
 				pickle.dump(rows,rowsFile)
 			return rows
 	else:
-	'''
+	
 	with open('Layer1/generatedRows','rb') as rowsFile:
 		#print("\nDone.")
 		return pickle.load(rowsFile)
 
 	#return [rows[0]]
-
-def getFoods(foodFile):
-	#Clean via nutritionix
-	foodsList = []
-	#print("Reading Food File...")
-	with open('Layer1/'+foodFile +'.json') as foods:
-		foodItems = json.loads(foods.read())
-		#print(foodItems['C'])
-		return foodItems
-
-def query_JSON(foodItem):
-	#1 - Check the json file for a match, if found, then return the food
-	with open('Layer1/scores2.json') as scoreFile:
-		scores = json.loads(scoreFile.read())
-		try:
-			if scores[foodItem]:
-				scores[foodItem]['ings'].extend(checkIngredient(foodItem))
-				scores[foodItem]['salt'] /= scores[foodItem]['count']
-				#print(scores[foodItem]['salt'])
-				#print("matched here")
-				return scores[foodItem]
-		except KeyError as ke:
-			for food in scores.keys():
-				if utilities.modmatch2(foodItem, food, SEARCH_THRESHOLD):
-					result = utilities.modmatch2(foodItem, food, SEARCH_THRESHOLD)
-					#print(scores[food])
-					scores[food]['salt'] /= scores[food]['count']
-					scores[food]['ings'].extend(checkIngredient(foodItem))
-					scores[food]['src'] = 'json'
-					#print("ke, matchee here")
-					return scores[food]
-		return None
 
 def query_USDA(foodItem):
 	#2 - If the food doesn't match, add it to the foods.json, and run assignScore, and append it
@@ -109,84 +173,6 @@ def query_USDA(foodItem):
 		data["name"] = foodItem
 		return find_score(foodItem=foodItem)
 	return None
-
-def query_nutritionix(foodItem):
-	#3 - Query nutritionix to get nutritional info, but return an empty list for ingredients, and append it to the existing file
-	#print("Not found in USDA, querying Nutritionix")
-	nutri_info = dict()
-	query_result = datak.ingredient(foodItem)
-	if query_result:
-		food_weight = query_result['serving_weight_grams']
-		#nutri_info["name"] = foodItem
-		nutri_info = dict()
-		#print(query_result)
-
-		nutri_info['sweet'] = (query_result['nf_sugars'] / food_weight) if query_result['nf_sugars'] else 0
-		nutri_info['salt'] = (query_result['nf_sodium'] / 39333) if query_result['nf_sodium'] else 0
-		nutri_info['fat'] = (query_result['nf_total_fat'] / food_weight) if query_result['nf_total_fat'] else 0
-		nutri_info['count'] = 1
-		nutri_info['ings'] = checkIngredient(foodItem)
-		nutri_info['src'] = 'nutritionix'
-		with open('Layer1/scores2.json') as f:
-			data = json.load(f)
-		with open('Layer1/scores2.json', 'w+') as f:
-			data[foodItem] = nutri_info
-			json.dump(data, f, indent='\t')
-
-		return nutri_info
-	return None
-
-def return_score(foodItem):
-	foodItem = re.sub("without [A-Za-z]+",'',foodItem)
-	print(foodItem)
-	foodItem = ' '.join([ps.stem(word) for word in foodItem.split(' ')])
-	print(foodItem)
-	foodItem = rejector.process(foodItem).upper()
-	print(foodItem)
-	goodList = [word for word in foodItem.split(' ') if word not in checkIngredient(foodItem)]
-	#print(checkIngredient(foodItem))
-	foodItem = ' '.join(goodList)
-	#print(goodList)
-	#print(checkIngredient(foodItem))
-#	print(foodItem)
-	#Make sure it runs faster
-	score = query_JSON(foodItem)
-	if score:
-		return score 
-	#print("Querying USDA")
-	score = query_USDA(foodItem)
-	if score:
-		return score
-	score = query_nutritionix(foodItem)
-	if score:
-		return score
-	else:
-		#print("\nNot found anywhere, please consult your local chef")
-		return None
-
-def loadIngredientFile():
-	with open('condensed_file.json') as f2:
-		data = json.loads(f2.read())
-		return data
-
-foodItems = getFoods('foods')
-ingredientItems = loadIngredientFile()
-rows = genRows('tasteScores - Copy')
-
-def checkIngredient(foodItem):
-	ingredients_in_name = list()
-	food_split = list(set(foodItem.split(' ')))
-	food_split = [ps.stem(word.strip()).upper() for word in food_split]
-	for food in food_split:
-		if food in foodItems[food[0]]:
-			#print(foodItems[food[0]])
-			food_split.remove(food)
-	##print(food_split)
-	for food in food_split:
-		if food in ingredientItems[food[0]]:
-			#print(ingredientItems[food[0]])
-			ingredients_in_name.append(food)
-	return ingredients_in_name
 
 def find_score(foodItem, rows=rows, testsize=len(rows)):
 
@@ -319,12 +305,31 @@ def assign_score(rows=rows, foodItems = foodItems):
 	#print("Done.")
 	return foodDict
 
+rows = genRows('tasteScores - Copy')
+
+foodItems = getFoods('foods')
+ingredientItems = loadIngredientFile()
+
+def checkIngredient(foodItem):
+	ingredients_in_name = list()
+	food_split = list(set(foodItem.split(' ')))
+	food_split = [ps.stem(word.strip()).upper() for word in food_split]
+	for food in food_split:
+		if food in foodItems[food[0]]:
+			#print(foodItems[food[0]])
+			food_split.remove(food)
+	##print(food_split)
+	for food in food_split:
+		if food in ingredientItems[food[0]]:
+			#print(ingredientItems[food[0]])
+			ingredients_in_name.append(food)
+	return ingredients_in_name
+
+'''
+
 def main():
 	#print("Reassign Scores?")
-	if input() == 'Y':
-		assign_score()
-
-	#print("Enter Food Name: ")
+	print("Enter Food Name: ")
 	print(return_score(input()))
 
 if __name__ == "__main__":

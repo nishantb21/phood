@@ -3,24 +3,63 @@ import hashlib
 import sys
 import json
 import nltk
+import re
+import csv
+import multiprocessing
+
+def read_csv(csv_file):
+	with open(csv_file) as cf:
+		reader = csv.reader(cf,delimiter=',')
+		next(reader)
+		txt_file = open('food_names.txt','w')
+		for row in reader:
+			name = row[0].strip()
+			txt_file.write(name+'\n')
+			item_dict = dict()
+			item_dict['name'] = name
+			item_dict['ingredients'] = eval(row[15].strip())
+			name_hash = hash(name)
+			print('\r', name.lower(), end='\r')
+			with open('hashed_foods/'+name_hash+'.json', 'w') as dish_file:
+				json.dump(item_dict,dish_file,indent='\t')
+	txt_file.close()
 
 def parameterize(qstring):
 		return qstring.strip('\n').replace(' ', '+')
-		
+
+def modmatchir(query_string, nriterable, threshold):
+	if len(nriterable) == 0:
+		return None
+	best_match = (None, -1)
+	best_match_index = 0
+	current_index = -1
+	for word in nriterable:
+		result = modmatch(query_string, word.name, threshold)
+		current_index += 1
+		#best_match = result if result is not None and result[1] > best_match[1] else best_match
+		if result is not None and result[1] > best_match[1]:
+			best_match_index = current_index
+			best_match = result
+	#print('\r', best_match_index, len(nriterable), end='\r')
+	return nriterable[best_match_index]
+
 def modmatchi(query_string, iterable, threshold):
 	best_match = (None, -1)
 	for word in iterable:
 		result = modmatch(query_string, word, threshold)
-		best_match = result if result[1] > best_match[1] else best_match
+		best_match = result if result is not None and result[1] > best_match[1] else best_match
 	return best_match
 
 def modmatch(query_string, match_string, threshold):
+	match_string = re.sub(',','',match_string)
+	query_string = re.sub(',','',query_string)
+	
 	match_string_split = match_string.strip().upper().split(' ')
 	query_string_split = query_string.strip().upper().split(' ')
 	matched = [word for word in query_string_split if word in match_string_split]
 	if len(matched) > 0 or (' ' not in match_string and query_string.upper().strip() in match_string.upper().strip()):
 		if len(matched) / len(query_string_split) >= threshold:
-			return (query_string, round(len(matched) / len(query_string_split)), 2)
+			return (match_string, round(len(matched) / len(query_string_split),2))
 	return None
 
 def modmatchi2(query_string, iterable, threshold):
@@ -113,5 +152,7 @@ def ratio(i_no = 1):
 		perc_list[rrange] -= steal
 		perc_list[0] += steal
 	return perc_list
+
 if __name__ == '__main__':
-	package(sys.argv[1])
+	#package(sys.argv[1])
+	read_csv(sys.argv[1])

@@ -55,24 +55,24 @@ def nearest_ingredient(ingredient):
 	#No approximate or exact match found, query nutritionix
 	nutritionix_query = datak.ingredient(ingredient)
 	#print("nutritionix_query: ", nutritionix_query)
-	if nutritionix_query is not None and nutritionix_query['food_name'][0].upper() == ingredient[0].upper():
+	if nutritionix_query is not None and nutritionix_query.name.upper()[0] == ingredient[0].upper():
 		#Save the new nutrition information after standardizing and quantifying it
-		if not os.path.exists(os.path.join('nutritionix_data', utilities.hash(nutritionix_query['food_name']))):
-			#print("Added new file for " + nutritionix_query['food_name'])
-			with open(os.path.join('nutritionix_data', utilities.hash(nutritionix_query['food_name'])), 'w') as json_file:
-				json.dump(nutritionix_query, json_file, indent='\t')
-			taster.taste(utilities.standardize(utilities.hash(nutritionix_query['food_name'])))
-			kb.acceptor.add(nutritionix_query['food_name'])
+		if not os.path.exists(os.path.join('nutritionix_data', utilities.hash(nutritionix_query.name))):
+			#print("Added new file for " + nutritionix_query.name)
+			with open(os.path.join('nutritionix_data', utilities.hash(nutritionix_query.name)), 'w') as json_file:
+				json.dump(nutritionix_query.nutrition_data, json_file, indent='\t')
+			taster.taste(utilities.standardize(utilities.hash(nutritionix_query.name)))
+			kb.acceptor.add(nutritionix_query.name)
 		else:
-			#print("Adding {0} to aliases of {1}".format(ingredient, nutritionix_query['food_name']))
-			kb.matcher.add(nutritionix_query['food_name'], ingredient)
-		match.success(query = ingredient, method = 3, match = nutritionix_query['food_name'], confidence = 0.8)
+			#print("Adding {0} to aliases of {1}".format(ingredient, nutritionix_query.name))
+			kb.matcher.add(nutritionix_query.name, ingredient)
+		match.success(query = ingredient, method = 3, match = nutritionix_query.name, confidence = 0.8)
 		return match
 	#print("Nothing found for " + original_ingredient)
 	kb.rejector.add(ingredient)
 	return match
 
-def profile(dish_title, ingredient_list, json_obj):
+def profile(dish_title, ingredient_list):
 	if len(ingredient_list) == 0 or ingredient_list is None:
 		return None
 	taste_keys = ["sweet_score", "salt_score", "rich_score"]
@@ -87,15 +87,13 @@ def profile(dish_title, ingredient_list, json_obj):
 		#format: ((ingredient, ratio%), taste_key)
 		taste_ingredient_pair = itertools.product(ingredient_pair, taste_keys)
 		profile = dict()
-		for index in range(len(taste_keys)):
-			profile[taste_keys[index]] = json_obj[json_keys[index]]
-		#print(profile)
 		for pair in taste_ingredient_pair:
 			matched_ingredient = nearest_ingredient(pair[0][0])
 
 			if matched_ingredient is not None and matched_ingredient.match != '':
 				#print(matched_ingredient.query, ":",matched_ingredient.match, end=' ')
 				#read ingredient details from file
+				print(matched_ingredient.match)
 				with open("nutritionix_data/" + utilities.hash(matched_ingredient.match) + "_std.json") as ing_file:
 					ing_dict = json.load(ing_file)
 					try:
@@ -104,7 +102,8 @@ def profile(dish_title, ingredient_list, json_obj):
 						profile[pair[1]] = round(ing_dict[pair[1]] * pair[0][1], 4) / 100
 					finally:
 						if pair[1] == taste_keys[-1]:
-							#print(profile, pair[0][1],"\n===\n")
+							profile['ingredients'] = ingredient_list
+							profile['name'] = dish_title
 							with open(os.path.join("tasted_dishes", dish_hash), 'w') as tasted_dish_file:
 								json.dump(profile, tasted_dish_file, indent='\t')
 		#print(profile)
@@ -117,8 +116,12 @@ def profile(dish_title, ingredient_list, json_obj):
 		dish_values = json.load(dish_json)
 		print(dish_values)
 	return (dish_title, ingredient_list, dish_values)
+
+def assign(values):
+	profile(values, sys.argv[2])
+
 if __name__ == '__main__':
 	with open(sys.argv[1]) as input_file:
-		for line in input_file:
-			print(nearest_ingredient(line.strip('\n')))
+		with Pool(10) as ppool:
+			ppool.map(assign, input_file)
 	kb.end()
