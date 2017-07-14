@@ -123,12 +123,12 @@ def leech(for_file, folder):
 			else:
 				misses.write(query)
 
-	print('\nDone.')
+	#print('\nDone.')
 
 def assign(values):
 	leech(values, sys.argv[2])
 
 if __name__ == '__main__':
+
 	with Pool(8) as ppool:
 		ppool.map(assign, glob.iglob(sys.argv[1] + "/food_names.*"))
-	

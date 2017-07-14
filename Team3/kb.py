@@ -30,12 +30,11 @@ class Rejector:
 	def process(self, dirty_string):
 		'''
 		Strip all input of undesirable portions, in listed order:
-		1. All punctuations
-		2. All unterminated braces
+		1. All unterminated braces
+		2. All punctuations
 		3. All extra spacing
 		'''
 		dirty_string = re.sub("\(.*\)", "", dirty_string)
-		#dirty_string = re.sub("[%\!,.\{.*\}\[.*\]\'\"\:\;\-\\/&#\^_\-\+=]*[0-9]*", "", dirty_string)
 		dirty_string = re.sub("\(.*", "", dirty_string)
 		dirty_string = re.sub(".*\)", "", dirty_string)
 		dirty_string = re.sub("[^A-Za-z ]+", "", dirty_string)
@@ -59,7 +58,6 @@ class Rejector:
 		if len(input_words) == 0: #Input was completely rejected, return empty string
 			return ''
 
-		#clean_string = functools.reduce(lambda s,a: s+ ' ' + a, input_words)
 		#Rebuild string from clean word list
 		
 		clean_string = " ".join(input_words)

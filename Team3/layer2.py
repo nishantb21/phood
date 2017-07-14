@@ -36,14 +36,14 @@ def nearest_ingredient(ingredient):
 	match = Result()
 	#check 1
 	title_hash = utilities.hash(ingredient.upper())
-	#print(title_hash)
+
 	if os.path.exists(os.path.join('nutritionix_data', title_hash + '_std.json')):
 		match.success(method = 1, match = ingredient, confidence = 1, query = ingredient)
 		return match
 
 	
 	ingredient = kb.rejector.process(ingredient.strip('\n'))
-	#print(ingredient,"sss")
+
 	#hash check failed, try previous matches
 	if ingredient == '':
 		return None
@@ -54,21 +54,21 @@ def nearest_ingredient(ingredient):
 
 	#No approximate or exact match found, query nutritionix
 	nutritionix_query = datak.ingredient(ingredient)
-	#print("nutritionix_query: ", nutritionix_query)
+
 	if nutritionix_query is not None and nutritionix_query.name.upper()[0] == ingredient[0].upper():
 		#Save the new nutrition information after standardizing and quantifying it
 		if not os.path.exists(os.path.join('nutritionix_data', utilities.hash(nutritionix_query.name))):
-			#print("Added new file for " + nutritionix_query.name)
+
 			with open(os.path.join('nutritionix_data', utilities.hash(nutritionix_query.name)), 'w') as json_file:
 				json.dump(nutritionix_query.nutrition_data, json_file, indent='\t')
 			taster.taste(utilities.standardize(utilities.hash(nutritionix_query.name)))
 			kb.acceptor.add(nutritionix_query.name)
 		else:
-			#print("Adding {0} to aliases of {1}".format(ingredient, nutritionix_query.name))
+
 			kb.matcher.add(nutritionix_query.name, ingredient)
 		match.success(query = ingredient, method = 3, match = nutritionix_query.name, confidence = 0.8)
 		return match
-	#print("Nothing found for " + original_ingredient)
+
 	kb.rejector.add(ingredient)
 	return match
 
@@ -79,7 +79,7 @@ def profile(dish_title, ingredient_list):
 	json_keys = ["sweet", "salt", "fat"]
 
 	dish_hash = utilities.hash(dish_title)
-	#print(json_obj['salt'])
+
 	#format: [(ingredient, ratio%)]
 	ingredient_pair = zip(ingredient_list, utilities.ratio(len(ingredient_list)))
 	if not os.path.exists(os.path.join("tasted_dishes", dish_hash)):
@@ -91,7 +91,7 @@ def profile(dish_title, ingredient_list):
 			matched_ingredient = nearest_ingredient(pair[0][0])
 
 			if matched_ingredient is not None and matched_ingredient.match != '':
-				#print(matched_ingredient.query, ":",matched_ingredient.match, end=' ')
+
 				#read ingredient details from file
 				print(matched_ingredient.match)
 				with open("nutritionix_data/" + utilities.hash(matched_ingredient.match) + "_std.json") as ing_file:
@@ -106,11 +106,11 @@ def profile(dish_title, ingredient_list):
 							profile['name'] = dish_title
 							with open(os.path.join("tasted_dishes", dish_hash), 'w') as tasted_dish_file:
 								json.dump(profile, tasted_dish_file, indent='\t')
-		#print(profile)
+
 		return (dish_title, ingredient_list, profile)
 
 	#Read from precomputed file and return 
-	#print("Precomputed", end='\b'*11)
+
 	dish_values = dict()
 	with open("tasted_dishes/" + dish_hash) as dish_json:
 		dish_values = json.load(dish_json)

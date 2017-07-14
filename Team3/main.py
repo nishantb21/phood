@@ -39,8 +39,8 @@ if arguments.profile:
 			dish_pair = layer2.profile(dish, dish_json_l1['ingredients'])
 			#print(dish_pair)			
 
+layer1.end()
 layer2.kb.end()
-
 # Set data
 print(dish_json_l1)
 cat = ['Sweetness', 'Saltiness', 'Richness']
