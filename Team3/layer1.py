@@ -5,11 +5,12 @@ import pickle
 import os
 import nltk
 import json
+import re
 import datak
 import sys
 import kb
 
-SEARCH_THRESHOLD = 0.3
+SEARCH_THRESHOLD = 0.4
 foodDict = dict()
 ps = nltk.PorterStemmer()
 rejector = kb.Rejector('food_rejects.json')
@@ -73,6 +74,7 @@ def getFoods(foodFile):
 	#print("Reading Food File...")
 	with open('Layer1/'+foodFile +'.json') as foods:
 		foodItems = json.loads(foods.read())
+		#print(foodItems['C'])
 		return foodItems
 
 def query_JSON(foodItem):
@@ -102,6 +104,7 @@ def query_USDA(foodItem):
 	#2 - If the food doesn't match, add it to the foods.json, and run assignScore, and append it
 	with open('Layer1/foods.json','r+') as foodsFile:
 		data = json.loads(foodsFile.read())
+		print(foodItem)
 		data[foodItem[0]] = foodItem
 		data["name"] = foodItem
 		return find_score(foodItem=foodItem)
@@ -133,10 +136,20 @@ def query_nutritionix(foodItem):
 		return nutri_info
 	return None
 
-def return_score(foodItem):	
+def return_score(foodItem):
+	foodItem = re.sub("without [A-Za-z]+",'',foodItem)
+	print(foodItem)
+	foodItem = ' '.join([ps.stem(word) for word in foodItem.split(' ')])
+	print(foodItem)
 	foodItem = rejector.process(foodItem).upper()
+	print(foodItem)
+	goodList = [word for word in foodItem.split(' ') if word not in checkIngredient(foodItem)]
+	#print(checkIngredient(foodItem))
+	foodItem = ' '.join(goodList)
+	#print(goodList)
+	#print(checkIngredient(foodItem))
+#	print(foodItem)
 	#Make sure it runs faster
-	#print(foodItem)
 	score = query_JSON(foodItem)
 	if score:
 		return score 
@@ -160,16 +173,18 @@ foodItems = getFoods('foods')
 ingredientItems = loadIngredientFile()
 rows = genRows('tasteScores - Copy')
 
-def checkIngredient(food):
+def checkIngredient(foodItem):
 	ingredients_in_name = list()
-	food_split = list(set(food.split(' ')))
-	food_split = [ps.stem(word).upper() for word in food_split]
+	food_split = list(set(foodItem.split(' ')))
+	food_split = [ps.stem(word.strip()).upper() for word in food_split]
 	for food in food_split:
-		if food and food in foodItems[food[0]]:
+		if food in foodItems[food[0]]:
+			#print(foodItems[food[0]])
 			food_split.remove(food)
 	##print(food_split)
 	for food in food_split:
-		if food and food in ingredientItems[food[0]]:
+		if food in ingredientItems[food[0]]:
+			#print(ingredientItems[food[0]])
 			ingredients_in_name.append(food)
 	return ingredients_in_name
 
@@ -234,8 +249,7 @@ def find_score(foodItem, rows=rows, testsize=len(rows)):
 			data[food]['src'] = 'usda'
 			##print(ingredients_in_name)
 			json.dump(data,f,indent='\t')
-
-		return foodDict
+		return foodDict[food]
 	else:
 		#foodDict.pop(food)
 		return None

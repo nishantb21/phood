@@ -40,10 +40,12 @@ def modmatch2(query_string, match_string, threshold):
 	query_string_split = set([ps.stem(word) for word in query_string.strip().upper().replace(',',' ').split(' ')])
 	match_string_split = list(filter(lambda x: x,match_string_split))
 	query_string_split = list(filter(lambda x: x,query_string_split))
+	if len(query_string_split) == 1:
+		threshold = 1
 	if len(query_string_split) == 2:
 		threshold = 0.5
 	if len(query_string_split) == 3:
-		threshold = 0.66
+		threshold = 0.6
 	matched = [word for word in query_string_split if word in match_string_split]
 	if len(matched) > 0 or (' ' not in match_string and query_string.upper().strip().replace(',',' ') in match_string.upper().strip().replace(',',' ')):
 		if len(matched) / len(query_string_split) >= threshold:

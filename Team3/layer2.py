@@ -36,12 +36,14 @@ def nearest_ingredient(ingredient):
 	match = Result()
 	#check 1
 	title_hash = utilities.hash(ingredient.upper())
+	#print(title_hash)
 	if os.path.exists(os.path.join('nutritionix_data', title_hash + '_std.json')):
 		match.success(method = 1, match = ingredient, confidence = 1, query = ingredient)
 		return match
 
 	
 	ingredient = kb.rejector.process(ingredient.strip('\n'))
+	#print(ingredient,"sss")
 	#hash check failed, try previous matches
 	if ingredient == '':
 		return None
