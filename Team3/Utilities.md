@@ -1,4 +1,4 @@
-## Utilities
+# Utilities
 
 ### modmatch(*query\_string, match\_string, threshold*)
 Compares the *query_string* with the *match_string* by checking how similar they are.  
