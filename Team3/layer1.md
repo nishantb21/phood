@@ -1,7 +1,5 @@
 # layer1.py
 
-##
-
 ## layer1.get\_data\_from\_JSON(*food_item*)
 
 **returns** nutritional information of *food_item* if corresponding JSON file exists.
