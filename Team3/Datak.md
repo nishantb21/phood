@@ -1,4 +1,4 @@
-## Datak
+# Datak
 
 ### ingredient(*query*)
 Queries Nutritionix, by checking for best match amongst results provided by search predictor, and returns an object of type *NutritionixResponse* on a successful query
