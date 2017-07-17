@@ -4,8 +4,11 @@
 Queries Nutritionix, by checking for best match amongst results provided by search predictor, and **returns** an object of type *NutritionixResponse* on a successful query
 
 ### parameters:  
-### returns:
+- *query* - Ingredient/Dish being looked up on nutritionix (str)
 
+### returns:
+- *NutritionixResponse* object, on a successful query.
+- *None*, on an unsuccessful query
 
 ## datak.leech(*for_file*,*folder*)
 *for_file* is a file that contains a list of dishes, which are queried via **ingredient(*query*)** , and writes the nutritional information to a file
