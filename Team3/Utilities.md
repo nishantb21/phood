@@ -3,7 +3,7 @@
 ### modmatch(*query\_string, match\_string, threshold*)
 Compares the *query_string* with the *match_string* by checking how similar they are.  
 **returns** a tuple containing the *match_string* and the score of how similar the strings are if the score is greater than the *threshold*,  
-**returns*** *None* otherwise
+**returns** *None* otherwise
 
 ### modmatchi(*query\_string, iterable, threshold*)
 Compares the *query_string* with each element in the *iterable* and **returns** best possible match
