@@ -1,7 +1,5 @@
 # Main
 
-##
-
 ### Generates taste profile scores for each dish, and provides a radar chart representation of each score (*currently salt, sweet and richness*)
 
 ## Arguments
