@@ -1,7 +1,5 @@
 # kb.py - Knowledge Base Creation
 
-##
-
 # Rejector
 
 ##  kb.Rejector.add(*self*, *words*):  
