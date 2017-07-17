@@ -11,7 +11,8 @@ from multiprocessing import Pool
 query_url = 'https://www.nutritionix.com/track-api/v2/search/instant?branded=true&common=true&self=false&query='
 nutrition_url = 'https://www.nutritionix.com/nixapi/items/'
 nutrition_common_url = 'https://www.nutritionix.com/track-api/v2/natural/nutrients'
-
+brand_id_url = "https://d1gvlspmcma3iu.cloudfront.net/brands-restaurant.json.gz"
+brand_dishes = 'https://www.nutritionix.com/nixapi/brands/{0}/items/1?limit=1000&search='
 class NutritionixResponse:
 	def __init__(self, item_type='common', name='name', item_id=None, nutrition_data = dict()):
 		self.name = name
@@ -25,32 +26,39 @@ class NutritionixResponse:
 		except KeyError:
 			return self.name
 
+def save_for(brand):
+	try:
+		items_json = requests.get(brand_dishes.format(brand['id']))
+		print(brand['name'] + ' | ')
+		items = items_json.json()
+		print("Hits: ", items["total_hits"], end='\n')
+		count = 0
+		for item in items["items"]:
+			print('\r({:3}/{:3})'.format(count, items['total_hits']), item['item_name'], end='  '*20)
+			if not os.path.exists('branded_dishes/' + utilities.hash(item['item_name']) + ".json"):
+				nutrition = requests.get(nutrition_url + item['item_id'])
+				with open('branded_dishes/' + utilities.hash(item['item_name']) + ".json", 'w') as file:
+					json.dump(nutrition.json(), file, indent='\t')
+					count += 1
+		print("\r")
+	except KeyError:
+		pass
+
+def leech_brand(brand_file):
+	brand_ids = list()
+	with open(brand_file) as brands:
+		brand_ids = json.load(brands)
+	with Pool(15) as ppool:
+		ppool.map(save_for, brand_ids)
+	for brand in brand_ids:
+		print(brand['name'], end=' | ')
+
 def ingredient(query):
 	print('\rQuerying for: ' + query.strip(), end='\r', flush=True)
 	response = requests.get(query_url + utilities.parameterize(query))
 	response_json = response.json()
 	try:
 		if response.status_code == 200:
-			'''
-			if len(response_json['common']) > 0:
-				#print("GOT: ", len(response_json['common']), response_json['common'])
-				response_json = response_json['common'][0]
-				title_hash = utilities.hash(response_json['food_name'])
-			
-				response_nutrition = requests.post(nutrition_common_url, data = {'query': response_json['food_name']})
-				
-				response_nutrition = response_nutrition.json()
-				try:
-					response_nutrition = response_nutrition['foods'][0]
-				except json.decoder.JSONDecodeError:
-					#print(': ', response_nutrition.text, sep='')
-					#print('-'*15)
-					pass
-
-				#print(', got ', response_json['food_name'], end=', ', sep='', flush=True)
-				return response_nutrition
-
-			'''
 			possible_matches = list()
 			if len(response_json['common']) > 0:
 				for rid in range(min(3, len(response_json['common']))):
@@ -71,7 +79,7 @@ def ingredient(query):
 						pass
 					return NutritionixResponse(name=response_nutrition['food_name'],
 					                           item_type='common',
-					                           nutrition_data = response_nutrition
+					                           nutrition_data = utilities.standardize_keys(response_nutrition)
 					                           )
 
 				response_nutrition = requests.get(nutrition_url + best_match.item_id)
@@ -85,29 +93,7 @@ def ingredient(query):
 			return None
 	except KeyError as ke:
 		pass
-'''
-def leech(for_file, folder):
-	with open(for_file) as queries, open('misses_' + queries.name, 'w') as misses, open('discards_' + queries.name, 'w') as discards:
 
-		for query in queries:
-			returned_ingredient = ingredient(query.strip())
-			if returned_ingredient is not None:
-				modmatch_result = utilities.modmatch(query, returned_ingredient, 0.4)
-				#Found a suitable result
-				if modmatch_result is not None:					
-					if not os.path.exists(os.path.join(folder, for_file.split('.')[0])):
-						os.makedirs(os.path.join(folder, for_file.split('.')[0]))
-					with open(os.path.join(folder, os.path.join(for_file.split('.')[0], title_hash)), "w") as ing_file:
-						json.dump(response_nutrition, ing_file, indent='\t')
-				else:
-					#print(len(matched)/len(response['food_name'].split(' ')))
-					#print('discarded', end='*'*7)
-					discards.write(str((query.strip(), response['food_name'])) + '\n')
-			else:
-				misses.write(query)
-
-	print('\nDone.')
-'''
 def leech(for_file, folder):
 	with open(for_file) as queries, open('misses_' + queries.name.split("/")[-1], 'w') as misses:
 
@@ -129,6 +115,8 @@ def assign(values):
 	leech(values, sys.argv[2])
 
 if __name__ == '__main__':
-
+	#leech_brand(sys.argv[1])
+	
 	with Pool(8) as ppool:
 		ppool.map(assign, glob.iglob(sys.argv[1] + "/food_names.*"))
+	

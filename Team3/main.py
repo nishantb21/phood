@@ -1,22 +1,17 @@
-#wrapper for L2
 import argparse
 import layer1
 import layer2
 import glob
 import json
 import kb
-import subprocess
 from math import pi
 import matplotlib.pyplot as plt
 
 parser = argparse.ArgumentParser(prog="Fabric - Taste Profiler")
 parser.add_argument("--build-kb", help="Specify the kb component to build")
-parser.add_argument("--rebuild-kb", help="Specify the kb component to rebuild", choices=['kb.acceptor', 'kb.rejector', 'kb.matcher'], action='append')
-parser.add_argument("-p","--profile", help="profile the specified number of dish hashes", action='append')
+parser.add_argument("-p","--profile", help="profile the specified dish hashes", action='append')
 parser.add_argument("--profile-all", help="profile all dishes in specified folder")
 arguments = parser.parse_args()
-#print("Profiling {} dishes".format(arguments.profile_all or arguments.profile))
-#print("Knowledge base actions\nBuild: {}\tRebuild: {}".format(arguments.build_kb, arguments.rebuild_kb))
 
 dish_pair = ('', [], None)
 dish_name = str()

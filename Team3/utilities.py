@@ -5,7 +5,37 @@ import json
 import nltk
 import re
 import csv
-import multiprocessing
+from multiprocessing import Pool
+import glob
+
+def standardize_keys(nutrition_information):
+	'''
+	Standardize nutritional information
+	Maps common nutrients to the standard format
+	food_name: item_name
+	serving_weight_grams:metric_qty
+	nf_calories: calories
+	nf_total_fat:total_fat
+	nf_saturated_fat:saturated_fat
+	nf_cholesterol: cholesterol
+	nf_sodium:sodium
+	nf_total_carbohydrates:total_carb
+	nf_dietary_fiber:dietary_fiber
+	nf_sugars:sugar
+	nf_protein:protein
+	'''
+	#try: 
+	if nutrition_information.__contains__('metric_qty'):		
+		return nutrition_information #Key exists, is already in standard format
+
+	#except KeyError: #Common format, standardize
+	standard_keys = ["food_name", "serving_weight_grams", "nf_calories", "nf_total_fat", "nf_saturated_fat", "nf_cholesterol", "nf_sodium", "nf_total_carbohydrates", "nf_dietary_fiber", "nf_sugars", "nf_protein"]
+	common_keys = ["item_name", "metric_qty", "calories", "total_fat", "saturated_fat", "cholesterol", "sodium", "total_carb", "dietary_fiber", "sugar", "protein"]
+	mappings = zip(standard_keys, common_keys)
+	new_nutrition_information = dict()
+	for mapping in mappings:
+		new_nutrition_information[mapping[0]] = nutrition_information[mapping[1]]
+	return new_nutrition_information
 
 def read_csv(csv_file):
 	with open(csv_file) as cf:
@@ -62,6 +92,7 @@ def modmatch(query_string, match_string, threshold):
 			return (match_string, round(len(matched) / len(query_string_split),2))
 	return None
 
+'''
 def modmatchi2(query_string, iterable, threshold):
 	best_match = (None, None, -1)
 	for word in iterable:
@@ -90,6 +121,7 @@ def modmatch2(query_string, match_string, threshold):
 		if len(matched) / len(query_string_split) >= threshold:
 			return (match_string, query_string, round(len(matched) / len(query_string_split), 2))
 	return None
+'''
 
 def hash(input_title):
 	return hashlib.md5(input_title.strip().strip('\n').upper().encode('utf-8')).hexdigest()
@@ -153,6 +185,14 @@ def ratio(i_no = 1):
 		perc_list[0] += steal
 	return perc_list
 
+def standardize_files(file):
+	nutri = dict()
+	with open(file) as raw_file:
+		nutri = json.load(raw_file)
+	with open("fin/" + file.split("/")[-1], 'w') as stdfile:
+		json.dump(standardize_keys(nutri), stdfile, indent='\t')
+
 if __name__ == '__main__':
-	#package(sys.argv[1])
-	read_csv(sys.argv[1])
+	#for folder
+	with Pool(17) as ppool:
+		ppool.map(standardize_files, glob.iglob(sys.argv[1] + "/*.json"))
