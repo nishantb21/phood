@@ -1,0 +1,948 @@
+[
+    [
+        {
+            "timestamp": 1497659579178,
+            "logId": "410ba934-7dfc-4c60-bacb-2ee34e36b618",
+            "resource": "recommendation?min=true",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1497659579202,
+            "logId": "28dbb06d-66ef-402e-8dea-d0e3c6ad117c",
+            "resource": "search/restaurant/location?lat=33.64342900925147&lon=-117.84200644387406&rad=5",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1497659780711,
+            "logId": "b56ce1fd-8274-4da1-83d0-851407926752",
+            "resource": "review/dish/0d282545-5e7e-4dc9-939a-0ff59cac3144",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1497659851083,
+            "logId": "e60b8cf1-0773-4e67-ba75-fd137cca404f",
+            "resource": "search/restaurant/location?lat=33.64342207254831&lon=-117.84199474289723&rad=3&keyword=Human+blood",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1497659851092,
+            "logId": "50e54741-ab88-4760-922b-26b99c87e241",
+            "resource": "search/location/Human blood?min=True&lat=33.64342207254831&lon=-117.84199474289723&rad=3",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1497663420777,
+            "logId": "71adf3be-8cee-45c0-8798-31a2692fe4b2",
+            "resource": "recommendation?min=true",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1497663423394,
+            "logId": "c876fe2e-52d5-44be-aee4-0bafe3791546",
+            "resource": "recommendation?min=true",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1497663462309,
+            "logId": "a21ef2c4-32ee-46d0-b90f-8e853c6b3d7c",
+            "resource": "recommendation?min=true",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1497663462316,
+            "logId": "8510c305-6ace-4567-b28f-687cbac4048b",
+            "resource": "search/restaurant/location?lat=33.64343182548878&lon=-117.84200454111216&rad=5",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1497663470318,
+            "logId": "89911ce0-5aeb-4b83-be72-43260b4faa07",
+            "resource": "recommendation?min=true",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1497663470333,
+            "logId": "bfcfc96d-41fa-4a23-a350-87c24c511465",
+            "resource": "search/restaurant/location?lat=33.64343555862054&lon=-117.84200905760333&rad=5",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1497663511298,
+            "logId": "5e251f00-aba4-489f-bfee-be7d465c5988",
+            "resource": "search/restaurant/location?lat=33.64343209539727&lon=-117.8420088364367&rad=5",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1497663511449,
+            "logId": "97e7827d-6dbc-4d9e-86b9-85050e4c0829",
+            "resource": "recommendation?min=true",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1497676171704,
+            "logId": "0e62ccf3-d78c-4d02-86d2-cb2bda0f2ddb",
+            "resource": "search/restaurant/location?lat=33.65134773702662&lon=-117.83641914764544&rad=5",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1497676171754,
+            "logId": "05c85096-61e1-4a4b-ba64-7db7cbea0231",
+            "resource": "recommendation?min=true",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1497676210536,
+            "logId": "3a2b4c8c-d2aa-4552-8ee3-862bb91f38ee",
+            "resource": "search/restaurant/location?lat=33.65151870687218&lon=-117.8361504808801&rad=5",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1497676210661,
+            "logId": "4857a80a-e85a-4db7-87c4-5e4bd169e185",
+            "resource": "recommendation?min=true",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1498459859323,
+            "logId": "397a8ae6-a4b8-4bdf-b76a-610faad3ee0b",
+            "resource": "recommendation?min=true",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1498459859531,
+            "logId": "2d40fb07-2aeb-4f92-9873-8d3bbf137065",
+            "resource": "search/restaurant/location?lat=33.6511279395414&lon=-117.83658286298578&rad=5",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499286258044,
+            "logId": "ba601f8d-52cb-4e40-9c42-c2c2f7c0c109",
+            "resource": "search/restaurant/location?lat=33.64343764126913&lon=-117.84199552305952&rad=5",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499286258094,
+            "logId": "b5518d28-49d0-47b4-b1de-9b51cd92f8ae",
+            "resource": "recommendation?min=true",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499286259560,
+            "logId": "65ed8cd5-2276-421b-83f0-7b988cdeb914",
+            "resource": "review/dish/6868ee40-7bad-469c-8145-f651000131a7",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499286335657,
+            "logId": "41248806-b54a-405b-bf90-afc91ad50637",
+            "resource": "restaurant/ac5e88f0-1df8-4c4f-87af-44094c202de1/menu",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499286352741,
+            "logId": "6e6df311-8e25-4431-ab6e-667804f3199f",
+            "resource": "recommendation?min=true",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499286421255,
+            "logId": "7ced5387-d926-4ec1-be4a-555bdf1ac04a",
+            "resource": "recommendation?min=true",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499286425862,
+            "logId": "53a9433b-ff7e-4e59-b121-a18393818cdd",
+            "resource": "search/restaurant/location?lat=33.64344428932098&lon=-117.84198404934864&rad=3&keyword=Human+blood",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499286352765,
+            "logId": "95396b93-f3f0-4e83-a6dc-a0fe21d136ac",
+            "resource": "search/restaurant/location?lat=33.64343842058239&lon=-117.84199072593877&rad=5",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499286425896,
+            "logId": "fb04b4d4-d534-4f66-b206-cf408ec06935",
+            "resource": "search/location/Human blood?min=True&lat=33.64344428932098&lon=-117.84198404934864&rad=3",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499657650879,
+            "logId": "c3b6ff73-6bd8-45f6-8a25-9b5df928b7dc",
+            "resource": "search/restaurant/location?lat=33.65124101767309&lon=-117.83662470193701&rad=5",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499657651180,
+            "logId": "c072b68c-1b44-4a51-99f9-8c7624740df9",
+            "resource": "recommendation?min=true",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499657656620,
+            "logId": "ca63b4ae-06dc-4cc3-a8b6-b8edc329a53a",
+            "resource": "review/dish/59b26de7-e752-4d95-bade-4ccf2c2e3309",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499717673917,
+            "logId": "b67b9c03-be8c-4769-b23d-83a05ec50ba1",
+            "resource": "search/restaurant/location?lat=33.64344365656568&lon=-117.84198674868802&rad=5",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499717914557,
+            "logId": "7508f096-bf64-4aa7-bada-7ed646e2193b",
+            "resource": "search/location/Pizza?min=True&lat=33.64343938532312&lon=-117.84199232935917&rad=3",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499717962439,
+            "logId": "a5ad88c9-f70b-4414-9279-5bc672ec97f1",
+            "resource": "restaurant/e4c6b7bc-bafa-4d95-ae33-1d0af87f6c9b/menu",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499728744098,
+            "logId": "1b2c1d63-22e8-465a-8ed4-5d467a2c7a18",
+            "resource": "recommendation?min=true",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499728810311,
+            "logId": "644461b2-1aff-4ab3-a823-0c645ee84c85",
+            "resource": "search/location/Pizza?min=True&lat=33.64343724093078&lon=-117.84199248655463&rad=3",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499717673934,
+            "logId": "f2a31695-2745-4228-a8d2-91f76fade4cd",
+            "resource": "recommendation?min=true",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499717686933,
+            "logId": "bfb0d3ad-3f3f-4055-ace4-65c133642cc8",
+            "resource": "search/restaurant/location?lat=33.643430560427866&lon=-117.84200163560278&rad=5",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499717687087,
+            "logId": "aac80544-ccaf-4e2b-83f1-e97097dbe5df",
+            "resource": "recommendation?min=true",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499717746064,
+            "logId": "63d263ea-b531-4f75-b4dd-9e6f1833f296",
+            "resource": "search/restaurant/location?lat=33.643430560427866&lon=-117.84200163560278&rad=3&keyword=Sandwich",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499717746255,
+            "logId": "04cea2f9-ddde-4d4d-b33f-23a89f8a01c6",
+            "resource": "search/location/Sandwich?min=True&lat=33.643430560427866&lon=-117.84200163560278&rad=3",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499717785087,
+            "logId": "a1c7d0f9-dfc7-48d9-8f6e-4469168555d1",
+            "resource": "review/dish/dbd3c58e-9e95-4de0-a49b-39613e540526",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499717813774,
+            "logId": "5f2feada-b3fb-4548-9492-8c377eb49b75",
+            "resource": "restaurant/12f06809-a227-4a1b-9249-50835a9f5de2",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499717813853,
+            "logId": "e7ec1e8a-0eab-4621-937a-d90badeec4b0",
+            "resource": "restaurant/12f06809-a227-4a1b-9249-50835a9f5de2/menu",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499717832710,
+            "logId": "598ff028-0df8-4497-91f6-0f74e3e79c04",
+            "resource": "restaurant/12f06809-a227-4a1b-9249-50835a9f5de2",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499717832785,
+            "logId": "9fd065c3-e0d8-43ae-a9c4-e64ac088bb57",
+            "resource": "restaurant/12f06809-a227-4a1b-9249-50835a9f5de2/menu",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499717892200,
+            "logId": "bdb7ac78-c556-4d81-b1d5-335a15bc7b3b",
+            "resource": "restaurant/8a6379fb-2b36-41c9-967c-dee5f3f2d090/menu",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499717895603,
+            "logId": "e376a776-05f2-4a3a-81a8-09a0ff9f0b87",
+            "resource": "restaurant/8a6379fb-2b36-41c9-967c-dee5f3f2d090/menu",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499717910466,
+            "logId": "0bf53237-851f-4ad1-8a61-25d1e99d8f76",
+            "resource": "restaurant/8a6379fb-2b36-41c9-967c-dee5f3f2d090/menu",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499717914524,
+            "logId": "ec5f4d2a-4669-47c8-9326-41a70482db2a",
+            "resource": "search/restaurant/location?lat=33.64343938532312&lon=-117.84199232935917&rad=3&keyword=Pizza",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499728744114,
+            "logId": "b5f02d02-2077-486a-b2dc-95527075c056",
+            "resource": "search/restaurant/location?lat=33.64343759531874&lon=-117.84197949454912&rad=5",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499728810236,
+            "logId": "32894551-e207-4f9b-b81c-7260202a05ac",
+            "resource": "search/restaurant/location?lat=33.64343724093078&lon=-117.84199248655463&rad=3&keyword=Pizza",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499801689921,
+            "logId": "7115bf91-83af-4cb3-8b19-a23bfa05819c",
+            "resource": "search/restaurant/location?lat=33.64344289150604&lon=-117.84199514261127&rad=5",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499801690108,
+            "logId": "1fdc674f-2b4d-477a-90d7-98446272b42f",
+            "resource": "recommendation?min=true",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499801711578,
+            "logId": "e91f0c24-d3b6-4a16-9b8b-f89701213e3f",
+            "resource": "search/restaurant/location?lat=33.64344079259228&lon=-117.84198772844005&rad=3&keyword=Ham",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499740263062,
+            "logId": "21725b84-879c-43d3-a3d3-7ac017a5b7c1",
+            "resource": "recommendation?min=true",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499740267861,
+            "logId": "2d46dec7-f3aa-496e-9eb5-8abc03558f5d",
+            "resource": "search/restaurant/location?lat=33.643440951555505&lon=-117.8419854801395&rad=3&keyword=Salad",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499741370317,
+            "logId": "1141d543-3d69-4bb7-9885-313fd62a5d02",
+            "resource": "search/restaurant/location?lat=33.643449461006846&lon=-117.84198696717945&rad=5",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499741386575,
+            "logId": "691fdeff-d178-45af-946c-bb4f8af28df3",
+            "resource": "search/location/Peanut butter?min=True&lat=33.64344151106952&lon=-117.84199033378758&rad=3",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499741519102,
+            "logId": "4248065b-1b37-493b-9309-339b70f7b385",
+            "resource": "review/dish/b6f2a866-b8d2-47e0-9937-ce6a6a354e59",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499741543960,
+            "logId": "e3b084e0-f72a-45b1-8117-9d54254e1e85",
+            "resource": "search/restaurant/location?lat=33.64344092245438&lon=-117.84198772150562&rad=3&keyword=Peanut",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499741573809,
+            "logId": "415d8d44-0149-4d47-b882-ecdded1c900e",
+            "resource": "search/restaurant/location?lat=33.64344092245438&lon=-117.84198772150562&rad=3&keyword=Taco",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499741580400,
+            "logId": "9dbe94a2-849a-4b42-89b9-4b32c7891764",
+            "resource": "search/location/Burrito?min=True&lat=33.64344092245438&lon=-117.84198772150562&rad=3",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499743934978,
+            "logId": "ab57a65b-51dd-4790-a0b3-49c87616cfab",
+            "resource": "search/restaurant/location?lat=33.6434402522356&lon=-117.84199428761436&rad=3&keyword=Tuna",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499745324446,
+            "logId": "04f26e29-928f-4a1d-ab81-4b4f348b7c28",
+            "resource": "search/restaurant/location?lat=33.643436904538916&lon=-117.84200067951521&rad=5",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499745329434,
+            "logId": "23ff1b61-31b9-4e24-a9ca-1077378f5784",
+            "resource": "search/restaurant/location?lat=33.643440709470774&lon=-117.8420036618124&rad=3&keyword=Beef",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499815474281,
+            "logId": "8ebf8aa2-9e57-4964-8b29-98fd797870b7",
+            "resource": "search/restaurant/location?lat=33.643431782974616&lon=-117.84198374442822&rad=5",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499815480322,
+            "logId": "c58d4e9e-669f-4d94-a344-bd1df5017af1",
+            "resource": "search/restaurant/location?lat=33.64343995824201&lon=-117.84199169700003&rad=3&keyword=Risotto",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499825407475,
+            "logId": "dfcdcd43-fb31-4a4f-b254-f90c47b85a85",
+            "resource": "search/location/Dosa?min=True&lat=33.643438629327186&lon=-117.84198914687815&rad=3",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499825924970,
+            "logId": "f2cf57cf-0877-4578-b343-1f215404351a",
+            "resource": "search/restaurant/location?lat=33.64343480458617&lon=-117.84198533771729&rad=3&keyword=Ratatouille",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499740263070,
+            "logId": "5179b630-9ed6-4b38-9521-94cee43f3c7e",
+            "resource": "search/restaurant/location?lat=33.643440951555505&lon=-117.8419854801395&rad=5",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499740267869,
+            "logId": "daad459d-77f6-4d30-8cac-3450c02ad5fa",
+            "resource": "search/location/Salad?min=True&lat=33.643440951555505&lon=-117.8419854801395&rad=3",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499741370170,
+            "logId": "afc9e8d7-1481-467e-9d91-f7b962f8de3b",
+            "resource": "recommendation?min=true",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499741386566,
+            "logId": "05334b8e-408a-4875-8cd5-686e76741119",
+            "resource": "search/restaurant/location?lat=33.64344151106952&lon=-117.84199033378758&rad=3&keyword=Peanut+butter",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499741543977,
+            "logId": "42feebd7-5b4f-418d-bf88-a7897f095d6a",
+            "resource": "search/location/Peanut?min=True&lat=33.64344092245438&lon=-117.84198772150562&rad=3",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499741573817,
+            "logId": "1ad51f5c-8f00-4885-b6ef-c1b9262c0954",
+            "resource": "search/location/Taco?min=True&lat=33.64344092245438&lon=-117.84198772150562&rad=3",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499741580392,
+            "logId": "f579344e-1d59-4890-8abf-bd29c1091bb5",
+            "resource": "search/restaurant/location?lat=33.64344092245438&lon=-117.84198772150562&rad=3&keyword=Burrito",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499743934987,
+            "logId": "923ccc9a-edab-482b-8a0c-8cc22b38fb83",
+            "resource": "search/location/Tuna?min=True&lat=33.6434402522356&lon=-117.84199428761436&rad=3",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499745324197,
+            "logId": "c8f6e48d-7b1f-4837-a379-ad9357aa3fd9",
+            "resource": "recommendation?min=true",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499745329413,
+            "logId": "9e1b03a1-6ddb-4655-bab9-4c109f65c51a",
+            "resource": "search/location/Beef?min=True&lat=33.643440709470774&lon=-117.8420036618124&rad=3",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499801711570,
+            "logId": "23d23789-76c1-481e-8cd3-a31fc49ff263",
+            "resource": "search/location/Ham?min=True&lat=33.64344079259228&lon=-117.84198772844005&rad=3",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499802867791,
+            "logId": "f0e83803-f4bc-43fc-8f09-ed8dd6094389",
+            "resource": "search/restaurant/location?lat=33.64343994529877&lon=-117.84198419832981&rad=5",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499802874591,
+            "logId": "05b1940f-fa3f-4436-94e3-2bca44f38270",
+            "resource": "search/restaurant/location?lat=33.64344495093259&lon=-117.8419846048735&rad=3&keyword=Almond+milk",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499802979245,
+            "logId": "4cb26664-da9a-4190-9e78-219926e343b3",
+            "resource": "search/location/Pad Thai?min=True&lat=33.64343627129662&lon=-117.84198912812744&rad=3",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499802982978,
+            "logId": "5440e6e4-0c05-4080-80e9-bae81b625aa4",
+            "resource": "review/dish/6dd216ad-0ace-4c61-96a3-b8a54d2800bd",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499803101798,
+            "logId": "3f6ff817-535b-434d-b40b-9f9743aaaf5b",
+            "resource": "search/restaurant/location?lat=33.64343627129662&lon=-117.84198912812744&rad=3&keyword=Hash+browns",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499803151013,
+            "logId": "5fcbe203-4379-4e6a-9b1c-373d97e26d61",
+            "resource": "search/location/Sweet potato?min=True&lat=33.64343627129662&lon=-117.84198912812744&rad=3",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499803154130,
+            "logId": "d66ed050-bd59-4ef8-a948-834121ce9e08",
+            "resource": "review/dish/38935582-90a9-46a4-81a8-8dcfb772b2a2",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499803260000,
+            "logId": "042876fc-fd9c-4e1f-a1cb-dbfffd2d6533",
+            "resource": "search/restaurant/location?lat=33.64344353084646&lon=-117.84198338354821&rad=3&keyword=Mashed+potato",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499803286450,
+            "logId": "1a04210c-11b7-459b-ab1c-a6e6838becd7",
+            "resource": "search/location/Sweet potato?min=True&lat=33.64344353084646&lon=-117.84198338354821&rad=3",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499803324981,
+            "logId": "dad5a83f-30f2-4b3f-aa59-355d5fb96e67",
+            "resource": "search/restaurant/location?lat=33.64344353084646&lon=-117.84198338354821&rad=3&keyword=Hershey\u00e2\u0080\u0099s+sundae+pie",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499803371946,
+            "logId": "78d25b2c-e70a-4afe-b02c-eb47a90b5299",
+            "resource": "search/location/Tendergrill chicken sandwich without mayo?min=True&lat=33.64344353084646&lon=-117.84198338354821&rad=3",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499803556606,
+            "logId": "fbfb30c7-01e1-4726-8820-ccb45083c483",
+            "resource": "search/restaurant/location?lat=33.64344726379202&lon=-117.84201163688138&rad=3&keyword=Tendergrill+chicken+sandwich+without+mayo",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499803704991,
+            "logId": "08e98a1f-1a67-408c-bb73-61dbc3504869",
+            "resource": "search/location/Burger?min=True&lat=33.64344437918406&lon=-117.84198588849311&rad=3",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499803739424,
+            "logId": "495b6646-b3ac-4048-9e04-6622568249ba",
+            "resource": "search/restaurant/location?lat=33.64344437918406&lon=-117.84198588849311&rad=3&keyword=Burger+with+mayo",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499803739565,
+            "logId": "a52a027d-8679-4fd3-9bde-b7b403bfdc64",
+            "resource": "search/location/Burger with mayo?min=True&lat=33.64344437918406&lon=-117.84198588849311&rad=3",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499802867776,
+            "logId": "ff29603f-b1f1-4630-ae47-fe1865b06625",
+            "resource": "recommendation?min=true",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499802874599,
+            "logId": "e6c38adf-4d94-4abf-b0fa-f910b2db1923",
+            "resource": "search/location/Almond milk?min=True&lat=33.64344495093259&lon=-117.8419846048735&rad=3",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499802979212,
+            "logId": "eff1ce46-e3c7-430b-b9b0-b1381c0a2af6",
+            "resource": "search/restaurant/location?lat=33.64343627129662&lon=-117.84198912812744&rad=3&keyword=Pad+Thai",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499803101815,
+            "logId": "23962e33-0146-4dff-aafc-146bfe89e1a5",
+            "resource": "search/location/Hash browns?min=True&lat=33.64343627129662&lon=-117.84198912812744&rad=3",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499803104115,
+            "logId": "27f73b98-5afe-4451-80b3-0a6084c171a6",
+            "resource": "review/dish/76395bf0-731e-4987-bdf0-ed2399f21d89",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499803151005,
+            "logId": "bfadc09a-6936-4eaa-96dd-41d5e5c604c1",
+            "resource": "search/restaurant/location?lat=33.64343627129662&lon=-117.84198912812744&rad=3&keyword=Sweet+potato",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499803260009,
+            "logId": "e55ca5f6-cc10-4a79-8c5f-9c085034b7e5",
+            "resource": "search/location/Mashed potato?min=True&lat=33.64344353084646&lon=-117.84198338354821&rad=3",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499803286458,
+            "logId": "13099ed0-3586-40c3-9630-b9949539b402",
+            "resource": "search/restaurant/location?lat=33.64344353084646&lon=-117.84198338354821&rad=3&keyword=Sweet+potato",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499803325048,
+            "logId": "f79ca41f-4eb2-4966-9ef3-61c3c28eeea8",
+            "resource": "search/location/Hershey\u00e2\u0080\u0099s sundae pie?min=True&lat=33.64344353084646&lon=-117.84198338354821&rad=3",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499803371921,
+            "logId": "fafc2521-2081-41de-90a7-010ed8dfb9f7",
+            "resource": "search/restaurant/location?lat=33.64344353084646&lon=-117.84198338354821&rad=3&keyword=Tendergrill+chicken+sandwich+without+mayo",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499803556614,
+            "logId": "0b4d4aea-baf9-4f87-b027-37e48e1f0eed",
+            "resource": "search/location/Tendergrill chicken sandwich without mayo?min=True&lat=33.64344726379202&lon=-117.84201163688138&rad=3",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499803704983,
+            "logId": "aa39849d-59c9-45d5-be3a-f7ded997c6e8",
+            "resource": "search/restaurant/location?lat=33.64344437918406&lon=-117.84198588849311&rad=3&keyword=Burger",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499803752698,
+            "logId": "93dd5bb6-d7c5-4c26-a8fd-7a7249cd9c15",
+            "resource": "search/restaurant/location?lat=33.64344437918406&lon=-117.84198588849311&rad=3&keyword=Burger+without+mayo",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499803784663,
+            "logId": "e80abf34-a898-418a-a2f0-f5d72e3cd8bb",
+            "resource": "search/location/Burger without bread?min=True&lat=33.64344437918406&lon=-117.84198588849311&rad=3",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499803752706,
+            "logId": "5155a2a0-4683-4e89-887c-c30ff7245089",
+            "resource": "search/location/Burger without mayo?min=True&lat=33.64344437918406&lon=-117.84198588849311&rad=3",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499803784655,
+            "logId": "0ae512e2-d28d-4137-81b0-b6c2d7609895",
+            "resource": "search/restaurant/location?lat=33.64344437918406&lon=-117.84198588849311&rad=3&keyword=Burger+without+bread",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499815474266,
+            "logId": "e3492707-199c-4c97-a64d-fb82e3f3c186",
+            "resource": "recommendation?min=true",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499815480331,
+            "logId": "1f01efb7-c163-4459-8c9b-828b4dfa368f",
+            "resource": "search/location/Risotto?min=True&lat=33.64343995824201&lon=-117.84199169700003&rad=3",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499825407450,
+            "logId": "b866dd6c-c0c1-4cb8-a9b2-5d439612e114",
+            "resource": "search/restaurant/location?lat=33.643438629327186&lon=-117.84198914687815&rad=3&keyword=Dosa",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499825924987,
+            "logId": "1710f01d-066d-4a98-8e96-b46f47a0fd34",
+            "resource": "search/location/Ratatouille?min=True&lat=33.64343480458617&lon=-117.84198533771729&rad=3",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499826994736,
+            "logId": "89a66471-6a88-464c-a93d-3332463867e4",
+            "resource": "search/location/Tuna?min=True&lat=33.64343775441218&lon=-117.84199103979122&rad=3",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499826907722,
+            "logId": "207a2119-7f7f-4c90-9d02-6468d0e49f92",
+            "resource": "review/dish/d5748127-36d4-46bf-8484-b74b46c311f3",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499826994721,
+            "logId": "b8ee241e-479c-41b9-8118-c952f54c7225",
+            "resource": "search/restaurant/location?lat=33.64343775441218&lon=-117.84199103979122&rad=3&keyword=Tuna",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499898511965,
+            "logId": "37a82d4d-f40c-40c1-8f0d-9ff4d6bac77b",
+            "resource": "search/restaurant/location?lat=33.643429928692115&lon=-117.84202091670235&rad=5",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499898512271,
+            "logId": "f9a6cb5c-acfd-4990-be06-a4a029efb832",
+            "resource": "recommendation?min=true",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499898523811,
+            "logId": "a5916ac9-a075-459d-9d59-866a6077113a",
+            "resource": "search/restaurant/location?lat=33.643429928692115&lon=-117.84202091670235&rad=3&keyword=Cheese+sandwich",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499898730570,
+            "logId": "80cceeeb-7330-4f3e-a8df-b2595a73f2fc",
+            "resource": "search/location/Chicken salad?min=True&lat=33.64344050751044&lon=-117.84198183566735&rad=3",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499899008192,
+            "logId": "033c5e11-3d69-49f8-97fc-ccf81f825997",
+            "resource": "search/restaurant/location?lat=33.64344568848385&lon=-117.84200184272166&rad=3&keyword=Chocolate",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499899179143,
+            "logId": "d6327664-7574-4d79-bcb9-a7d7796f7ed5",
+            "resource": "search/location/Pasta?min=True&lat=33.64344106574469&lon=-117.84199394694748&rad=3",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499899230324,
+            "logId": "93be6a3a-5c15-4e76-85f1-7b184ffc1c10",
+            "resource": "search/restaurant/location?lat=33.64343787709373&lon=-117.84199263934036&rad=3&keyword=Pie",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499899371069,
+            "logId": "c101bc81-648b-48a4-a2fd-9ee63d97e3fc",
+            "resource": "search/location/Pie?min=True&lat=33.64343651949543&lon=-117.84199499512617&rad=3",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499899418275,
+            "logId": "1fd13068-9118-4a1d-b8b8-358bce64a46e",
+            "resource": "search/restaurant/location?lat=33.64343714603062&lon=-117.8419945728907&rad=3&keyword=Tuna",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499899930313,
+            "logId": "1eaf021e-1ad5-469a-a2df-aaf62f69aa78",
+            "resource": "search/restaurant/location?lat=33.64343959523598&lon=-117.84198710899875&rad=5",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499899946937,
+            "logId": "6ce0b7f0-8514-46bf-9c90-99df67896fa1",
+            "resource": "search/location/Tuna sandwich?min=True&lat=33.643429844411905&lon=-117.84200316553867&rad=3",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499898523820,
+            "logId": "4d185b5f-c95a-478f-a8a3-b98119bdd0df",
+            "resource": "search/location/Cheese sandwich?min=True&lat=33.643429928692115&lon=-117.84202091670235&rad=3",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499898730561,
+            "logId": "99764b0c-fa9f-4539-b5cf-96c191c29c51",
+            "resource": "search/restaurant/location?lat=33.64344050751044&lon=-117.84198183566735&rad=3&keyword=Chicken+salad",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499899008200,
+            "logId": "00ed1886-c971-44bd-927e-28d85d393848",
+            "resource": "search/location/Chocolate?min=True&lat=33.64344568848385&lon=-117.84200184272166&rad=3",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499899179135,
+            "logId": "72419692-4238-43c2-8994-073535de9ff0",
+            "resource": "search/restaurant/location?lat=33.64344106574469&lon=-117.84199394694748&rad=3&keyword=Pasta",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499899230333,
+            "logId": "c8e32a41-001d-4d0f-9ffc-fa52b52ce884",
+            "resource": "search/location/Pie?min=True&lat=33.64343787709373&lon=-117.84199263934036&rad=3",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499899371052,
+            "logId": "a9041ff2-88b4-4a93-af91-8b03d2271366",
+            "resource": "search/restaurant/location?lat=33.64343651949543&lon=-117.84199499512617&rad=3&keyword=Pie",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499899418300,
+            "logId": "a1f54874-163a-4402-82a5-4b59356b9f9f",
+            "resource": "search/location/Tuna?min=True&lat=33.64343714603062&lon=-117.8419945728907&rad=3",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499899930297,
+            "logId": "55cad20d-19d1-4012-a7ee-a73bd7632a96",
+            "resource": "recommendation?min=true",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499899946945,
+            "logId": "94682ec7-bad3-4188-95f8-f56cd0653977",
+            "resource": "search/restaurant/location?lat=33.643429844411905&lon=-117.84200316553867&rad=3&keyword=Tuna+sandwich",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499974296084,
+            "logId": "15c180a9-b07d-4633-ab6c-d438853b0cc6",
+            "resource": "search/restaurant/location?lat=33.643436341975786&lon=-117.8419785111468&rad=5",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1499974296285,
+            "logId": "afba67b9-ec44-451d-ba3d-ca87ca53e4a8",
+            "resource": "recommendation?min=true",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1500061111013,
+            "logId": "cfbb5406-3842-4c33-b111-bc0bd554a827",
+            "resource": "recommendation?min=true",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1500061124237,
+            "logId": "afe47680-27c6-4ae6-8726-9e7b4ffb3c34",
+            "resource": "search/restaurant/location?lat=33.643436906396495&lon=-117.84197750685789&rad=3&keyword=Pork+pasta",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1500067946882,
+            "logId": "9f88753f-085a-4b35-8ad5-c0e0d4551d90",
+            "resource": "recommendation?min=true",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1500067955574,
+            "logId": "1484367c-9ab7-4890-a955-64cd2f843ad1",
+            "resource": "search/location/Tuna sandwich?min=True&lat=33.64343048045735&lon=-117.84195641865955&rad=3",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1500061110979,
+            "logId": "83fcd51f-21d3-4b26-9a2c-1bd0e9c7db7c",
+            "resource": "search/restaurant/location?lat=33.643436906396495&lon=-117.84197750685789&rad=5",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1500061124245,
+            "logId": "b1da7cdc-f31a-4ad0-b079-9b7a71fa2d80",
+            "resource": "search/location/Pork pasta?min=True&lat=33.643436906396495&lon=-117.84197750685789&rad=3",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1500067946874,
+            "logId": "12620b91-e0a1-42d3-9d15-42600dd5decd",
+            "resource": "search/restaurant/location?lat=33.64343048045735&lon=-117.84195641865955&rad=5",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1500067955582,
+            "logId": "cdb8786d-8c28-4e6a-9cec-0d9859073ffd",
+            "resource": "search/restaurant/location?lat=33.64343048045735&lon=-117.84195641865955&rad=3&keyword=Tuna+sandwich",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1500340861513,
+            "logId": "e265d9be-8573-4f0e-a555-a476e3f586db",
+            "resource": "recommendation?min=true",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1500340884188,
+            "logId": "c30e23d7-50a2-4711-ac55-5a72d30e905c",
+            "resource": "search/restaurant/location?lat=33.64343274951551&lon=-117.84200214108964&rad=3&keyword=Tuna+sandwich",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1500340884522,
+            "logId": "a129fc9e-1d71-4830-ae83-71e2483e5cba",
+            "resource": "search/location/Tuna sandwich?min=True&lat=33.64343274951551&lon=-117.84200214108964&rad=3",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1500340861072,
+            "logId": "dd26495e-3883-406f-8ea9-985b52280e55",
+            "resource": "search/restaurant/location?lat=33.64343856098321&lon=-117.84199761847407&rad=5",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1500404124677,
+            "logId": "feca234a-7199-4d01-b01d-40fa5ce703c7",
+            "resource": "search/restaurant/location?lat=33.643445441425335&lon=-117.84200203309668&rad=5",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1500404124710,
+            "logId": "eee3ead8-e18d-43f3-b82b-47654bdf779a",
+            "resource": "recommendation?min=true",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1500404138527,
+            "logId": "478a6611-2c7c-4ecf-b8ef-7f90eaaf67ce",
+            "resource": "search/restaurant/location?lat=33.643443583809194&lon=-117.8419976462971&rad=3&keyword=Salad",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        },
+        {
+            "timestamp": 1500404138560,
+            "logId": "f87a266f-b2bf-430d-88ef-493ae1c3ac6c",
+            "resource": "search/location/Salad?min=True&lat=33.643443583809194&lon=-117.8419976462971&rad=3",
+            "userId": "56235e41-a73c-4479-9913-468709e0934a"
+        }
+    ],
+    [],
+    []
+]
