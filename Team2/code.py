@@ -15,6 +15,7 @@ import call_api
 import GetLogs
 import toPlot
 
+'''
 def printuserscore():
 	userscore = json.load(open("userscore.json"))
 	for i in sorted(userscore):
@@ -24,7 +25,7 @@ def printuserscore():
 				print(k, userscore[i][j][k], sep = " : ", end = "; ")
 			print("\n")
 		print("")
-
+'''
 def add_to_hier(tags):
 	handle = open("h.json")
 	hierarchy = json.load(handle)
