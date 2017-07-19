@@ -37,7 +37,10 @@ def standardize_keys(nutrition_information):
 	for mapping in mappings:
 		new_nutrition_information[mapping[1]] = nutrition_information[mapping[0]]	
 	for item in full_nutrient_keys.items():
-		new_nutrition_information[item[0]] = nutrition_information['full_nutrients'][item[1]]["value"]
+		try:
+			new_nutrition_information[item[0]] = nutrition_information['full_nutrients'][item[1]]["value"]
+		except IndexError as ie:
+			new_nutrition_information[item[0]] = 0.0
 	return new_nutrition_information
 
 def read_csv(csv_file):
