@@ -14,7 +14,7 @@ import findleaves
 import call_api
 import GetLogs
 import toPlot
-
+import tasteProfile
 
 def printuserscore():
 	userscore = json.load(open("userscore.json"))
@@ -379,6 +379,7 @@ def main():
 
 	elif x > 1:
 		in_flow(sys.argv[1], sys.argv[2])
+		tasteProfile.categoriseTaste(sys.argv[3])
 
 	toPlot.makeDataToPlot()
 

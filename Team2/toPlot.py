@@ -43,5 +43,25 @@ def makeDataToPlot():
 		ans.append((key, collections.OrderedDict(half_ans)))
 
 	ans = collections.OrderedDict(ans)
+
+	flavorProfile = json.load(open("flavorProfile.json"))
+	if userID in flavorProfile:
+		f = flavorProfile[userID]
+		answer = f[0]
+		for i in f[1:]:
+			for j in i:
+				answer[j] += i[j]
+
+		for i in answer:
+			answer[i] = round(answer[i] / len(f), 3)
+
+		if answer['spice'] > 0.5:
+			answer['spice'] = 1
+
+		else:
+			anser['spice'] = 0
+
+		ans["flavor"] = answer
+		
 	ans = json.dumps(ans)
 	print(ans)

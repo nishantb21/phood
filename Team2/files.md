@@ -35,3 +35,8 @@ Program to call the Spoonacular API when the queried dish doesn't get matching t
 - api\_call\_count\(\) : Returns the current amount of times the API has been called.
 - api\_count\_update\(count\) : Opens the file where the count of API calls exist and updates it by "count"
 - call\_api\_tags\(dish\) : Queries the Spoonacular API with the dishes that missed our knowledge base. Each call updates the count of API call by 1. Each call to the API is logged in a separate file. Since each API is limited to 50 calls per day, a count of the API calls are maintained and once it reaches the limit, an error message is thrown and logged. The tags returned by the API are put in a list called "result\_tags" and then are then passed to "cleaning\.py" for those tags to match the format of our knowledge base.
+
+### toPlot\.py: This program is gives the data for plotting graphs which visualises user's old data and the updated data.
+
+### Functions:
+- makeDataToPlot\(\) : Retrieves the User ID from a file which maintains the ID of the latest edit. Uses this ID to get that user's old data and new data which is appended in the form an ordered dictionary.
