@@ -1,5 +1,6 @@
 #generate taste scores
 import json
+import glob, sys
 
 PROTEIN_SUPPLEMENT_MULTIPLIER = 1
 VEGETABLES_MULTIPLIER = 2
@@ -20,13 +21,17 @@ def taste(file):
 				#print('\rDecode error for file {0}'.format(file))
 				pass
 
-def match_descriptors(dish_title, descriptor_strings):
+def match_descriptors(dish_title, descriptor_dict):
 	dish_split = dish_title.split(" ")
-	final_scores = 0
-	for pair in itertools.product(dish_split, descriptor_strings['items']):
+	final_scores = dict()
+	for item in descriptor_dict:
+		for pair in itertools.product(dish_split, item['items']):
 		#format (dish_word, (descriptor, score))
 		if pair[0] in pair[1][0]:
-			final_scores += pair[1][1]
+			try:
+				final_scores[taste_key] += pair[1][1]
+			except KeyError:
+				final_scores[taste_key] = pair[1][1]
 	return final_scores
 
 
@@ -35,13 +40,21 @@ def umami(dish_title, nutrition_data, PROTEIN_SUPPLEMENT_MULTIPLIER = 1, VEGETAB
 	umami_meats = dict()
 	umami_protein_supps = dict()
 	umami_descriptors = utilities.read_json("umami_descriptors.json")	
-	umamitypes = ["vegetables", "protein_supps", "meats"]
-	descriptor_score = match_descriptors(dish_title, umami_descriptors)
+	for category in umamitypes:
+		descriptor_score = match_descriptors(dish_title, umami_descriptors, category)
 	#score = 1.5meat + 2veggies + 1protein_supps
-	meat_score = match_descriptors(dish_title, )
+	
 
 def salt(dish_nutrition):
 	total_weight = dish_nutrition['total_fat'] + dish_nutrition['total_carb'] + dish_nutrition['protein']
-	return (dish_nutrition['sodium'] / total_weight) * 10
+	if total_weight == 0:
+		return dish_nutrition['sodium'] / dish_nutrition['metric_qty'] / 3.8758
+#	return((dish_nutrition['sodium'] / dish_nutrition['metric_qty']))
+	#print((dish_nutrition['sodium'] / dish_nutrition['metric_qty']) / 38.758, end=' | ')
+	return ((dish_nutrition['sodium'] / total_weight)) / 3.8758
 
-#Fe: attr_id: 303
+if __name__ == "__main__":
+	for file in glob.iglob(sys.argv[1] + "/*.json"):
+		print(file, end=': ')
+		with open(file) as infile:
+			print(salt(json.load(infile)))

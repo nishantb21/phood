@@ -21,20 +21,23 @@ def standardize_keys(nutrition_information):
 	nf_sodium:sodium
 	nf_total_carbohydrates:total_carb
 	nf_dietary_fiber:dietary_fiber
-	nf_sugars:sugar
+	nf_sugars:sugars
 	nf_protein:protein
 	'''
 	#try: 
-	if nutrition_information.__contains__('metric_qty'):		
+	if nutrition_information.__contains__('metric_qty'):
+		nutrition_information['iron'] = nutrition_information['iron_dv'] if nutrition_information['iron_dv'] is not None else 0
 		return nutrition_information #Key exists, is already in standard format
-
+	full_nutrient_keys = {"iron": 13, "vitamin_c": 40}
 	#except KeyError: #Common format, standardize
 	standard_keys = ["food_name", "serving_weight_grams", "nf_calories", "nf_total_fat", "nf_saturated_fat", "nf_cholesterol", "nf_sodium", "nf_total_carbohydrate", "nf_dietary_fiber", "nf_sugars", "nf_protein"]
-	common_keys = ["item_name", "metric_qty", "calories", "total_fat", "saturated_fat", "cholesterol", "sodium", "total_carb", "dietary_fiber", "sugar", "protein"]
+	common_keys = ["item_name", "metric_qty", "calories", "total_fat", "saturated_fat", "cholesterol", "sodium", "total_carb", "dietary_fiber", "sugars", "protein"]
 	mappings = zip(standard_keys, common_keys)
 	new_nutrition_information = dict()
 	for mapping in mappings:
-		new_nutrition_information[mapping[1]] = nutrition_information[mapping[0]]
+		new_nutrition_information[mapping[1]] = nutrition_information[mapping[0]]	
+	for item in full_nutrient_keys.items():
+		new_nutrition_information[item[0]] = nutrition_information['full_nutrients'][item[1]]["value"]
 	return new_nutrition_information
 
 def read_csv(csv_file):
