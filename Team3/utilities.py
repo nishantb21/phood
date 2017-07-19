@@ -25,10 +25,17 @@ def standardize_keys(nutrition_information):
 	nf_protein:protein
 	'''
 	#try: 
+	#print(nutrition_information)
 	if nutrition_information.__contains__('metric_qty'):
 		nutrition_information['iron'] = nutrition_information['iron_dv'] if nutrition_information['iron_dv'] is not None else 0
 		return nutrition_information #Key exists, is already in standard format
-	full_nutrient_keys = {"iron": 13, "vitamin_c": 40}
+	full_nutrient_keys = {"iron": 303, "vitamin_c": 401}
+	full_nutrient_indices = {'iron': 0, 'vitamin_c': 0}
+	for nutrient in nutrition_information['full_nutrients']:
+		for item in full_nutrient_keys.items():
+			if nutrient['attr_id'] == item[1]:
+				full_nutrient_indices[item[0]] = nutrition_information['full_nutrients'].index(nutrient)
+
 	#except KeyError: #Common format, standardize
 	standard_keys = ["food_name", "serving_weight_grams", "nf_calories", "nf_total_fat", "nf_saturated_fat", "nf_cholesterol", "nf_sodium", "nf_total_carbohydrate", "nf_dietary_fiber", "nf_sugars", "nf_protein"]
 	common_keys = ["item_name", "metric_qty", "calories", "total_fat", "saturated_fat", "cholesterol", "sodium", "total_carb", "dietary_fiber", "sugars", "protein"]
@@ -36,7 +43,7 @@ def standardize_keys(nutrition_information):
 	new_nutrition_information = dict()
 	for mapping in mappings:
 		new_nutrition_information[mapping[1]] = nutrition_information[mapping[0]]	
-	for item in full_nutrient_keys.items():
+	for item in full_nutrient_indices.items():
 		try:
 			new_nutrition_information[item[0]] = nutrition_information['full_nutrients'][item[1]]["value"]
 		except IndexError as ie:
