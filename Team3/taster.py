@@ -1,6 +1,8 @@
 #generate taste scores
 import json
 import glob, sys
+import utilities
+import itertools
 
 PROTEIN_SUPPLEMENT_MULTIPLIER = 1
 VEGETABLES_MULTIPLIER = 2
@@ -25,13 +27,13 @@ def match_descriptors(dish_title, descriptor_dict):
 	dish_split = dish_title.split(" ")
 	final_scores = dict()
 	for item in descriptor_dict:
-		for pair in itertools.product(dish_split, item['items']):
-		#format (dish_word, (descriptor, score))
-		if pair[0] in pair[1][0]:
-			try:
-				final_scores[taste_key] += pair[1][1]
-			except KeyError:
-				final_scores[taste_key] = pair[1][1]
+		for pair in itertools.product(item['items'].items(),dish_split):
+		#format ((descriptor, score), dish_word)
+			if pair[0][0].lower() in pair[1].lower():
+				try:
+					final_scores[item["name"]] += pair[0][1]
+				except KeyError:
+					final_scores[item["name"]] = pair[0][1]
 	return final_scores
 
 
@@ -40,8 +42,8 @@ def umami(dish_title, nutrition_data, PROTEIN_SUPPLEMENT_MULTIPLIER = 1, VEGETAB
 	umami_meats = dict()
 	umami_protein_supps = dict()
 	umami_descriptors = utilities.read_json("umami_descriptors.json")	
-	for category in umamitypes:
-		descriptor_score = match_descriptors(dish_title, umami_descriptors, category)
+	descriptor_score = match_descriptors(dish_title, umami_descriptors)
+	return(descriptor_score)
 	#score = 1.5meat + 2veggies + 1protein_supps
 	
 
@@ -57,4 +59,6 @@ if __name__ == "__main__":
 	for file in glob.iglob(sys.argv[1] + "/*.json"):
 		print(file, end=': ')
 		with open(file) as infile:
-			print(salt(json.load(infile)))
+			#print(salt(json.load(infile)))
+			jv = json.load(infile)
+			print(umami(jv['item_name'], jv))
