@@ -1,0 +1,202 @@
+[
+    {
+        "korean": [
+            "korean"
+        ],
+        "portuguese": [
+            "tempura"
+        ],
+        "caribbean": [
+            "caribbean"
+        ],
+        "cajun": [
+            "cajun"
+        ],
+        "middle eastern": [
+            "falafel",
+            "baklava"
+        ],
+        "chinese": [
+            "shanghai",
+            "wonton",
+            "beijing",
+            "kung pao",
+            "lo mein",
+            "rangoon",
+            "szechuan",
+            "potsticker",
+            "chow mein"
+        ],
+        "creole": [
+            "creole"
+        ],
+        "lebanese": [
+            "pita"
+        ],
+        "vietnamese": [
+            "vietnamese"
+        ],
+        "swiss": [
+            "swiss"
+        ],
+        "russian": [
+            "russian"
+        ],
+        "mexican": [
+            "doritos",
+            "crunchwrap",
+            "chipotle",
+            "mexican",
+            "caesar",
+            "taco",
+            "tostada",
+            "gordita",
+            "nacho",
+            "chalupa",
+            "taquito",
+            "carnitas",
+            "fajita",
+            "quesadilla",
+            "burrito",
+            "enchilada",
+            "tortilla",
+            "enchirito",
+            "churro",
+            "salsa",
+            "barbacoa"
+        ],
+        "cuban": [
+            "hawana",
+            "cuban",
+            "havana"
+        ],
+        "mediterranean": [
+            "mediterranean"
+        ],
+        "portugese": [
+            "portugese"
+        ],
+        "hawaiian": [
+            "kahuna",
+            "hawaiian",
+            "maui"
+        ],
+        "american": [
+            "hotcake",
+            "sub",
+            "soutwest",
+            "100 by 100",
+            "philly",
+            "wisconsin",
+            "3 by 3",
+            "monkey bread",
+            "burger",
+            "biscuit",
+            "bagel",
+            "bearclaw",
+            "50 by 50",
+            "poutine",
+            "bacon",
+            "smoothie",
+            "500 by 500",
+            "bear claw",
+            "hot cake",
+            "oatmeal",
+            "pancake",
+            "5 by 5",
+            "sandwich",
+            "bowlwich",
+            "double double",
+            "4 by 4",
+            "american",
+            "10 by 10",
+            "french fries"
+        ],
+        "french": [
+            "dijon",
+            "financier",
+            "kouign amann",
+            "miche",
+            "baguette",
+            "croissant",
+            "torsad",
+            "bisque",
+            "cordon bleu",
+            "chorizo",
+            "french",
+            "souffl",
+            "waffle",
+            "palmier"
+        ],
+        "english": [
+            "english",
+            "scone",
+            "chowder",
+            "pie",
+            "muffin",
+            "macaroon"
+        ],
+        "greek": [
+            "greek",
+            "gyro"
+        ],
+        "japanese": [
+            "soba miso",
+            "udon noodle"
+        ],
+        "italian": [
+            "gratin",
+            "calzone",
+            "ciabatta",
+            "italian",
+            "minestrone",
+            "canoli",
+            "bolognese",
+            "pizza",
+            "pasta",
+            "focaccia",
+            "frittata",
+            "gorgonzola",
+            "bruschetta"
+        ],
+        "asian": [
+            "edamame",
+            "asian"
+        ],
+        "british": [
+            "british",
+            "england"
+        ],
+        "santa fe": [
+            "santa fe"
+        ],
+        "danish": [
+            "danish"
+        ],
+        "scottish": [
+            "shortbread"
+        ],
+        "mongolian": [
+            "mongolian"
+        ],
+        "canadian": [
+            "canadian"
+        ],
+        "thai": [
+            "thai"
+        ],
+        "madagascar": [
+            "madagascar"
+        ],
+        "sicillian": [
+            "sicillian"
+        ],
+        "morroccan": [
+            "morroccan"
+        ],
+        "world": [
+            "sausage",
+            "dumpling"
+        ]
+    }
+]

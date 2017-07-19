@@ -16,7 +16,7 @@ Contains functions for writing content to dictionary, text file, pickle file, js
 - write\_json\(data, file\_name\)  : Input parameters are file name and data\. This function adds the data into the file in json format with proper indentation\.
 - write\_to\_dict\(key, tags, file\_name\)  : Takes a file name along with a key\-value pair as input\. Creates a handler which is used to load the pickle file in a user readable format\. Adds the key\-value pair as a dictionary item into the file and dumps it in its original format\(pickle file\) \. Generates logs for each update to the file\.
 - write\_to\_list\(full\_list, file\_name\)  : Takes a list as parameter along with a pickle file, as input\. Creates a handler to open the pickle file in write mode and then adds the list to the file and dumps it back as pickle file\.
-- lod\_data\(message, file\_name\) : Inputs for this function are message and file name\. Any append to the knowledge base, hierarchy, API miss, is logged into a separate file with the timestamp\.
+- log\_data\(message, file\_name\) : Inputs for this function are message and file name\. Any append to the knowledge base, hierarchy, API miss, is logged into a separate file with the timestamp\.
 
 ### findleaves\.py:
 This program locates the given tags for dish queried in the hierarchy and returns the number of leaves for that particular node\. This is used for scoring the tags proportionately\.
