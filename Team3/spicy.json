@@ -23,7 +23,7 @@
 	],
 	"F": [
 		"FLAMIN",
-		"FIRE",
+		"FIRE"
 	],
 	"J": [
 		"JALAPENO"
@@ -43,7 +43,7 @@
 		"WOT"
 	],
 	"A": [
-		"ANDHRA",
+		"ANDHRA"
 	],
 	"T": [
 		"TAMALE",
@@ -51,11 +51,11 @@
 	],
 	"B": [
 		"BURRITO",
-		"BURNING"
+		"BURNING",
 		"BURN"
 	],
 	"K": [
-		"KIMCHI",
+		"KIMCHI"
 	],
 	"D": [],
 	"E": [],

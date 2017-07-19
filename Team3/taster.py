@@ -3,10 +3,88 @@ import json
 import glob, sys
 import utilities
 import itertools
+import numpy
 
-PROTEIN_SUPPLEMENT_MULTIPLIER = 1
-VEGETABLES_MULTIPLIER = 2
-MEAT_MULTIPLIER = 1.5
+SWEET_FACTOR_X = 0.9
+SWEET_FACTOR_Y = 0.1
+
+RICHNESS_FACTOR_X = 0.5
+RICHNESS_FACTOR_Y = 0.7
+RICHNESS_FACTOR_Z = 50
+
+SOURNESS_FACTOR_X = 0.1
+SOURNESS_FACTOR_Y = 0.25
+SOURNESS_FACTOR_Z = 0.5
+
+def sweet(nutrition_data, SWEET_FACTOR_X=0.85, SWEET_FACTOR_Y=0.1):
+	try:
+		total_weight = nutrition_data['metric_qty']
+		sweet_score_x1 = abs(nutrition_data['sugars'] - nutrition_data['dietary_fiber']) / total_weight
+		sweet_score_y = nutrition_data['sugars'] / nutrition_data['total_carb'] 
+		sweet_score_1 = (SWEET_FACTOR_X * sweet_score_x1) + (SWEET_FACTOR_Y * sweet_score_y)
+		#	print(sweet_score_1)
+	except Exception as e:
+		sweet_score_1 = 0
+	return round(sweet_score_1 / 0.998,3) * 10
+
+def rich(nutrition_data, RICHNESS_FACTOR_X=0.5, RICHNESS_FACTOR_Y=0.7,RICHNESS_FACTOR_Z=50):
+	try:
+		total_weight = nutrition_data['metric_qty']
+		richness_score_x = nutrition_data['saturated_fat'] / nutrition_data['total_fat'] #high
+		#Why consider sat_fat if we're considering total fat anyway? Would make more sense if total fat wasn't available
+		richness_score_y = nutrition_data['total_fat'] / total_weight #low
+		#Why is this not enough to work off of?
+		richness_score_z = nutrition_data['cholesterol'] / (total_weight * 1000)
+		#I'll admit that this is a good idea anyway
+		richness_score_1 = (RICHNESS_FACTOR_X * richness_score_x) + (RICHNESS_FACTOR_Y * richness_score_y) + (RICHNESS_FACTOR_Z * richness_score_z)
+	except Exception as e:
+		richness_score_1 = 0
+
+	return round((richness_score_1 / 0.992),3) * 10
+	## Normalize to butter which has highest score
+
+def sour(dish_title, nutrition_data, SOURNESS_FACTOR_X=0.1, SOURNESS_FACTOR_Y=0.25, SOURNESS_FACTOR_Z=0.5):
+	total_weight = nutrition_data['total_carb'] + nutrition_data['protein'] + nutrition_data['total_fat']
+	food_words = dish_title.upper().split(' ')
+	#print(food_words)
+	try:
+		vitamin_c = nutrition_data['vitamin_c']
+	except KeyError as ke:
+		vitamin_c = 0.0
+	print(vitamin_c)
+	with open('sour.json') as f:
+		sour = json.load(f)
+		#print(sour)
+	with open('too_sour.json') as f:
+		too_sour = json.load(f)
+	try:
+		sour_score_x = vitamin_c / total_weight
+	except ZeroDivisionError as zde:
+		sour_score_x = 0
+
+	sour_score_y = 0
+	sour_score_z = 0
+
+	for word in food_words:
+		if word in sour[word[0]]:
+			#print("found s", word)
+			sour_score_y += 1
+		if word in too_sour[word[0]]:
+			sour_score_z += 1
+	sour_score = round(((SOURNESS_FACTOR_X * sour_score_x) + (SOURNESS_FACTOR_Y * sour_score_y) + (SOURNESS_FACTOR_Z * sour_score_z)) / 0.995,3)
+	#print(sour_score)
+	if sour_score > 1 :
+		sour_score = 1
+	return sour_score * 10
+
+def spicy(dish_title):
+	food_words = dish_title.upper().split(' ')
+	with open('spicy.json') as f:
+		spice = json.load(f)
+	for word in food_words:
+		if word in spice[word[0]]:
+			return True
+	return False
 
 def taste(file):
 	if file is not None:
@@ -14,9 +92,9 @@ def taste(file):
 			try:
 				ingredient = json.load(input_file)
 				#print('\r', file, sep='', end='')
-				ingredient['sweet_score'] = round(ingredient['nf_sugars'] / 100, 4)
+				ingredient['sweet_score'] = round(ingredient['nf_sugars'] / 10, 4)
 				ingredient['salt_score'] = round(ingredient['nf_sodium'] / 39333, 4)
-				ingredient['rich_score'] = round((ingredient['nf_total_fat'] + ingredient['nf_saturated_fat']) / 100, 4)
+				ingredient['rich_score'] = round((ingredient['nf_total_fat'] + ingredient['nf_saturated_fat']) / 10, 4)
 				json.dump(ingredient, sampled_json, indent='\t')
 			
 			except json.decoder.JSONDecodeError:
@@ -37,28 +115,54 @@ def match_descriptors(dish_title, descriptor_dict):
 	return final_scores
 
 
-def umami(dish_title, nutrition_data, PROTEIN_SUPPLEMENT_MULTIPLIER = 1, VEGETABLES_MULTIPLIER = 2, MEAT_MULTIPLIER = 1.5):
-	umami_vegetables = dict()
-	umami_meats = dict()
-	umami_protein_supps = dict()
+def umami(dish_title, nutrition_data, PROTEIN_SUPPLEMENT_MULTIPLIER = 0.80, VEGETABLES_MULTIPLIER = 2.40, MEAT_MULTIPLIER = 1.75):
 	umami_descriptors = utilities.read_json("umami_descriptors.json")	
 	descriptor_score = match_descriptors(dish_title, umami_descriptors)
-	return(descriptor_score)
-	#score = 1.5meat + 2veggies + 1protein_supps
-	
+	print(PROTEIN_SUPPLEMENT_MULTIPLIER, VEGETABLES_MULTIPLIER, MEAT_MULTIPLIER, end=': ')
+	protein_score = nutrition_data["protein"] / total_weight(nutrition_data)
+	umamiscore = protein_score
+	pairings = zip([PROTEIN_SUPPLEMENT_MULTIPLIER, VEGETABLES_MULTIPLIER, MEAT_MULTIPLIER], ["protein_supps", "vegetables", "meat"])
+	for pair in pairings:
+		#print(pair)
+		#umamiscore = 1.5meat + 2veggies + 1protein_supps
+		if descriptor_score.__contains__(pair[1]):
+			umamiscore += pair[0] * descriptor_score[pair[1]] * 1
+	return round(umamiscore, 3)
+
+def total_weight(dish_nutrition):
+	return dish_nutrition['total_fat'] + dish_nutrition['total_carb'] + dish_nutrition['protein']
 
 def salt(dish_nutrition):
-	total_weight = dish_nutrition['total_fat'] + dish_nutrition['total_carb'] + dish_nutrition['protein']
-	if total_weight == 0:
+	totalweight = total_weight(dish_nutrition)
+	if totalweight == 0:
 		return dish_nutrition['sodium'] / dish_nutrition['metric_qty'] / 3.8758
-#	return((dish_nutrition['sodium'] / dish_nutrition['metric_qty']))
+	#return((dish_nutrition['sodium'] / dish_nutrition['metric_qty']))
 	#print((dish_nutrition['sodium'] / dish_nutrition['metric_qty']) / 38.758, end=' | ')
-	return ((dish_nutrition['sodium'] / total_weight)) / 3.8758
+	return ((dish_nutrition['sodium'] / totalweight)) / 3.8758
+
+def bitter(dish_title, nutrition_data, LEVEL1_MULTIPLIER = 0.80, LEVEL2_MULTIPLIER = 1.40):
+	bitter_descriptors = utilities.read_json("bitter_descriptors.json")	
+	descriptor_score = match_descriptors(dish_title, bitter_descriptors)
+	print(LEVEL1_MULTIPLIER, LEVEL2_MULTIPLIER, end=': ')
+	bitterscore = nutrition_data["iron"] / total_weight(nutrition_data)
+	pairings = zip([LEVEL1_MULTIPLIER, LEVEL2_MULTIPLIER], ["bitter_l1", "bitter_l2"])
+	for pair in pairings:
+		if descriptor_score.__contains__(pair[1]):
+			bitterscore += pair[0] * descriptor_score[pair[1]] * 1
+	return round(bitterscore * 10, 3)
 
 if __name__ == "__main__":
 	for file in glob.iglob(sys.argv[1] + "/*.json"):
-		print(file, end=': ')
 		with open(file) as infile:
+			print(file, end=': ')
 			#print(salt(json.load(infile)))
 			jv = json.load(infile)
-			print(umami(jv['item_name'], jv))
+			print({
+			      "sweet": sweet(jv),
+			      "rich": rich(jv),
+			      "sour": sour(jv["item_name"], jv),
+			      "spicy": spicy(jv["item_name"]),
+			      "umami": umami(jv["item_name"], jv),
+			      "bitter": bitter(jv["item_name"], jv),
+			      "salt": salt(jv)
+			      })	
