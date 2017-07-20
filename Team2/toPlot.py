@@ -64,4 +64,4 @@ def makeDataToPlot():
 		ans["flavor"] = answer
 		
 	ans = json.dumps(ans)
-	print(ans)
+	return ans

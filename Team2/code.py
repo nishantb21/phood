@@ -377,10 +377,17 @@ def main():
 	if x == 1:
 		from_server()
 
-	elif x > 1:
+	elif x == 2:
+		in_flow(sys.argv[1])
+
+	elif x == 3:
+		in_flow(sys.argv[1], sys.argv[2])
+
+	else:
 		in_flow(sys.argv[1], sys.argv[2])
 		tasteProfile.categoriseTaste(sys.argv[3])
 
-	toPlot.makeDataToPlot()
+	final_result = toPlot.makeDataToPlot()
+	print(final_result)
 
 main()
