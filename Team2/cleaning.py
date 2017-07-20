@@ -20,6 +20,9 @@ import requests
 import pickle
 import copy
 import logging
+import sys
+import ast
+
 
 d_file = open("h.json") # the tag hierarchy is contained in file h.json
 

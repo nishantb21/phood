@@ -6,6 +6,8 @@ import requests
 import pickle
 import copy
 import logging
+import sys
+import ast
 
 def write_api_miss(term, file_name):
 	term = term.lower()

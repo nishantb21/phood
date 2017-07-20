@@ -1,0 +1,11 @@
+{
+    "tags": {
+        "dummyUser": {
+            "mashed potato": 15.0,
+            "vegetable": 0.09,
+            "potato": 11.0,
+            "falafel": 15.0,
+            "snack": 0.435
+        }
+    }
+}

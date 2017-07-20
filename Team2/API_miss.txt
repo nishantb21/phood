@@ -13,6 +13,3 @@ dish
 sdf
 human blood
 dosa
-human+blood
-hash+browns
-pad+thai

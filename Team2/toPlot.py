@@ -7,8 +7,9 @@ import pickle
 import copy
 import logging
 import sys
+import ast
 
-def makeDataToPlot():
+def makeDataToPlot(flavor):
 	userID = open("lastedit.txt", "r").read().strip()
 	newdata = json.load(open("userscore.json"))
 	olddata = json.load(open("oldscore.json"))
@@ -44,24 +45,25 @@ def makeDataToPlot():
 
 	ans = collections.OrderedDict(ans)
 
-	flavorProfile = json.load(open("flavorProfile.json"))
-	if userID in flavorProfile:
-		f = flavorProfile[userID]
-		answer = f[0]
-		for i in f[1:]:
-			for j in i:
-				answer[j] += i[j]
+	if flavor:
+		flavorProfile = json.load(open("flavorProfile.json"))
+		if userID in flavorProfile:
+			f = flavorProfile[userID]
+			answer = f[0]
+			for i in f[1:]:
+				for j in i:
+					answer[j] += i[j]
 
-		for i in answer:
-			answer[i] = round(answer[i] / len(f), 3)
+			for i in answer:
+				answer[i] = round(answer[i] / len(f), 3)
 
-		if answer['spice'] > 0.5:
-			answer['spice'] = 1
+			if 'spice' in answer:
+				if answer['spice'] > 0.5:
+					answer['spice'] = 1
 
-		else:
-			anser['spice'] = 0
-
-		ans["flavor"] = answer
-		
+				else:
+					anser['spice'] = 0
+			ans["flavor"] = answer
+			
 	ans = json.dumps(ans)
 	return ans

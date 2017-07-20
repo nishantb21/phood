@@ -7,6 +7,7 @@ import pickle
 import copy
 import logging
 import sys
+import ast
 
 import cleaning
 import write_files
@@ -82,6 +83,8 @@ def tag_dish(dish, ingredients = "", restaurant = ""):
 	free = {"free"}
 
 	dishLower = dish.lower()
+	print('falafel' in dishLower)
+
 	ingredientsLower = ingredients.lower()
 
 	dl = re.split(',| ',dishLower)
@@ -359,7 +362,7 @@ def in_flow(dish, ingredients = ""):
 	json.dump(oldscore, open("oldscore.json", "w+"), indent = 4)
 
 	returned_tags = tagging_dish(dish, ingredients)
-
+	print(returned_tags)
 	# meta tags for dishes
 	if len(returned_tags[0]) != 0:
 		for i in returned_tags[0]:
@@ -374,20 +377,23 @@ def in_flow(dish, ingredients = ""):
 
 def main():
 	x = len(sys.argv)
-	if x == 1:
-		from_server()
+	if x <= 3:
+		if x == 1:
+			from_server()
 
-	elif x == 2:
-		in_flow(sys.argv[1])
+		elif x == 2:
+			in_flow(sys.argv[1])
 
-	elif x == 3:
-		in_flow(sys.argv[1], sys.argv[2])
+		elif x == 3:
+			in_flow(sys.argv[1], sys.argv[2])
+	
+		final_result = toPlot.makeDataToPlot(0)
 
 	else:
 		in_flow(sys.argv[1], sys.argv[2])
 		tasteProfile.categoriseTaste(sys.argv[3])
+		final_result = toPlot.makeDataToPlot(1)
 
-	final_result = toPlot.makeDataToPlot()
 	print(final_result)
 
 main()

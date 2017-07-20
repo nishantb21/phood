@@ -1,1 +1,16 @@
-{}
+{
+    "tags": {
+        "dummyUser": {
+            "mashed potato": 16.0,
+            "vegetable": 0.096,
+            "potato": 12.0,
+            "falafel": 16.0,
+            "snack": 0.464
+        }
+    },
+    "cuisine": {
+        "dummyUser": {
+            "middle eastern": 0.333
+        }
+    }
+}
