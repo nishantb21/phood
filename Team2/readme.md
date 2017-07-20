@@ -1,9 +1,22 @@
 # Documentation - Team 2 : User Profiling
 
 
-Programming language used : Python/Python3
+Programming language used : Python (compiled using Python3)
 
-Problem Statement : Given user logs, user has to be relavently scored for the dishes that were searched, purchased or added to the wishlist
+### Instructions for executing: 
+python3 code.py "dishName" "ingredientsList" "dishFlavour"
+
+### NOTE: code.py accepts 3 parameters: 
+
+- dish name (string)
+- ingredients (string)
+- dish flavour (dictionary wrapped as a string)
+* It can be run even without the second and third parameters
+
+### Example:
+python3 code.py "cheeseburger" "beef, lettuce" "{'rich' : '8', 'salt' : '1'}"
+
+Problem Statement : Given user logs, user has to be relavently scored for the dishes that were searched, purchased or added to the wishlist along with flavour profiling for that user.
 
 ##  Run through:
 
@@ -43,27 +56,46 @@ Problem Statement : Given user logs, user has to be relavently scored for the di
 
 - tasteProfile.py - This program retrieves the flavour profile data from Team3 and is used for generating flavour profile for the user
 
-## Database files:
+- toPlot.py - Takes the user scores (old and new) along with the flavour profile profile of the user ID queried and then returns everything as json, which is used for plotting graphs
+
+## Pickle files:
+###  Any object in python can be pickled so that it can be saved on disk. What pickle does is that it “serialises” the object first before writing it to file. Pickling is a way to convert a python object (list, dict, etc.) into a character stream.
 - cuisine.pickle
 - data1.pickle
 - data2.pickle
 - size.pickle
 - vegnonveg.pickle
-- cuisine_hierarchy.json
-- h.json
-- logs.json
-- old_value.json
-- sharedparents.json
-- userscore.json
+
+## Database files:
+### cuisine_hierarchy.json:
+##### Structure:
+[{"cuisine" : ["dishes falling under this cuisine"]}]
+### h.json:
+##### Structure:
+[{"Level1" : [{"Level2" : [{"Level3" : [{}]}], "Level2" : [{}]}], "Level1" : [{}]}]
+### logs.json:
+##### Structure:
+[[{searchLogs}],[{wishListLogs}],[{purchaseLogs}]]
+### sharedparents.json: 
+##### Structure:
+{"Higher level Tag" : ["Shared lower level tag"]}
+
+### oldscore.json
+### userscore.json
+### flavorProfile.json
 
 ## Modules imported:
 - json
 - collections
 - os
 - re
-- requests
 - pickle
 - copy
 - logging
 - sys
 - matplotlib
+- [requests](http://docs.python-requests.org/en/latest/user/install/)
+
+## Documentation files:
+- readme.md
+- files.md
