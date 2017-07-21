@@ -15,7 +15,8 @@ python3 code.py "dishName" "ingredientsList" "dishFlavour"
 
 ### Example:
 - python3 code.py "cheeseburger" "beef, lettuce" "{'rich' : '8', 'salt' : '1'}"
-- python3 code.py 
+- python3 code.py "chicken sandwich"
+- python3 code.py "burger without mayo" "steak, ranch" "{'rich' : '6', 'sweet' : '0.23', 'salt' : '1.5', 'sour' : '0.7', 'bitter' : '0', 'umami' : '7'}"
 
 ## Problem Statement : 
 #### Given user logs, user has to be relavently scored for the dishes that were searched, purchased or added to the wishlist along with flavour profiling for that user.
