@@ -14,14 +14,11 @@ python3 code.py "dishName" "ingredientsList" "dishFlavour"
 * It can be run even without the second and third parameters
 
 ### Example:
-python3 code.py "cheeseburger" "beef, lettuce" "{'rich' : '8', 'salt' : '1'}"
+- python3 code.py "cheeseburger" "beef, lettuce" "{'rich' : '8', 'salt' : '1'}"
+- python3 code.py 
 
-Problem Statement : Given user logs, user has to be relavently scored for the dishes that were searched, purchased or added to the wishlist along with flavour profiling for that user.
-
-##  Run through:
-
-* Developed a knowledge base which contains ~1200 tags into which the dishes get tagged under. A hierarchy is maintained taking into consideration, the taxonomy of each item in the knowledge base, which will be used for scoring every tag, from the root, till the node in question, proportionately.
-* Making use of an API (Spoonacular by Mashape) which tags the dishes in a very similar fashion to what our knowledge base contains. However, there are quite a few redundant tags returned by the API which are cleaned before getting added to the knowledge base and the hierarchy.
+## Problem Statement : 
+#### Given user logs, user has to be relavently scored for the dishes that were searched, purchased or added to the wishlist along with flavour profiling for that user.
 
 ##  Flow:
 
@@ -33,6 +30,11 @@ Problem Statement : Given user logs, user has to be relavently scored for the di
 * Once the dish is tagged, appropiate scoring is done based on where the tags lie in the hierarchy. Then user logs are queried for his old scores which are then updated with the new ones.
 * There are differenent weights attached to the user logs based on whether he searched, purchased or added them to wishlist.
 * The flavour profile of the user will also be modified in a similar fashion as that of user score, for every item queried by the user.
+
+##  Run through:
+
+* Developed a knowledge base which contains ~1200 tags into which the dishes get tagged under. A hierarchy is maintained taking into consideration, the taxonomy of each item in the knowledge base, which will be used for scoring every tag, from the root, till the node in question, proportionately.
+* Making use of an API (Spoonacular by Mashape) which tags the dishes in a very similar fashion to what our knowledge base contains. However, there are quite a few redundant tags returned by the API which are cleaned before getting added to the knowledge base and the hierarchy.
 
 ### Long term goal:
 - Build a time-based decay function which decreases the user's scores over time, for a dish which is not being queried any more.
@@ -73,16 +75,13 @@ Problem Statement : Given user logs, user has to be relavently scored for the di
 ### h.json:
 ##### Structure:
 [{"Level1" : [{"Level2" : [{"Level3" : [{}]}], "Level2" : [{}]}], "Level1" : [{}]}]
+Example : 
 ### logs.json:
 ##### Structure:
 [[{searchLogs}],[{wishListLogs}],[{purchaseLogs}]]
 ### sharedparents.json: 
 ##### Structure:
 {"Higher level Tag" : ["Shared lower level tag"]}
-
-### oldscore.json
-### userscore.json
-### flavorProfile.json
 
 ## Modules imported:
 - json
