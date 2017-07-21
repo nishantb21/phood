@@ -36,22 +36,26 @@ Program to call the Spoonacular API when the queried dish doesn't get matching t
 - api\_count\_update\(count\) : Opens the file where the count of API calls exist and updates it by "count"
 - call\_api\_tags\(dish\) : Queries the Spoonacular API with the dishes that missed our knowledge base. Each call updates the count of API call by 1. Each call to the API is logged in a separate file. Since each API is limited to 50 calls per day, a count of the API calls are maintained and once it reaches the limit, an error message is thrown and logged. The tags returned by the API are put in a list called "result\_tags" and then are then passed to "cleaning\.py" for those tags to match the format of our knowledge base.
 
-### GetLogs\.py: Program to hit the eventshop endpoint for the given user ID and extract all his logs into a json file.
+### GetLogs\.py: 
+Program to hit the eventshop endpoint for the given user ID and extract all his logs into a json file.
 
 ### Functions:
 - get\_new\_log\(\) : Queries the Eventshop server with the USER ID and stores the logs returned in a list. This list is then dumped into a json file.
 
-### toPlot\.py: This program is gives the data for plotting graphs which visualises user's old data and the updated data.
+### toPlot\.py: 
+This program is gives the data for plotting graphs which visualises user's old data and the updated data.
 
 ### Functions:
 - makeDataToPlot\(\) : Retrieves the User ID from a file which maintains the ID of the latest edit. Uses this ID to get that user's old data and new data which is appended in the form an ordered dictionary.
 
-### tasteProfile\.py: This program retrieves the flavour profile data from Team3.
+### tasteProfile\.py: 
+This program retrieves the flavour profile data from Team3.
 
 ### Functions:
 - categoriseTaste\(flavour\) : Input for this function is the flavour profile passed from Team3 and it converted into a dictionary. Then, the flavour profile of the user whose ID is present in the file which maintains User ID of the latest edit is accessed and his flavour profile is updated. This is then dumped into a json file.
 
-### code\.py: This program contains the main function and is the program to be run. 
+### code\.py: 
+This program contains the main function and is the program to be run. 
 
 ### Functions:
 - printuserscore\(\) : This function is used to sort the user scores and print them on the terminal.
