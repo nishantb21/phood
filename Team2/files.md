@@ -36,7 +36,31 @@ Program to call the Spoonacular API when the queried dish doesn't get matching t
 - api\_count\_update\(count\) : Opens the file where the count of API calls exist and updates it by "count"
 - call\_api\_tags\(dish\) : Queries the Spoonacular API with the dishes that missed our knowledge base. Each call updates the count of API call by 1. Each call to the API is logged in a separate file. Since each API is limited to 50 calls per day, a count of the API calls are maintained and once it reaches the limit, an error message is thrown and logged. The tags returned by the API are put in a list called "result\_tags" and then are then passed to "cleaning\.py" for those tags to match the format of our knowledge base.
 
+### GetLogs\.py: Program to hit the eventshop endpoint for the given user ID and extract all his logs into a json file.
+
+### Functions:
+- get\_new\_log\(\) : Queries the Eventshop server with the USER ID and stores the logs returned in a list. This list is then dumped into a json file.
+
 ### toPlot\.py: This program is gives the data for plotting graphs which visualises user's old data and the updated data.
 
 ### Functions:
 - makeDataToPlot\(\) : Retrieves the User ID from a file which maintains the ID of the latest edit. Uses this ID to get that user's old data and new data which is appended in the form an ordered dictionary.
+
+### tasteProfile\.py: This program retrieves the flavour profile data from Team3.
+
+### Functions:
+- categoriseTaste\(flavour\) : Input for this function is the flavour profile passed from Team3 and it converted into a dictionary. Then, the flavour profile of the user whose ID is present in the file which maintains User ID of the latest edit is accessed and his flavour profile is updated. This is then dumped into a json file.
+
+### code\.py: This program contains the main function and is the program to be run. 
+
+### Functions:
+- printuserscore\(\) : This function is used to sort the user scores and print them on the terminal.
+- add\_to\_hier\(tags\) : Input for this function is the tags generated. This function adds the tags that are not present in the hierarchy, to the hierarchy and then logs it to the log file.
+- add\_to\_database\(key, tags\) : Given key and tags as input, this function checks the length of the key. Based on this, it gets added to the knowledge base.
+- add\_shared\_parent(key, value) : writes the items which have shared parents in hierarchy, to a file which maintains a list of all items with shared parents.
+- check\_nonveg\(key, tags\) : Given key and tags as input, if any of the tags matches an item in the non veg list maintained, the key associated with that tag is added to the non veg list.
+- tag\_dish\(dish, ingredients = "", restaurant = ""\) : This function tags the given dish with the tags in the knowledge base and also with the appropriate cuisine. It is also determined whether the dish is vegetarian or not and the serving size is also taken into consideration if available.
+- tagging\_dish\(term, ingredients = ""\) : Calls the "tag\_dish\(\)" function and checks if there are any empty tags returned which means that the knowledge base could not tag that dish. That dish is then queried to the API and then the tags generated from the API are cleaned before adding them to the hierarchy and knowledge base. If the API also could not tag that dish, it is logged to the log file and also written to a separate file which maintains a list of items missed by the API.
+- score\(dish, userID = "", factor = 1 ,type = 0\) : Takes 4 parameters for input \-\> dish name, user ID, factor and type. Factor is what decides the multiplie is going to be. If the user searches, scoring factor will be 1. If the user wish lists, the scoring factor would be 2 and if the user purchases, the scoring factor would be 3. "type" lets the dish to be tagged based on meta tags \[type = 0\] and cuisine \[type = 1\]
+- tag\_score\_user\(log, factor\) : This function takes the user logs as input and then scores it depending upon the factor.
+- in\_flow\(dish, ingredients = ""\) : This function retrieves the user logs and then make a copy of it before updating his logs with the new values. These old and new values are used for visualisation.
