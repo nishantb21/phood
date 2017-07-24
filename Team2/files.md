@@ -52,7 +52,7 @@ This program is gives the data for plotting graphs which visualises user's old d
 This program retrieves the flavour profile data from Team3.
 
 ### Functions:
-- categoriseTaste\(flavour\) : Input for this function is the flavour profile passed from Team3 and it converted into a dictionary. Then, the flavour profile of the user whose ID is present in the file which maintains User ID of the latest edit is accessed and his flavour profile is updated. This is then dumped into a json file.
+- categoriseTaste\(flavour\) : Input for this function is the flavour profile passed from Team3 and it is converted into a dictionary. Then, the flavour profile of the user whose ID is present in a file which maintains User ID of the latest edit is accessed and his flavour profile is updated. This is then dumped into a json file.
 
 ### code\.py: 
 This program contains the main function and is the program to be run. 
@@ -67,4 +67,4 @@ This program contains the main function and is the program to be run.
 - tagging\_dish\(term, ingredients = ""\) : Calls the "tag\_dish\(\)" function and checks if there are any empty tags returned which means that the knowledge base could not tag that dish. That dish is then queried to the API and then the tags generated from the API are cleaned before adding them to the hierarchy and knowledge base. If the API also could not tag that dish, it is logged to the log file and also written to a separate file which maintains a list of items missed by the API.
 - score\(dish, userID = "", factor = 1 ,type = 0\) : Takes 4 parameters for input \-\> dish name, user ID, factor and type. Factor is what decides the multiplie is going to be. If the user searches, scoring factor will be 1. If the user wish lists, the scoring factor would be 2 and if the user purchases, the scoring factor would be 3. "type" lets the dish to be tagged based on meta tags \[type = 0\] and cuisine \[type = 1\]
 - tag\_score\_user\(log, factor\) : This function takes the user logs as input and then scores it depending upon the factor.
-- in\_flow\(dish, ingredients = ""\) : This function retrieves the user logs and then make a copy of it before updating his logs with the new values. These old and new values are used for visualisation.
+- in\_flow\(dish, ingredients = ""\) : This function retrieves the user logs and then makes a copy of it before updating his logs with the new values. These old and new values are used for visualisation.
