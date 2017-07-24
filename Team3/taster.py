@@ -169,24 +169,25 @@ def bitter(dish_title, nutrition_data, LEVEL1_MULTIPLIER = 0.80, LEVEL2_MULTIPLI
 			bitterscore += pair[0] * descriptor_score[pair[1]] * 1
 	return round(bitterscore / 1.4571, 3)
 
+	def taste(jv):
+		return {
+				"sweet": sweet(jv),
+				"rich": rich(jv),
+				"sour": sour(jv["item_name"], jv),
+				"spicy": spicy(jv["item_name"]),
+				"umami": umami(jv["item_name"], jv),
+				"bitter": bitter(jv["item_name"], jv),
+				"salt": salt(jv)
+	}
 if __name__ == "__main__":
 	for taste in ["sweet", "rich", "sour", "spicy", "umami", "bitter", "salt"]:
 		results = list()
 		for file in glob.iglob(taste + "/*.json"):
 			with open(file) as infile:
-				#print(file, end=': ')
-				#print(salt(json.load(infile)))
+				# print(file, end=': ')
+				# print(salt(json.load(infile)))
 				jv = json.load(infile)
-
-				result = {
-							"sweet": sweet(jv),
-							"rich": rich(jv),
-							"sour": sour(jv["item_name"], jv),
-							"spicy": spicy(jv["item_name"]),
-							"umami": umami(jv["item_name"], jv),
-							"bitter": bitter(jv["item_name"], jv),
-							"salt": salt(jv)
-				}
+				result = taste(jv)
 				print(result)
 				results.append({"name": file.split("/")[-1].split(".")[0], "value": result})
 '''
