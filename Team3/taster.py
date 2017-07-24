@@ -26,7 +26,7 @@ def sweet(nutrition_data, SWEET_FACTOR_X=0.85, SWEET_FACTOR_Y=0.1):
 	try:
 		total_weight = nutrition_data['metric_qty']
 		sweet_score_x1 = abs(nutrition_data['sugars'] - nutrition_data['dietary_fiber']) / total_weight
-		sweet_score_y = nutrition_data['sugars'] / nutrition_data['total_carb'] 
+		sweet_score_y = nutrition_data['sugars'] / nutrition_data['total_carb']
 		sweet_score_1 = (SWEET_FACTOR_X * sweet_score_x1) + (SWEET_FACTOR_Y * sweet_score_y)
 		#	print(sweet_score_1)
 	except Exception as e:
@@ -49,7 +49,7 @@ def rich(nutrition_data, RICHNESS_FACTOR_X=0.2, RICHNESS_FACTOR_Y=1.3,RICHNESS_F
 	except Exception as e:
 		richness_score_1 = 0
 
-	return round((richness_score_1 * 10/ 0.992),3) 
+	return round((richness_score_1 * 10/ 0.992),3)
 	## Normalize to butter which has highest score
 
 def sour(dish_title, nutrition_data, SOURNESS_FACTOR_X=0.1, SOURNESS_FACTOR_Y=0.25, SOURNESS_FACTOR_Z=0.5):
@@ -105,7 +105,7 @@ def taste(file):
 				ingredient['salt_score'] = round(ingredient['nf_sodium'] / 39333, 4)
 				ingredient['rich_score'] = round((ingredient['nf_total_fat'] + ingredient['nf_saturated_fat']) / 10, 4)
 				json.dump(ingredient, sampled_json, indent='\t')
-			
+
 			except json.decoder.JSONDecodeError:
 				#print('\rDecode error for file {0}'.format(file))
 				pass
@@ -129,16 +129,16 @@ def umami(dish_title, nutrition_data, PROTEIN_SUPPLEMENT_MULTIPLIER = 0.80, VEGE
 		if nutrition_data[key] is None:
 			nutrition_data[key] = 0
 
-	umami_descriptors = utilities.read_json("umami_descriptors.json")	
+	umami_descriptors = utilities.read_json("umami_descriptors.json")
 	descriptor_score = match_descriptors(dish_title, umami_descriptors)
 	#print(descriptor_score)
 	umamiscore =  nutrition_data["protein"] / total_weight(nutrition_data)
-	
+
 	pairings = zip([PROTEIN_SUPPLEMENT_MULTIPLIER, VEGETABLES_MULTIPLIER, MEAT_MULTIPLIER, STRING_MULTIPLIER], ["protein_supps", "vegetables", "meat", "savory_strings"])
 	for pair in pairings:
 		#umamiscore = 1.5meat + 2veggies + 1protein_supps
 		if descriptor_score.__contains__(pair[1]):
-			
+
 			umamiscore += pair[0] * descriptor_score[pair[1]] * 1
 	umamiscore *= 10
 	#return round(umamiscore, 3) if umamiscore <= 10 else round(umamiscore%10, 3)
@@ -159,7 +159,7 @@ def salt(dish_nutrition):
 	return round((dish_nutrition['sodium'] / totalweight) / 3.8758, 3)
 
 def bitter(dish_title, nutrition_data, LEVEL1_MULTIPLIER = 0.80, LEVEL2_MULTIPLIER = 1.40, MULTI_WORD_MULTIPLIER=2.3):
-	bitter_descriptors = utilities.read_json("bitter_descriptors.json")	
+	bitter_descriptors = utilities.read_json("bitter_descriptors.json")
 	descriptor_score = match_descriptors(dish_title, bitter_descriptors)
 	#print(LEVEL1_MULTIPLIER, LEVEL2_MULTIPLIER, end=': ')
 	bitterscore = nutrition_data["iron"] / total_weight(nutrition_data)
@@ -171,13 +171,13 @@ def bitter(dish_title, nutrition_data, LEVEL1_MULTIPLIER = 0.80, LEVEL2_MULTIPLI
 
 if __name__ == "__main__":
 	for taste in ["sweet", "rich", "sour", "spicy", "umami", "bitter", "salt"]:
-		results = list()			
+		results = list()
 		for file in glob.iglob(taste + "/*.json"):
 			with open(file) as infile:
 				#print(file, end=': ')
 				#print(salt(json.load(infile)))
 				jv = json.load(infile)
-				
+
 				result = {
 							"sweet": sweet(jv),
 							"rich": rich(jv),
@@ -187,14 +187,14 @@ if __name__ == "__main__":
 							"bitter": bitter(jv["item_name"], jv),
 							"salt": salt(jv)
 				}
-				#print(result)
-				results.append({"name": file.split("/")[-1].split(".")[0],"value": result})
-	
+				print(result)
+				results.append({"name": file.split("/")[-1].split(".")[0], "value": result})
+'''
 		print(taste, results)
 		objects = tuple([title["name"] for title in results])
 		performance = [value[taste] for value in [title["value"] for title in results]]
 		print(objects, performance)
-		
+
 		y_pos = np.arange(len(objects))
 		plt.bar(y_pos, performance, align='center', alpha=0.5)
 		plt.xticks(y_pos, objects)
@@ -202,4 +202,4 @@ if __name__ == "__main__":
 		plt.title('Taste: {}'.format(taste))
 
 		plt.show()
-		
+'''

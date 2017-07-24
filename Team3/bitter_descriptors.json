@@ -19,12 +19,13 @@
 			"rutabaga": 0.5,
 			"saffron": 0.6,
 			"thistles": 0.5,
-			"cucumbers": 0.65
+			"cucumbers": 0.94
 		}
 	},
 	{
 		"name": "bitter_l2",
 		"items": {
+			"coffee": 0.2749,
 			"sharp": 1,
 			"pungent":  1,
 			"artichokes": 1,

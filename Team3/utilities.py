@@ -2,7 +2,6 @@
 import hashlib
 import sys
 import json
-import nltk
 import re
 import csv
 from multiprocessing import Pool
@@ -24,7 +23,7 @@ def standardize_keys(nutrition_information):
 	nf_sugars:sugars
 	nf_protein:protein
 	'''
-	#try: 
+	#try:
 	#print(nutrition_information)
 	if nutrition_information.__contains__('metric_qty'):
 		nutrition_information['iron'] = nutrition_information['iron_dv'] if nutrition_information['iron_dv'] is not None else 0
@@ -42,7 +41,7 @@ def standardize_keys(nutrition_information):
 	mappings = zip(standard_keys, common_keys)
 	new_nutrition_information = dict()
 	for mapping in mappings:
-		new_nutrition_information[mapping[1]] = nutrition_information[mapping[0]]	
+		new_nutrition_information[mapping[1]] = nutrition_information[mapping[0]]
 	for item in full_nutrient_indices.items():
 		try:
 			new_nutrition_information[item[0]] = nutrition_information['full_nutrients'][item[1]]["value"]
@@ -96,7 +95,7 @@ def modmatchi(query_string, iterable, threshold):
 def modmatch(query_string, match_string, threshold):
 	match_string = re.sub(',','',match_string)
 	query_string = re.sub(',','',query_string)
-	
+
 	match_string_split = match_string.strip().upper().split(' ')
 	query_string_split = query_string.strip().upper().split(' ')
 	matched = [word for word in query_string_split if word in match_string_split]
@@ -115,7 +114,7 @@ def package(input_file):
 			if not contents.__contains__(line[0]):
 				contents[line[0]] = set()
 			contents[line[0]].add(line.strip('\n'))
-			
+
 	for key in contents.keys():
 		contents[key] = list(contents[key])
 	with open(input_file.split('.')[0] + '.json', 'w') as writer:
@@ -149,7 +148,7 @@ def standardize(input_file):
 		nutrition_scrubbed['food_name'] = nutrition['food_name']
 		nutrition_scrubbed['nf_ndb_no'] = nutrition['ndb_no']
 		nutrition_scrubbed['nf_upc'] = nutrition['upc']
-		for key in key_list:			
+		for key in key_list:
 			nutrition_scrubbed[key] = round(nutrition[key] * multiplier, 3) if nutrition[key] is not None else 0.0
 
 		json.dump(nutrition_scrubbed, json_standardized, indent = '\t')
