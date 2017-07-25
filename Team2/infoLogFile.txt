@@ -70,3 +70,15 @@
 2017-07-25 16:01:47,555 human blood unamrked by API
 2017-07-25 16:01:47,609 dosa unamrked by API
 2017-07-25 16:01:47,840 dosa unamrked by API
+2017-07-25 16:44:13,877 human blood unamrked by API
+2017-07-25 16:44:13,878 human blood unamrked by API
+2017-07-25 16:44:13,879 human blood unamrked by API
+2017-07-25 16:44:13,880 human blood unamrked by API
+2017-07-25 16:44:13,935 dosa unamrked by API
+2017-07-25 16:44:14,166 dosa unamrked by API
+2017-07-25 16:45:13,350 human blood unamrked by API
+2017-07-25 16:45:13,351 human blood unamrked by API
+2017-07-25 16:45:13,352 human blood unamrked by API
+2017-07-25 16:45:13,354 human blood unamrked by API
+2017-07-25 16:45:13,406 dosa unamrked by API
+2017-07-25 16:45:13,629 dosa unamrked by API

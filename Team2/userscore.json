@@ -1,12 +1,1 @@
-{
-    "tags": {
-        "dummyUser": {
-            "pizza": 0.666
-        }
-    },
-    "cuisine": {
-        "dummyUser": {
-            "italian": 0.154
-        }
-    }
-}
+{}

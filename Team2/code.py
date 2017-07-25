@@ -400,57 +400,36 @@ def in_flow(dish, ingredients = ""):
 
 	# printuserscore()
 
-'''
 def main():
-	x = len(sys.argv)
-	if x <= 3:
-		if x == 1:
-			from_server()
+	ap = argparse.ArgumentParser()
+	ap.add_argument("--dishName")
+	ap.add_argument("--dishIng")
+	ap.add_argument("--dishTaste")
+	ap.add_argument("-o", action='store_true')
+	ap.add_argument("-p", action='store_true')
 
-		elif x == 2:
-			in_flow(sys.argv[1])
+	argvalues = ap.parse_args()
 
-		elif x == 3:
-			in_flow(sys.argv[1], sys.argv[2])
-	
-		final_result = toPlot.makeDataToPlot(0)
+	if argvalues.o:
+		if argvalues.dishName and argvalues.dishTaste:
+			geometry.start(argvalues.dishName, argvalues.dishTaste)
+
+	elif argvalues.p:
+		if argvalues.dishTaste:
+			in_flow(argvalues.dishName, argvalues.dishIng)
+			tasteProfile.categoriseTaste(argvalues.dishTaste)
+			final_result = toPlot.makeDataToPlot(1)
+		if argvalues.dishIng:
+			in_flow(argvalues.dishName, argvalues.dishIng)
+			final_result = toPlot.makeDataToPlot(0)
+		if argvalues.dishName:
+			in_flow(argvalues.dishName)
+			final_result = toPlot.makeDataToPlot(0)
+		print(final_result)
 
 	else:
-		in_flow(sys.argv[1], sys.argv[2])
-		tasteProfile.categoriseTaste(sys.argv[3])
-		final_result = toPlot.makeDataToPlot(1)
-
-	print(final_result)
-'''
-
-ap = argparse.ArgumentParser()
-ap.add_argument("--dishName")
-ap.add_argument("--dishIng")
-ap.add_argument("--dishTaste")
-ap.add_argument("-o", action='store_true')
-ap.add_argument("-p", action='store_true')
-
-argvalues = ap.parse_args()
-print(argvalues)
-
-if argvalues.o:
-	if argvalues.dishName and argvalues.dishTaste:
-		geometry.start(argvalues.dishName, argvalues.dishTaste)
-
-elif argvalues.p:
-	if argvalues.dishTaste:
-		in_flow(argvalues.dishName, argvalues.dishIng)
-		tasteProfile.categoriseTaste(argvalues.dishTaste)
-		final_result = toPlot.makeDataToPlot(1)
-	if argvalues.dishIng:
-		in_flow(argvalues.dishName, argvalues.dishIng)
+		from_server()
 		final_result = toPlot.makeDataToPlot(0)
-	if argvalues.dishName:
-		in_flow(argvalues.dishName)
-		final_result = toPlot.makeDataToPlot(0)
-	print(final_result)
+		print(final_result)
 
-else:
-	from_server()
-	final_result = toPlot.makeDataToPlot(0)
-	print(final_result)
+main()
