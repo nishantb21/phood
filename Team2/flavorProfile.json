@@ -1,1 +1,9 @@
-{}
+{
+    "dummyUser": [
+        {
+            "sweet": 4,
+            "salt": 3,
+            "umami": 7
+        }
+    ]
+}

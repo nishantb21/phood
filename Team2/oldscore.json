@@ -1,73 +1,12 @@
 {
-    "cuisine": {
-        "dummyUser": {
-            "middle eastern": 0.333
-        },
-        "56235e41-a73c-4479-9913-468709e0934a": {
-            "american": 0.748,
-            "mexican": 0.192,
-            "english": 1.002,
-            "thai": 2.0,
-            "italian": 0.77
-        }
-    },
     "tags": {
         "dummyUser": {
-            "potato": 12.0,
-            "vegetable": 0.096,
-            "falafel": 16.0,
-            "snack": 0.464,
-            "mashed potato": 16.0
-        },
-        "56235e41-a73c-4479-9913-468709e0934a": {
-            "risotto": 2.0,
-            "cheese": 0.182,
-            "red meat": 0.228,
-            "beef": 0.334,
-            "vegetable": 0.048,
-            "potato": 8.0,
-            "pasta": 0.036,
-            "taco": 2.0,
-            "mayonnaise": 2.0,
-            "salad": 1.998,
-            "burger": 0.728,
-            "ratatouille": 2.0,
-            "chicken": 6.0,
-            "grill": 4.0,
-            "beverage": 0.026,
-            "peanut": 4.0,
-            "noodle": 0.666,
-            "pork": 2.0,
-            "peanut butter": 2.0,
-            "bread": 0.258,
-            "pie": 6.0,
-            "burrito": 2.0,
-            "dessert": 0.052,
-            "meat": 0.12,
-            "ham": 1.0,
-            "fried": 2.0,
-            "poultry": 1.002,
-            "almond milk": 2.0,
-            "butter": 2.0,
-            "pizza": 1.332,
-            "bun": 8.0,
-            "dairy": 0.222,
-            "nut": 0.6,
-            "milk": 0.2,
-            "snack": 0.116,
-            "sundae": 2.0,
-            "condiments": 0.1,
-            "seafood": 0.084,
-            "almond": 2.0,
-            "tuna": 12.0,
-            "hashbrown": 2.0,
-            "white meat": 0.126,
-            "rice": 0.5,
-            "sweet potato": 4.0,
-            "mashed potato": 2.0,
-            "sandwich": 1.4,
-            "fish": 0.096,
-            "chocolate": 0.106
+            "pizza": 0.333
+        }
+    },
+    "cuisine": {
+        "dummyUser": {
+            "italian": 0.077
         }
     }
 }

@@ -1,3 +1,6 @@
+# Refer readme.md for brief information about each file.
+# Refer files.md for detailed information about each file and functions used in each file.
+
 import json
 import collections
 import os
@@ -8,6 +11,9 @@ import copy
 import logging
 import sys
 import ast
+
+# This program is gives the data for plotting graphs which visualises user's old data and the updated data.
+# Retrieves the User ID from a file which maintains the ID of the latest edit. Uses this ID to get that user's old data and new data which is appended in the form an ordered dictionary.
 
 def makeDataToPlot(flavor):
 	userID = open("lastedit.txt", "r").read().strip()

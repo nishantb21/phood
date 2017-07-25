@@ -1,3 +1,14 @@
+import argparse
+import json
+import collections
+import os
+import re
+import requests
+import pickle
+import copy
+import logging
+import sys
+import ast
 import math
 
 sixth_overlap_area = []
@@ -79,12 +90,28 @@ def get_hexagon_area(h):
 
     return x
 
-dish_score = [2, 2, 2, 2, 2, 2]
-user_score = [2, 2, 2, 2, 2, 0]
+def start(dishName, dishTaste):
+    dish_score = []
+    user_score = []
+    dishTaste = ast.literal_eval(dishTaste)
 
-compute_difference_in_area(dish_score, user_score)
-sixth_user_area = get_hexagon_area(user_score)
-sixth_dish_area = get_hexagon_area(dish_score)
+    for i in sorted(dishTaste):
+        dish_score.append(dishTaste[i])
 
-x = max(sum(sixth_user_area), sum(sixth_dish_area))
-print("Percentage Overlap Dish", round((sum(sixth_overlap_area) / x * 100), 2))
+    user_s = json.load(open("flavorProfile.json"))
+    userID = open("lastedit.txt", "r").read().strip()
+    user_s = user_s[userID][0]
+
+    for i in sorted(user_s):
+        user_score.append(dishTaste[i])
+
+    print(dish_score)
+    print(user_score)
+
+    compute_difference_in_area(dish_score, user_score)
+    sixth_user_area = get_hexagon_area(user_score)
+    sixth_dish_area = get_hexagon_area(dish_score)
+
+    x = max(sum(sixth_user_area), sum(sixth_dish_area))
+    score_final = round((sum(sixth_overlap_area) / x * 100), 2)
+    print("Percentage Overlap for", dishName, "and, user", userID, ":", score_final)

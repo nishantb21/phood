@@ -1,3 +1,6 @@
+# Refer readme.md for brief information about each file.
+# Refer files.md for detailed information about each file and functions used in each file.
+import argparse
 import json
 import collections
 import os
@@ -8,6 +11,8 @@ import copy
 import logging
 import sys
 import ast
+import math
+
 
 import cleaning
 import write_files
@@ -16,7 +21,9 @@ import call_api
 import GetLogs
 import toPlot
 import tasteProfile
+import geometry
 
+# This function retrieves the user scores from the json file, sorts the scores and prints it on the screen.
 def printuserscore():
 	userscore = json.load(open("userscore.json"))
 	for i in sorted(userscore):
@@ -27,6 +34,7 @@ def printuserscore():
 			print("\n")
 		print("")
 
+# This function takes the tags of the dishes as input and checks if they are present in the hierarchy. If they are not present, then the tags are appended to the hierarchy. Each new item that gets added to the hierarchy is logged in a separate log file.
 def add_to_hier(tags):
 	handle = open("h.json")
 	hierarchy = json.load(handle)
@@ -48,6 +56,8 @@ def add_to_hier(tags):
 	for item in newly_added:
 		write_files.log_data(item + " added to the tag hierarchy", "infoLogFile.txt")
 
+# The knowledge base for meta tags are categorised into two pickle files - data1 and data2. data1 contains keys which have one or more words in them and string match is the operation done for comparison. data2 contains keys which are of only one word and these keys are hashed for comparison. This is done to avoid conflicts. Example : "cola" is tagged as ["cola", "beverage"]. The word "cola" is a substring of "chocolate" so "chocolate" ends up being tagged as ["cola", "beverage"] as well if string match is done. Hence, hashing is done.
+# This function takes as input, a key and tags associated with it. The length of the key is checked and then determined as to, to which file that particular record has to be added into.
 def add_to_database(key, tags):
 	spaces = key.count(' ')
 
@@ -58,9 +68,12 @@ def add_to_database(key, tags):
 	
 	write_files.write_to_dict(key, tags, file_name)
 
+# Items which have more than one parent in the hierarchy are stroed in a separate json file. This function takes the key-value pair of the item with shared parents and writes it into the json file.
 def add_shared_parent(key, value):
 	write_files.write_dict_json(key, value, "sharedparents.json")
 
+# The knowledge base contains a list of non vegetarian items which are used to determine whether the input (dish) is vegetarian or non vegetarian.
+# This function accepts a key and tags associated with it as input and checks if any of the tags match with the non veg list. If a match is found for a tag, the key associated with that tag is appended into the non veg list (if the key already does not exist).
 def check_nonveg(key, tags):
 	vegnonveg_file = open("vegnonveg.pickle", "rb")
 	vegnonveg = pickle.load(vegnonveg_file)
@@ -73,20 +86,24 @@ def check_nonveg(key, tags):
 	vegnonveg_file.close()
 	write_files.write_to_list(vegnonveg, "vegnonveg.pickle")
 
+# Dish name is taken as input along with ingredients. THis function tags the dish with meta tags and cuisine tags. Whether the dish is vegetarian or non vegetarian and the size of serving of the dish is also determined based on the data available.
 def tag_dish(dish, ingredients = "", restaurant = ""):
 	cui = []
 	tag = []
 	veg = 1
 	size = None
 
+	# A list is maintained with negation words, which when encountered in the dish name, the tags of the subsequent word after the word matched in this list, are removed. Example : "Chicken sandwich without mayo"
 	negations = {"without", "instead", "monkey"}
+	# Instead of removing the tags associated with the word after the negation word, the tags of the previous word are removed when "free" is encountered. Example : "Sugar free coffee"
 	free = {"free"}
 
+	# All comparisons are done for lowercase text and thus, everything is converted to lowercase at first.
 	dishLower = dish.lower()
-	print('falafel' in dishLower)
 
 	ingredientsLower = ingredients.lower()
 
+	# Input is split based on space or comma as delimeter.
 	dl = re.split(',| ',dishLower)
 	il = re.split(',| ',ingredientsLower)
 	dl = list(map(str.strip, dl))
@@ -142,6 +159,7 @@ def tag_dish(dish, ingredients = "", restaurant = ""):
 			if next in data2:
 				tag = list(set(tag) - set(data2[next]))
 
+	# Removing repeated tags
 	tag = set(tag)
 	
 	### cuisine ###
@@ -154,6 +172,7 @@ def tag_dish(dish, ingredients = "", restaurant = ""):
 		if i in cuisine:
 			cui.append(cuisine[i])
 
+	# Removing repeated tags
 	cui = set(cui)
 
 	### veg - NonVeg ###
@@ -181,6 +200,7 @@ def tag_dish(dish, ingredients = "", restaurant = ""):
 
 	return (list(tag), list(cui), veg, size)
 
+# Dish name and ingredients are accepted as input and then tagged. If no tags are returned, then the Spoonacular API is called. The tags returned by the API are then cleaned so that the new tags are similar in structure to the tags in the knowledge base. These cleaned tags are then added to the database and hierarchy. Suppose the API could not tag the dish, it is logged in a separate log file and every item that API could not tag is stored in another separate file.
 def tagging_dish(term, ingredients = ""):
 	returned_data = tag_dish(term, ingredients)
 	tags = returned_data[0]
@@ -206,8 +226,11 @@ def tagging_dish(term, ingredients = ""):
 							add_shared_parent(j, cleaned_tags[1])
 	return (tags, cuisine)
 
+# This function takes the dish and userID as input and returns a score based on that user's logs.
+# "type" parameter is to determine whether to score for meta tags or cuisine tags.
+# "factor" parameter determines what multiplier to be used for scoring the user. Depending upon whether the user searches, wishlists or purchases an item, the factor varies and so does the final score.
+# These scores are then written to a json file, which will be updated every time the user queries for some dish.
 def score(dish, userID = "", factor = 1 ,type = 0):
-	# print(dish, userID)
 	userscore = json.load(open("userscore.json"))
 
 	# metatags
@@ -266,6 +289,8 @@ def score(dish, userID = "", factor = 1 ,type = 0):
 	open("lastedit.txt", "w+").write(userID)
 	write_files.write_json(userscore, "userscore.json")
 
+# This function takes the user's log as input along with the factor and then extracts the dish name from the logs, which is to be scored.
+# Depending upon whether search log, wishlist log or purchased log is being searched, the way to extract to dish name differs and the scoring factor also differs as explained above.
 def tag_score_user(log, factor):
 	if factor == 1:
 		search_term_in = log["resource"]
@@ -356,13 +381,13 @@ def from_server():
 
 	# printuserscore()
 
+# This function retrieves the user logs and then makes a copy of it before updating his logs with the new values. These old and new values are used for visualisation
 def in_flow(dish, ingredients = ""):
 	userscore = json.load(open("userscore.json"))
 	oldscore = copy.deepcopy(userscore)
 	json.dump(oldscore, open("oldscore.json", "w+"), indent = 4)
 
 	returned_tags = tagging_dish(dish, ingredients)
-	print(returned_tags)
 	# meta tags for dishes
 	if len(returned_tags[0]) != 0:
 		for i in returned_tags[0]:
@@ -375,6 +400,7 @@ def in_flow(dish, ingredients = ""):
 
 	# printuserscore()
 
+'''
 def main():
 	x = len(sys.argv)
 	if x <= 3:
@@ -395,5 +421,36 @@ def main():
 		final_result = toPlot.makeDataToPlot(1)
 
 	print(final_result)
+'''
 
-main()
+ap = argparse.ArgumentParser()
+ap.add_argument("--dishName")
+ap.add_argument("--dishIng")
+ap.add_argument("--dishTaste")
+ap.add_argument("-o", action='store_true')
+ap.add_argument("-p", action='store_true')
+
+argvalues = ap.parse_args()
+print(argvalues)
+
+if argvalues.o:
+	if argvalues.dishName and argvalues.dishTaste:
+		geometry.start(argvalues.dishName, argvalues.dishTaste)
+
+elif argvalues.p:
+	if argvalues.dishTaste:
+		in_flow(argvalues.dishName, argvalues.dishIng)
+		tasteProfile.categoriseTaste(argvalues.dishTaste)
+		final_result = toPlot.makeDataToPlot(1)
+	if argvalues.dishIng:
+		in_flow(argvalues.dishName, argvalues.dishIng)
+		final_result = toPlot.makeDataToPlot(0)
+	if argvalues.dishName:
+		in_flow(argvalues.dishName)
+		final_result = toPlot.makeDataToPlot(0)
+	print(final_result)
+
+else:
+	from_server()
+	final_result = toPlot.makeDataToPlot(0)
+	print(final_result)
