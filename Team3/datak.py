@@ -1,6 +1,4 @@
 import requests
-import re
-import hashlib
 import os
 import json
 import utilities
@@ -13,8 +11,10 @@ nutrition_url = 'https://www.nutritionix.com/nixapi/items/'
 nutrition_common_url = 'https://www.nutritionix.com/track-api/v2/natural/nutrients'
 brand_id_url = "https://d1gvlspmcma3iu.cloudfront.net/brands-restaurant.json.gz"
 brand_dishes = 'https://www.nutritionix.com/nixapi/brands/{0}/items/1?limit=1000&search='
+
+
 class NutritionixResponse:
-	def __init__(self, item_type='common', name='name', item_id=None, nutrition_data = dict()):
+	def __init__(self, item_type='common', name='name', item_id=None, nutrition_data=dict()):
 		self.name = name
 		self.item_id = item_id
 		self.item_type = item_type
@@ -26,6 +26,7 @@ class NutritionixResponse:
 		except KeyError:
 			return self.name
 
+
 def save_for(brand):
 	try:
 		items_json = requests.get(brand_dishes.format(brand['id']))
@@ -34,7 +35,7 @@ def save_for(brand):
 		print("Hits: ", items["total_hits"], end='\n')
 		count = 0
 		for item in items["items"]:
-			print('\r({:3}/{:3})'.format(count, items['total_hits']), item['item_name'], end='  '*20)
+			print('\r({:3}/{:3})'.format(count, items['total_hits']), item['item_name'], end='  ' * 20)
 			if not os.path.exists('branded_dishes/' + utilities.hash(item['item_name']) + ".json"):
 				nutrition = requests.get(nutrition_url + item['item_id'])
 				with open('branded_dishes/' + utilities.hash(item['item_name']) + ".json", 'w') as file:
@@ -43,6 +44,7 @@ def save_for(brand):
 		print("\r")
 	except KeyError:
 		pass
+
 
 def leech_brand(brand_file):
 	brand_ids = list()
@@ -53,6 +55,7 @@ def leech_brand(brand_file):
 	for brand in brand_ids:
 		print(brand['name'], end=' | ')
 
+
 def ingredient(query):
 	print('\rQuerying for: ' + query.strip(), end='\r', flush=True)
 	response = requests.get(query_url + utilities.parameterize(query))
@@ -62,37 +65,29 @@ def ingredient(query):
 			possible_matches = list()
 			if len(response_json['common']) > 0:
 				for rid in range(min(3, len(response_json['common']))):
-					possible_matches.append(NutritionixResponse(item_type = 'common', name = response_json['common'][rid]['food_name'], item_id = None))
-				
+					possible_matches.append(NutritionixResponse(item_type='common', name=response_json['common'][rid]['food_name'], item_id=None))
 			elif len(response_json['branded']) > 0:
 				for rid in range(min(3, len(response_json['branded']))):
-					possible_matches.append(NutritionixResponse(item_type = 'branded', name = response_json['branded'][rid]['brand_name_item_name'], item_id = response_json['branded'][rid]['nix_item_id']))
-			#print(query)
+					possible_matches.append(NutritionixResponse(item_type='branded', name=response_json['branded'][rid]['brand_name_item_name'], item_id=response_json['branded'][rid]['nix_item_id']))
 			best_match = utilities.modmatchir(query, possible_matches, 0.2)
 			if best_match is not None:
 				if best_match.item_type == 'common':
-					response_nutrition = requests.post(nutrition_common_url, data = {"query": best_match.name})
+					response_nutrition = requests.post(nutrition_common_url, data={"query": best_match.name})
 					response_nutrition = response_nutrition.json()
 					try:
 						response_nutrition = response_nutrition['foods'][0]
 					except json.decoder.DecodeError:
 						pass
-					return NutritionixResponse(name=response_nutrition['food_name'],
-					                           item_type='common',
-					                           nutrition_data = utilities.standardize_keys(response_nutrition)
-					                           )
+					return NutritionixResponse(name=response_nutrition['food_name'], item_type='common', nutrition_data=utilities.standardize_keys(response_nutrition))
 
 				response_nutrition = requests.get(nutrition_url + best_match.item_id)
 				response_nutrition = response_nutrition.json()
-				return NutritionixResponse(name=best_match.name,
-				                           item_type='branded',
-				                           item_id=best_match.item_id,
-				                           nutrition_data = response_nutrition
-				                           )
+				return NutritionixResponse(name=best_match.name, item_type='branded', item_id=best_match.item_id, nutrition_data=response_nutrition)
 		else:
 			return None
 	except KeyError as ke:
 		pass
+
 
 def leech(for_file, folder):
 	with open(for_file) as queries, open('misses_' + queries.name.split("/")[-1], 'w') as misses:
@@ -109,14 +104,11 @@ def leech(for_file, folder):
 			else:
 				misses.write(query)
 
-	#print('\nDone.')
 
 def assign(values):
 	leech(values, sys.argv[2])
 
+
 if __name__ == '__main__':
-	#leech_brand(sys.argv[1])
-	
 	with Pool(8) as ppool:
 		ppool.map(assign, glob.iglob(sys.argv[1] + "/food_names.*"))
-	

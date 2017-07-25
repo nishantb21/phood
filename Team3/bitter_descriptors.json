@@ -7,11 +7,9 @@
 			"cauliflower": 0.3,
 			"chayotes": 0.5,
 			"cress": 0.5,
-			"dandelion greens": 0.5,
 			"endive": 0.35,
 			"escarole": 0.85,
 			"lettuce": 0.45,
-			"milk thistle": 0.35,
 			"olives": 0.7,
 			"pumpkins": 0.30,
 			"rhubarb": 0.85,
@@ -29,17 +27,13 @@
 			"sharp": 1,
 			"pungent":  1,
 			"artichokes": 1,
-			"bok choi": 1,
-			"bok choy": 1,
 			"broccoli": 1,
-			"brussels sprouts": 1,
 			"chard": 1,
 			"chicory": 0.90,
 			"cocoa": 0.80,
 			"dill": 0.9,
 			"gourd": 0.95,
 			"kale": 1,
-			"pak choi": 1,
 			"tonic": 1,
 			"turmeric": 1,
 			"zucchini": 1,
@@ -51,8 +45,14 @@
 			"items": {
 			"bitter gourd": 1,
 			"bitter melon": 1,
+			"bok choi": 1,
+			"bok choy": 1,
+			"brussels sprouts": 1,
 			"courgettes": 1,
-			"dark chocolate": 0.85
+			"dandelion greens": 0.5,
+			"dark chocolate": 0.85,
+			"milk thistle": 0.35,
+			"pak choi": 1
 			}
-		}		
+		}
 ]

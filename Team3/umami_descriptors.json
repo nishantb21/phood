@@ -1,0 +1,118 @@
+[
+	{
+		"name": "protein_supps",
+		"items": {
+			"casein": 0.92,
+			"whey": 1.0,
+			"eggs" : 0.87
+		}
+	},
+	{
+		"name": "vegetables",
+		"items": {
+			"asparagus": 0.0136,
+			"celery": 0.0077,
+			"apple": 0.0,
+			"grape": 0.0533,
+			"ginger": 0.0047,
+			"onion": 0.0139,
+			"mushroom": 0.0521,
+			"shungiku": 0.0225,
+			"daikon": 0.0195,
+			"wakame": 0.0136,
+			"cabbage": 0.0136,
+			"tomatoes": 0.0729,
+			"strawberry": 0.012,
+			"ikura": 0.0047,
+			"stilton": 0.2417,
+			"spinach": 0.0195,
+			"potatoes": 0.029,
+			"miso": 0.2062,
+			"camembert": 0.1143,
+			"carrot": 0.0086,
+			"plum": 0.0012,
+			"broccoli": 0.0509,
+			"kimchi": 0.0699,
+			"yellowfruit": 0.0012,
+			"kiwi": 0.0003,
+			"corn": 0.0314,
+			"garlic": 0.0284,
+			"truffles": 0.0225,
+			"avocado": 0.0041,
+			"katsuobushi": 0.0107
+		}
+	},
+	{
+		"name": "meat",
+		"items": {
+			"aji": 0.0029,
+			"anchovies": 0.452,
+			"bacon": 1.0,
+			"beef": 0.04,
+			"bonito": 0.2009,
+			"caviar": 0.0517,
+			"chicken": 0.0298,
+			"clam": 0.1463,
+			"cod": 0.0007,
+			"prawn": 0.0808,
+			"shrimp": 0.0808,
+			"squid": 0.0997,
+			"tuna": 0.1303,
+			"uni": 0.0662
+		}
+	},
+	{
+		"name": "strings",
+		"items": {
+			"appetizing": 0.25,
+			"aromatic": 0.25,
+			"delectable": 0.50,
+			"relishing": 0.80,
+			"savoury": 1,
+			"savory": 1,
+			"palatable": 0.85,
+			"savorous": 1,
+			"scrumptious": 0.75,
+			"meatiness": 1
+		}
+	},
+	{
+		"name": "multi_words",
+		"items": {
+			"chicken egg yolk" : 0.97,
+			"blue crab": 0.0247,
+			"shimeji mushroom": 0.0403,
+			"white shrimp": 0.008,
+			"whole chicken egg": 0.0044,
+			"snow crab": 0.0073,
+			"sea urchin": 0.0662,
+			"japanese littleneck clam": 0.059,
+			"fish sauce": 1.0,
+			"dry-cured hams": 0.2409,
+			"cured ham": 0.2387,
+			"chicken bones": 0.0226,
+			"green asparagus": 0.0133,
+			"naga kombu": 0.4135,
+			"fava beans": 0.0225,
+			"sweet potato": 0.0166,
+			"peach juice": 0.0083,
+			"grape juice": 0.0752,
+			"soy sauce": 0.5024,
+			"soy beans": 0.0225,
+			"rausu kombu": 1.0,
+			"lotus root": 0.0284,
+			"ma kombu": 0.9467,
+			"orange juice": 0.005,
+			"shiitake mushroom": 0.0432,
+			"rishiri kombu": 0.5853,
+			"green peas": 0.0314,
+			"enoki mushroom": 0.0255,
+			"hidaka kombu": 0.3957,
+			"chinese cabbage": 0.0255,
+			"burdock root": 0.0047,
+			"green onion": 0.0136,
+			"bamboo shoots": 0.0255,
+			"fresh tomato": 0.0758
+		}
+	}
+]
