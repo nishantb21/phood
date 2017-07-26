@@ -412,8 +412,8 @@ def main():
 
 	if argvalues.o:
 		if argvalues.dishName and argvalues.dishTaste:
-			tasteProfile.categoriseTaste(argvalues.dishTaste)
-			geometry.start(argvalues.dishName, argvalues.dishTaste)
+			ans = geometry.start(argvalues.dishName, argvalues.dishTaste)
+			print(ans)
 
 	elif argvalues.p:
 		if argvalues.dishTaste:

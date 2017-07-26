@@ -1,0 +1,18 @@
+{
+    "tags": {
+        "dummyUser": {
+            "mint": 3.0,
+            "beverage": 0.039,
+            "burger": 0.273,
+            "cooler": 3.0,
+            "lemon": 1.5,
+            "bread": 0.13,
+            "bun": 3.0
+        }
+    },
+    "cuisine": {
+        "dummyUser": {
+            "american": 0.103
+        }
+    }
+}

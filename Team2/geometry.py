@@ -116,4 +116,7 @@ def start(dishName, dishTaste):
 
     x = max(sum(sixth_user_area), sum(sixth_dish_area))
     score_final = round((sum(sixth_overlap_area) / x * 100), 2)
-    print("Percentage Overlap for", dishName, "and, userID - ", userID, ":", score_final)
+    answer = {}
+    answer["userID"] = userID
+    answer["score"] = score_final
+    return answer
