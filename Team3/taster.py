@@ -120,7 +120,7 @@ def umami(dish_title, nutrition_data, PROTEIN_SUPPLEMENT_MULTIPLIER=0.80, VEGETA
 		if descriptor_score.__contains__(pair[1]):
 
 			umamiscore += pair[0] * descriptor_score[pair[1]]
-	return round(umamiscore*10, 3)
+	return round(umamiscore*10, 3) if umamiscore <= 10 else 10
 
 
 def total_weight(dish_nutrition):
