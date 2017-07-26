@@ -70,6 +70,6 @@ def makeDataToPlot(flavor):
 				else:
 					anser['spice'] = 0
 			ans["flavor"] = answer
-			
+	
 	ans = json.dumps(ans)
 	return ans
