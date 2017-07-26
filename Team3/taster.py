@@ -88,8 +88,8 @@ def spicy(dish_title):
 		spice = json.load(f)
 	for word in food_words:
 		if word in spice[word[0]]:
-			return True
-	return False
+			return 1
+	return 0
 
 
 def match_descriptors(dish_title, descriptor_dict):

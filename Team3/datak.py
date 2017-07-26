@@ -57,7 +57,7 @@ def leech_brand(brand_file):
 
 
 def ingredient(query):
-	print('\rQuerying for: ' + query.strip(), end='\r', flush=True)
+	#print('\rQuerying for: ' + query.strip(), end='\r', flush=True)
 	response = requests.get(query_url + utilities.parameterize(query))
 	response_json = response.json()
 	try:

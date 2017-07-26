@@ -13,7 +13,7 @@ if arguments.profile:
 	for dish in arguments.profile:
 		datakresponse = datak.ingredient(dish)
 		tastejson = taster.taste_dish(datakresponse.nutrition_data)
-		print(tastejson)
+		print(json.dumps(tastejson))
 		if not os.path.exists(os.path.join("tasted", utilities.hash(datakresponse.name))):
 				with open(datakresponse.name, 'w') as outfile:
 					json.dump(tastejson, outfile, indent='\t')
