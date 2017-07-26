@@ -391,12 +391,12 @@ def in_flow(dish, ingredients = ""):
 	# meta tags for dishes
 	if len(returned_tags[0]) != 0:
 		for i in returned_tags[0]:
-			score(i, "dummyUser", 1)
+			score(i, "dummyUser", 3)
 
 	# cuisine tags for dishes
 	if len(returned_tags[1]) != 0:
 		for i in returned_tags[1]:
-			score(i, "dummyUser", 1, 1)
+			score(i, "dummyUser", 3, 1)
 
 	# printuserscore()
 
