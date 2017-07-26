@@ -3,7 +3,6 @@ import os
 import json
 import utilities
 import sys
-import glob
 from multiprocessing import Pool
 
 query_url = 'https://www.nutritionix.com/track-api/v2/search/instant?branded=true&common=true&self=false&query='
@@ -27,19 +26,19 @@ class NutritionixResponse:
 			return self.name
 
 
+
 def save_for(brand):
 	try:
 		items_json = requests.get(brand_dishes.format(brand['id']))
-		print(brand['name'] + ' | ')
+		print(brand['name'] + ' | ', end='')
 		items = items_json.json()
-		print("Hits: ", items["total_hits"], end='\n')
+		print("Hits: ", items["total_hits"])
 		count = 0
 		for item in items["items"]:
-			print('\r({:3}/{:3})'.format(count, items['total_hits']), item['item_name'], end='  ' * 20)
 			if not os.path.exists('branded_dishes/' + utilities.hash(item['item_name']) + ".json"):
 				nutrition = requests.get(nutrition_url + item['item_id'])
 				with open('branded_dishes/' + utilities.hash(item['item_name']) + ".json", 'w') as file:
-					json.dump(nutrition.json(), file, indent='\t')
+					json.dump(utilities.standardize_keys(nutrition.json()), file, indent='\t')
 					count += 1
 		print("\r")
 	except KeyError:
@@ -52,12 +51,9 @@ def leech_brand(brand_file):
 		brand_ids = json.load(brands)
 	with Pool(15) as ppool:
 		ppool.map(save_for, brand_ids)
-	for brand in brand_ids:
-		print(brand['name'], end=' | ')
 
 
 def ingredient(query):
-	#print('\rQuerying for: ' + query.strip(), end='\r', flush=True)
 	response = requests.get(query_url + utilities.parameterize(query))
 	response_json = response.json()
 	try:
@@ -85,7 +81,7 @@ def ingredient(query):
 				return NutritionixResponse(name=best_match.name, item_type='branded', item_id=best_match.item_id, nutrition_data=response_nutrition)
 		else:
 			return None
-	except KeyError as ke:
+	except KeyError:
 		pass
 
 
@@ -110,5 +106,13 @@ def assign(values):
 
 
 if __name__ == '__main__':
+	'''
 	with Pool(8) as ppool:
 		ppool.map(assign, glob.iglob(sys.argv[1] + "/food_names.*"))
+	'''
+	save_for(
+		{
+			"id": "569010fe25bbe91d1fc2b671",
+			"name": "tendergreens"
+		}
+		)
