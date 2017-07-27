@@ -413,6 +413,7 @@ def main():
 	if argvalues.o:
 		if argvalues.dishName and argvalues.dishTaste:
 			ans = geometry.start(argvalues.dishName, argvalues.dishTaste)
+			ans = json.dumps(ans)
 			print(ans)
 
 	elif argvalues.p:
