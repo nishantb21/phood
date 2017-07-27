@@ -114,22 +114,15 @@ def start(dishName, dishTaste):
             flav_sum += i[j]
         if j != 'spicy':
             user_score.append(round((flav_sum / user_s_len), 2))
-    
-    # print(user_score)
-    # print(dish_score)
 
     compute_difference_in_area(dish_score, user_score)
-    # print(sixth_overlap_area)
-    # print(sum(sixth_overlap_area))
 
     sixth_user_area = get_hexagon_area(user_score)
     sixth_dish_area = get_hexagon_area(dish_score)
-    # print(sum(sixth_dish_area))
-    # print(sum(sixth_user_area))
 
     x = max(sum(sixth_user_area), sum(sixth_dish_area))
 
-    score_final = round((sum(sixth_overlap_area) / x * 100), 2)
+    score_final = math.ceil((sum(sixth_overlap_area)/ x * 100))
     answer = {}
     answer["userID"] = userID
     answer["score"] = score_final
