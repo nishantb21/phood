@@ -52,10 +52,10 @@ def compute_difference_in_area_for_sixth(x1_1,y1_1,x2_1,y2_1,x1_2,y1_2,x2_2,y2_2
 
     else:
         x_temp, y_temp = get_intersection_point(x1_1,y1_1,x2_1,y2_1,x1_2,y1_2,x2_2,y2_2)
-        if (((x1_1<x1_2) and (y1_1 < y1_2)) and ((x2_2 < x2_1) and (y2_2 < y2_1))):
+        if (((x1_1 <= x1_2) and (y1_1 <= y1_2)) and ((x2_2 <= x2_1) and (y2_2 <= y2_1))):
             area += compute_area_triangle_heron(0,0,x1_1,y1_1,x_temp,y_temp)
             area += compute_area_triangle_heron(0,0,x_temp,y_temp,x2_2,y2_2)
-    
+
         else:
             area += compute_area_triangle_heron(0,0,x1_2,y1_2,x_temp,y_temp)
             area += compute_area_triangle_heron(0,0,x_temp,y_temp,x2_1,y2_1)
@@ -79,6 +79,7 @@ def compute_difference_in_area(h1,h2):
         y1_2 = h2[i]
         x2_2 = h2[j]*math.cos(theta2_radians)
         y2_2 = h2[j]*math.sin(theta2_radians)
+
         sixth_overlap_area.append(compute_difference_in_area_for_sixth(x1_1,y1_1,x2_1,y2_1,x1_2,y1_2,x2_2,y2_2))
     
 def get_hexagon_area(h):
@@ -120,10 +121,12 @@ def start(dishName, dishTaste):
     sixth_user_area = get_hexagon_area(user_score)
     sixth_dish_area = get_hexagon_area(dish_score)
 
-    x = max(sum(sixth_user_area), sum(sixth_dish_area))
+    # x = max(sum(sixth_user_area), sum(sixth_dish_area))
+    x = sum(sixth_user_area)
 
-    score_final = math.ceil((sum(sixth_overlap_area)/ x * 100))
+    score_final = round((sum(sixth_overlap_area)/ x * 100), 2)
+    
     answer = {}
     answer["userID"] = userID
-    answer["score"] = score_final
+    answer["score"] = 100 if score_final > 99.50 else score_final
     return answer

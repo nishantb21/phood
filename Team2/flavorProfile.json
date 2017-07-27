@@ -1,1 +1,13 @@
-{}
+{
+    "dummyUser": [
+        {
+            "sour": 0.39,
+            "bitter": 0.01,
+            "salt": 4.362,
+            "sweet": 0.09,
+            "umami": 1.513,
+            "spicy": 0,
+            "rich": 0.996
+        }
+    ]
+}
