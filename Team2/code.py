@@ -412,17 +412,19 @@ def main():
 
 	if argvalues.o:
 		if argvalues.dishName and argvalues.dishTaste:
-			geometry.start(argvalues.dishName, argvalues.dishTaste)
+			ans = geometry.start(argvalues.dishName, argvalues.dishTaste)
+			ans = json.dumps(ans)
+			print(ans)
 
 	elif argvalues.p:
 		if argvalues.dishTaste:
 			in_flow(argvalues.dishName, argvalues.dishIng)
 			tasteProfile.categoriseTaste(argvalues.dishTaste)
 			final_result = toPlot.makeDataToPlot(1)
-		if argvalues.dishIng:
+		elif argvalues.dishIng:
 			in_flow(argvalues.dishName, argvalues.dishIng)
 			final_result = toPlot.makeDataToPlot(0)
-		if argvalues.dishName:
+		elif argvalues.dishName:
 			in_flow(argvalues.dishName)
 			final_result = toPlot.makeDataToPlot(0)
 		print(final_result)

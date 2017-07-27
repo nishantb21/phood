@@ -24,8 +24,23 @@ def standardize_keys(nutrition_information):
 	nf_protein:protein
 	'''
 	if nutrition_information.__contains__('metric_qty'):
-		nutrition_information['iron'] = nutrition_information['iron_dv'] if nutrition_information['iron_dv'] is not None else 0
-		return nutrition_information  # Key exists, is already in standard format
+		keys = [
+			"item_name",
+			"metric_qty",
+			"calories",
+			"total_fat",
+			"saturated_fat",
+			"cholesterol",
+			"sodium",
+			"total_carb",
+			"dietary_fiber",
+			"sugars",
+			"protein"
+		]
+		dictionary = dict()
+		for key in keys:
+			dictionary[key] = nutrition_information[key]
+		return dictionary
 	full_nutrient_keys = {"iron": 303, "vitamin_c": 401}
 	full_nutrient_indices = {'iron': 0, 'vitamin_c': 0}
 	for nutrient in nutrition_information['full_nutrients']:

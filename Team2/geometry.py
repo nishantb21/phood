@@ -100,18 +100,23 @@ def start(dishName, dishTaste):
 
     user_s = json.load(open("flavorProfile.json"))
     userID = open("lastedit.txt", "r").read().strip()
-    user_s = user_s[userID][0]
+    user_s = user_s[userID]
 
-    for i in sorted(user_s):
-        user_score.append(dishTaste[i])
+    user_s_len = len(user_s)
 
-    print(dish_score)
-    print(user_score)
-
+    for j in sorted(dishTaste):
+        flav_sum = 0
+        for i in user_s:
+            flav_sum += i[j]
+        user_score.append(flav_sum / user_s_len)
+    
     compute_difference_in_area(dish_score, user_score)
     sixth_user_area = get_hexagon_area(user_score)
     sixth_dish_area = get_hexagon_area(dish_score)
 
     x = max(sum(sixth_user_area), sum(sixth_dish_area))
     score_final = round((sum(sixth_overlap_area) / x * 100), 2)
-    print("Percentage Overlap for", dishName, "and, user", userID, ":", score_final)
+    answer = {}
+    answer["userID"] = userID
+    answer["score"] = score_final
+    return answer
