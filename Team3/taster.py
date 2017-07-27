@@ -1,5 +1,5 @@
 import json
-import glob
+import sys
 import utilities
 import itertools
 
@@ -36,17 +36,13 @@ def rich(nutrition_data, RICHNESS_FACTOR_X=0.2, RICHNESS_FACTOR_Y=1.3, RICHNESS_
 	try:
 		total_weight = nutrition_data['metric_qty']
 		richness_score_x = nutrition_data['saturated_fat'] / nutrition_data['total_fat']  # high
-		# Why consider sat_fat if we're considering total fat anyway? Would make more sense if total fat wasn't available
 		richness_score_y = nutrition_data['total_fat'] / total_weight  # low
-		# Why is this not enough to work off of?
 		richness_score_z = nutrition_data['cholesterol'] / (total_weight * 1000)
-		# I'll admit that this is a good idea anyway
 		richness_score_1 = (RICHNESS_FACTOR_X * richness_score_x) + (RICHNESS_FACTOR_Y * richness_score_y) + (RICHNESS_FACTOR_Z * richness_score_z)
 	except Exception:
 		richness_score_1 = 0
 
-	return round((richness_score_1 * 10 / 0.992), 3)
-	# Normalize to butter which has highest score
+	return round((richness_score_1 * 10 / 0.992), 3)  # Normalize to butter which has highest score
 
 
 def sour(dish_title, nutrition_data, SOURNESS_FACTOR_X=0.1, SOURNESS_FACTOR_Y=0.25, SOURNESS_FACTOR_Z=0.5):
@@ -97,7 +93,7 @@ def match_descriptors(dish_title, descriptor_dict):
 	final_scores = dict()
 	for item in descriptor_dict:
 		for pair in itertools.product(item['items'].items(), dish_split):
-			if pair[0][0].lower() in pair[1].lower():
+			if pair[0][0].lower() in pair[1].lower().strip():
 				try:
 					final_scores[item["name"]] += pair[0][1]
 				except KeyError:
@@ -114,13 +110,13 @@ def umami(dish_title, nutrition_data, PROTEIN_SUPPLEMENT_MULTIPLIER=0.80, VEGETA
 	descriptor_score = match_descriptors(dish_title, umami_descriptors)
 
 	umamiscore = nutrition_data["protein"] / total_weight(nutrition_data)
+	umamiscore *= 10
 
 	pairings = zip([PROTEIN_SUPPLEMENT_MULTIPLIER, VEGETABLES_MULTIPLIER, MEAT_MULTIPLIER, STRING_MULTIPLIER], ["protein_supps", "vegetables", "meat", "savory_strings"])
 	for pair in pairings:
 		if descriptor_score.__contains__(pair[1]):
-
 			umamiscore += pair[0] * descriptor_score[pair[1]]
-	#umamiscore *= 10
+
 	return round(umamiscore, 3) if umamiscore <= 10 else 10
 
 
@@ -149,24 +145,21 @@ def bitter(dish_title, nutrition_data, LEVEL1_MULTIPLIER=0.80, LEVEL2_MULTIPLIER
 	return round(bitterscore / 1.4571, 3)
 
 
-def taste_dish(jv):
+def taste_dish(dish_title, jv):
 	return {
 		"sweet": sweet(jv),
 		"rich": rich(jv),
-		"sour": sour(jv["item_name"], jv),
-		"spicy": spicy(jv["item_name"]),
-		"umami": umami(jv["item_name"], jv),
-		"bitter": bitter(jv["item_name"], jv),
+		"sour": sour(dish_title, jv),
+		"spicy": spicy(dish_title),
+		"umami": umami(dish_title, jv),
+		"bitter": bitter(dish_title, jv),
 		"salt": salt(jv)
 	}
 
 
 if __name__ == "__main__":
-	for taste in ["sweet", "rich", "sour", "spicy", "umami", "bitter", "salt"]:
-		results = list()
-		for file in glob.iglob(taste + "/*.json"):
-			with open(file) as infile:
-				jv = json.load(infile)
-				result = taste_dish(jv)
-				print(result)
-				results.append({"name": file.split("/")[-1].split(".")[0], "value": result})
+	for file in sys.argv[1:]:
+		with open(file) as infile:
+			jv = json.load(infile)
+			result = taste_dish(jv)
+			print(file, result)

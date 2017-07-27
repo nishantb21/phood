@@ -26,7 +26,6 @@ class NutritionixResponse:
 			return self.name
 
 
-
 def save_for(brand):
 	try:
 		items_json = requests.get(brand_dishes.format(brand['id']))
@@ -115,4 +114,4 @@ if __name__ == '__main__':
 			"id": "569010fe25bbe91d1fc2b671",
 			"name": "tendergreens"
 		}
-		)
+	)
