@@ -20,7 +20,7 @@ def get_intersection_point(x1_1,y1_1,x2_1,y2_1,x1_2,y1_2,x2_2,y2_2):
     B1=(-A1 * y2_1) + x2_1
 
     A2=((x1_2-x2_2)/(y1_2-y2_2))
-    B2=(-A1 * y2_2) + x2_2
+    B2=(-A2 * y2_2) + x2_2
 
     y=((B2-B1)/(A1-A2))
     x=((A1*y)+B1)
@@ -79,7 +79,6 @@ def compute_difference_in_area(h1,h2):
         y1_2 = h2[i]
         x2_2 = h2[j]*math.cos(theta2_radians)
         y2_2 = h2[j]*math.sin(theta2_radians)
-
         sixth_overlap_area.append(compute_difference_in_area_for_sixth(x1_1,y1_1,x2_1,y2_1,x1_2,y1_2,x2_2,y2_2))
     
 def get_hexagon_area(h):
@@ -95,26 +94,41 @@ def start(dishName, dishTaste):
     user_score = []
     dishTaste = ast.literal_eval(dishTaste)
 
+    print(dishTaste)
+
+    if 'spicy' in dishTaste:
+        del dishTaste['spicy']
+
     for i in sorted(dishTaste):
         dish_score.append(dishTaste[i])
 
     user_s = json.load(open("flavorProfile.json"))
     userID = open("lastedit.txt", "r").read().strip()
     user_s = user_s[userID]
-
+    
     user_s_len = len(user_s)
 
     for j in sorted(dishTaste):
         flav_sum = 0
         for i in user_s:
             flav_sum += i[j]
-        user_score.append(flav_sum / user_s_len)
+        if j != 'spicy':
+            user_score.append(round((flav_sum / user_s_len), 2))
     
+    print(user_score)
+    print(dish_score)
+
     compute_difference_in_area(dish_score, user_score)
+    print(sixth_overlap_area)
+    print(sum(sixth_overlap_area))
+
     sixth_user_area = get_hexagon_area(user_score)
     sixth_dish_area = get_hexagon_area(dish_score)
+    print(sum(sixth_dish_area))
+    print(sum(sixth_user_area))
 
     x = max(sum(sixth_user_area), sum(sixth_dish_area))
+
     score_final = round((sum(sixth_overlap_area) / x * 100), 2)
     answer = {}
     answer["userID"] = userID
