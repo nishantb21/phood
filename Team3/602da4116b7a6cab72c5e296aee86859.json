@@ -1,12 +1,14 @@
 {
-	"cholesterol": 60,
-	"protein": 24,
-	"saturated_fat": 16,
-	"sugars": 11,
-	"total_fat": 48,
-	"dietary_fiber": 11,
-	"iron": 0,
-	"calories": 860,
-	"total_carb": 90,
-	"sodium": 1010
+	"dietary_fiber": 7.15,
+	"cholesterol": 2.1,
+	"metric_qty": 318,
+	"vitamin_c": 25.233999999999998,
+	"sugars": 5.8,
+	"saturated_fat": 2.0,
+	"total_fat": 11.99,
+	"protein": 8.98,
+	"iron": 1.8736000000000002,
+	"sodium": 781.13,
+	"calories": 353.06,
+	"total_carb": 52.89
 }

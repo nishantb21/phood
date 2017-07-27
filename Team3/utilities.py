@@ -6,6 +6,7 @@ import csv
 from multiprocessing import Pool
 import glob
 import utilities
+import datak
 
 
 def standardize_keys(nutrition_information):
@@ -200,23 +201,24 @@ def read_json(file):
 		return json.load(f)
 
 
-def add_sides(side_hashes, main_title, save_to_file=False):
+def add_sides(titles, main_title, save_to_file=False):
 	finaldish = dict()
-	for hashtitle in side_hashes:
-		dishdata = dict()
-		with open(hashtitle) as side:
-			dishdata = json.load(side)
-		for key, value in ((key, value) for key, value in dishdata.items() if isinstance(value, float) or isinstance(value, int)):
+	for subtitle in titles:
+		ndata = datak.ingredient(subtitle)
+		if not ndata["item_name"].lower() == subtitle.lower():
+			print(ndata["item_name"], file=sys.stderr)
+		for key, value in ((key, value) for key, value in ndata.nutrition_data.items() if isinstance(value, float) or isinstance(value, int)):
 			try:
-				finaldish[key] += dishdata[key]
+				finaldish[key] += ndata.nutrition_data[key]
 			except KeyError:
-				finaldish[key] = dishdata[key]
+				finaldish[key] = ndata.nutrition_data[key]
 
 	if save_to_file:
 		with open(utilities.hash(main_title) + ".json", "w") as mainfile:
 			json.dump(finaldish, mainfile, indent="\t")
-	return add_sides
+			print(utilities.hash(main_title) + ".json", file=sys.stderr)
+	return finaldish
 
 
 if __name__ == '__main__':
-	add_sides(sys.argv[1:len(sys.argv) - 1], sys.argv[-1], save_to_file=True)
+	print(add_sides(sys.argv[1:len(sys.argv) - 1], sys.argv[-1], save_to_file=True))

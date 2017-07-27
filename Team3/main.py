@@ -13,6 +13,8 @@ arguments = parser.parse_args()
 if arguments.profile:
 	for dish in arguments.profile:
 		nutrition = dict()
+		# Call stop word scrubber here
+		# add_sides(subtitle_list, main_title, save_to_file=True/False)
 		if os.path.exists(utilities.hash(dish) + ".json"):
 			with open(utilities.hash(dish) + ".json") as ifile:
 				nutrition = json.load(ifile)
