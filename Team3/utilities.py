@@ -5,6 +5,7 @@ import re
 import csv
 from multiprocessing import Pool
 import glob
+import utilities
 
 
 def standardize_keys(nutrition_information):
@@ -40,6 +41,7 @@ def standardize_keys(nutrition_information):
 		dictionary = dict()
 		for key in keys:
 			dictionary[key] = nutrition_information[key]
+		dictionary["iron"] = nutrition_information["iron_dv"] if nutrition_information["iron_dv"] is not None else 0
 		return dictionary
 	full_nutrient_keys = {"iron": 303, "vitamin_c": 401}
 	full_nutrient_indices = {'iron': 0, 'vitamin_c': 0}
@@ -198,6 +200,23 @@ def read_json(file):
 		return json.load(f)
 
 
+def add_sides(side_hashes, main_title, save_to_file=False):
+	finaldish = dict()
+	for hashtitle in side_hashes:
+		dishdata = dict()
+		with open(hashtitle) as side:
+			dishdata = json.load(side)
+		for key, value in ((key, value) for key, value in dishdata.items() if isinstance(value, float) or isinstance(value, int)):
+			try:
+				finaldish[key] += dishdata[key]
+			except KeyError:
+				finaldish[key] = dishdata[key]
+
+	if save_to_file:
+		with open(utilities.hash(main_title) + ".json", "w") as mainfile:
+			json.dump(finaldish, mainfile, indent="\t")
+	return add_sides
+
+
 if __name__ == '__main__':
-	with Pool(17) as ppool:
-		ppool.map(standardize_files, glob.iglob(sys.argv[1] + "/*.json"))
+	add_sides(sys.argv[1:len(sys.argv) - 1], sys.argv[-1], save_to_file=True)
