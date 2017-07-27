@@ -1,1 +1,49 @@
-{}
+{
+    "dummyUser": [
+        {
+            "bitter": 0.01,
+            "rich": 0.996,
+            "sweet": 0.09,
+            "umami": 1.513,
+            "sour": 0.39,
+            "salt": 4.362,
+            "spicy": 0
+        },
+        {
+            "salt": 4.362,
+            "rich": 0.996,
+            "sweet": 0.09,
+            "umami": 1.513,
+            "sour": 0.39,
+            "bitter": 0.01,
+            "spicy": 0
+        },
+        {
+            "salt": 4.362,
+            "rich": 0.996,
+            "sweet": 0.09,
+            "umami": 1.513,
+            "sour": 0.39,
+            "bitter": 0.01,
+            "spicy": 0
+        },
+        {
+            "salt": 2.128,
+            "rich": 1.56,
+            "sweet": 0.22,
+            "umami": 10,
+            "sour": 0.17,
+            "bitter": 0.017,
+            "spicy": 1
+        },
+        {
+            "salt": 2.128,
+            "rich": 1.56,
+            "sweet": 0.22,
+            "umami": 10,
+            "sour": 0.17,
+            "bitter": 0.017,
+            "spicy": 1
+        }
+    ]
+}

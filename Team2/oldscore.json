@@ -1,0 +1,23 @@
+{
+    "tags": {
+        "dummyUser": {
+            "chicken": 6.0,
+            "white meat": 0.042,
+            "poultry": 1.0,
+            "falafel": 6.0,
+            "potato": 3.6,
+            "meat": 0.032,
+            "snack": 0.172,
+            "mashed potato": 6.0,
+            "sandwich": 0.6,
+            "vegetable": 0.038
+        }
+    },
+    "cuisine": {
+        "dummyUser": {
+            "american": 0.206,
+            "mexican": 0.286,
+            "middle eastern": 2.0
+        }
+    }
+}
