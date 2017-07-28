@@ -25,7 +25,7 @@ def standardize_keys(nutrition_information):
 	nf_sugars:sugars
 	nf_protein:protein
 	'''
-	if nutrition_information.__contains__('metric_qty'):
+	if nutrition_information.__contains__('metric_qty '):
 		keys = [
 			"item_name",
 			"metric_qty",
@@ -45,7 +45,7 @@ def standardize_keys(nutrition_information):
 		dictionary["iron"] = nutrition_information["iron_dv"] if nutrition_information["iron_dv"] is not None else 0
 		return dictionary
 	full_nutrient_keys = {"iron": 303, "vitamin_c": 401}
-	full_nutrient_indices = {'iron': 0, 'vitamin_c': 0}
+	full_nutrient_indices = {'iron': 0, 'vitamin_c ': 0}
 	for nutrient in nutrition_information['full_nutrients']:
 		for item in full_nutrient_keys.items():
 			if nutrient['attr_id'] == item[1]:
@@ -110,20 +110,20 @@ def modmatchi(query_string, iterable, threshold):
 
 
 def modmatch(query_string, match_string, threshold):
-	match_string = re.sub(',', '', match_string)
-	query_string = re.sub(',', '', query_string)
+	match_string = re.sub( ', ',  ' ', match_string)
+	query_string = re.sub( ', ',  ' ', query_string)
 
-	match_string_split = match_string.strip().upper().split(' ')
-	query_string_split = query_string.strip().upper().split(' ')
+	match_string_split = match_string.strip().upper().split( '  ')
+	query_string_split = query_string.strip().upper().split( '  ')
 	matched = [word for word in query_string_split if word in match_string_split]
-	if len(matched) > 0 or (' ' not in match_string and query_string.upper().strip() in match_string.upper().strip()):
+	if len(matched) > 0 or ( '  ' not in match_string and query_string.upper().strip() in match_string.upper().strip()):
 		if len(matched) / len(query_string_split) >= threshold:
 			return (match_string, round(len(matched) / len(query_string_split), 2))
 	return None
 
 
 def hash(input_title):
-	return hashlib.md5(input_title.strip().strip('\n').upper().encode('utf-8')).hexdigest()
+	return hashlib.md5(input_title.strip().strip( '\n ').upper().encode( 'utf-8 ')).hexdigest()
 
 
 def package(input_file):
@@ -132,12 +132,12 @@ def package(input_file):
 		for line in ifile:
 			if not contents.__contains__(line[0]):
 				contents[line[0]] = set()
-			contents[line[0]].add(line.strip('\n'))
+			contents[line[0]].add(line.strip( '\n '))
 
 	for key in contents.keys():
 		contents[key] = list(contents[key])
-	with open(input_file.split('.')[0] + '.json', 'w') as writer:
-		json.dump(contents, writer, indent='\t')
+	with open(input_file.split( '. ')[0] +  '.json ',  'w ') as writer:
+		json.dump(contents, writer, indent= '\t ')
 
 
 def standardize(input_file):
@@ -156,13 +156,13 @@ def standardize(input_file):
 	'''
 	nutrition_scrubbed = dict()
 
-	with open('nutritionix_data/' + input_file) as json_file, open('nutritionix_data/' + input_file + '_std', 'w') as json_standardized:
+	with open('nutritionix_data/' + input_file) as json_file, open('nutritionix_data/' + input_file + '_std', 'w ') as json_standardized:
 		nutrition = json.load(json_file)
 		if nutrition['serving_weight_grams'] is not None:
 			multiplier = round(100 / nutrition['serving_weight_grams'], 3)
 		else:
 			return None
-		print('\r', input_file, ' : ', multiplier, sep='', end='\r', flush=True)
+		print('\r', input_file, ':', multiplier, sep='', end='\r', flush=True)
 		key_list = ['nf_calories', 'nf_total_fat', 'nf_cholesterol', 'nf_sodium', 'nf_total_carbohydrate', 'nf_saturated_fat', 'nf_dietary_fiber', 'nf_sugars', 'nf_protein', 'nf_potassium']
 		nutrition_scrubbed['food_name'] = nutrition['food_name']
 		nutrition_scrubbed['nf_ndb_no'] = nutrition['ndb_no']
@@ -191,14 +191,175 @@ def standardize_files(file):
 	nutri = dict()
 	with open(file) as raw_file:
 		nutri = json.load(raw_file)
-	with open("fin/" + file.split("/")[-1], 'w') as stdfile:
-		json.dump(standardize_keys(nutri), stdfile, indent='\t')
-		print('\r', file, end='')
+	with open("fin/" + file.split("/")[-1],  'w ') as stdfile:
+		json.dump(standardize_keys(nutri), stdfile, indent= '\t ')
+		print( '\r ', file, end= ' ')
 
 
 def read_json(file):
 	with open(file) as f:
 		return json.load(f)
+
+
+def split_title(input_title):
+	stopwords = [
+		' i',
+		' me',
+		' my',
+		' myself',
+		' we',
+		' our',
+		' ours',
+		' ourselves',
+		' you ',
+		' your ',
+		' yours ',
+		' yourself ',
+		' yourselves ',
+		' he ',
+		' him ',
+		' his ',
+		' himself ',
+		' she ',
+		' her ',
+		' hers ',
+		' herself ',
+		' it ',
+		' its ',
+		' itself ',
+		' they ',
+		' them ',
+		' their ',
+		' theirs ',
+		' themselves ',
+		' what ',
+		' which ',
+		' who ',
+		' whom ',
+		' this ',
+		' that ',
+		' these ',
+		' those ',
+		' am ',
+		' is ',
+		' are ',
+		' was ',
+		' were ',
+		' be ',
+		' been ',
+		' being ',
+		' have ',
+		' has ',
+		' had ',
+		' having ',
+		' do ',
+		' does ',
+		' did ',
+		' doing ',
+		' a ',
+		' an ',
+		' the ',
+		' and ',
+		' but ',
+		' if ',
+		' or ',
+		' because ',
+		' as ',
+		' until ',
+		' while ',
+		' of ',
+		' at ',
+		' by ',
+		' for ',
+		' with ',
+		'without ',
+		' about ',
+		' against ',
+		' between ',
+		' into ',
+		' through ',
+		' during ',
+		' before ',
+		' after ',
+		' above ',
+		' below ',
+		' to ',
+		' from ',
+		' up ',
+		' down ',
+		' in ',
+		' out ',
+		' on ',
+		' off ',
+		' over ',
+		' under ',
+		' again ',
+		' further ',
+		' then ',
+		' once ',
+		' here ',
+		' there ',
+		' when ',
+		' where ',
+		' why ',
+		' how ',
+		' all ',
+		' any ',
+		' both ',
+		' each ',
+		' few ',
+		' more ',
+		' most ',
+		' other ',
+		' some ',
+		' such ',
+		' no ',
+		' nor ',
+		' not ',
+		' only ',
+		' own ',
+		' same ',
+		' so ',
+		' than ',
+		' too ',
+		' very ',
+		' s ',
+		' t ',
+		' can ',
+		' will ',
+		' just ',
+		' don ',
+		' should ',
+		' now ',
+		' d ',
+		' ll ',
+		' m ',
+		' o ',
+		' re ',
+		' ve ',
+		' y ',
+		' ain ',
+		' aren ',
+		' couldn ',
+		' didn ',
+		' doesn ',
+		' hadn ',
+		' hasn ',
+		' haven ',
+		' isn ',
+		' ma ',
+		' mightn ',
+		' mustn ',
+		' needn ',
+		' shan ',
+		' shouldn ',
+		' wasn ',
+		' weren ',
+		' won ',
+		' wouldn ',
+	]
+	words = "|".join(stopwords)
+	return [word.strip() for word in re.sub(words, "$$", input_title).split("$$") if word is not '']
 
 
 def add_sides(titles, main_title, save_to_file=False):
@@ -221,4 +382,5 @@ def add_sides(titles, main_title, save_to_file=False):
 
 
 if __name__ == '__main__':
-	print(add_sides(sys.argv[1:len(sys.argv) - 1], sys.argv[-1], save_to_file=True))
+	# print(add_sides(sys.argv[1:len(sys.argv) - 1], sys.argv[-1], save_to_file=True))
+	print(split_title(sys.argv[1]))
