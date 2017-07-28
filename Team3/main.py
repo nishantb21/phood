@@ -20,7 +20,7 @@ if arguments.profile:
 			nutrition = datak.ingredient(dish)
 			if not nutrition["item_data"].lower() == dish.lower():
 				subtitle_list = utilities.split_title(dish)
-				print(subtitle_list)
+				print(subtitle_list, file=sys.stderr)
 				nutrition = utilities.add_sides(subtitle_list, dish, save_to_file=True)
 		tastejson = taster.taste_dish(dish, nutrition)
 		print(json.dumps(tastejson, sort_keys=True))

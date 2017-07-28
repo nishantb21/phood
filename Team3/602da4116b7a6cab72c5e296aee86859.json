@@ -1,14 +1,15 @@
 {
-	"dietary_fiber": 7.15,
-	"cholesterol": 2.1,
 	"metric_qty": 318,
+	"calories": 353.06,
+	"vitamin_c ": 8.981300000000001,
+	"cholesterol": 2.1,
+	"total_fat": 11.99,
 	"vitamin_c": 25.233999999999998,
 	"sugars": 5.8,
-	"saturated_fat": 2.0,
-	"total_fat": 11.99,
 	"protein": 8.98,
-	"iron": 1.8736000000000002,
+	"saturated_fat": 2.0,
 	"sodium": 781.13,
-	"calories": 353.06,
-	"total_carb": 52.89
+	"iron": 1.8736000000000002,
+	"total_carb": 52.89,
+	"dietary_fiber": 7.15
 }
