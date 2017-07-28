@@ -22,5 +22,7 @@ if arguments.profile:
 				subtitle_list = utilities.split_title(dish)
 				print(subtitle_list, file=sys.stderr)
 				nutrition = utilities.add_sides(subtitle_list, dish, save_to_file=True)
+			else:
+				nutrition = nutrition.nutrition_data
 		tastejson = taster.taste_dish(dish, nutrition)
 		print(json.dumps(tastejson, sort_keys=True))

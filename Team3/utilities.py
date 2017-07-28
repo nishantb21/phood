@@ -110,8 +110,8 @@ def modmatchi(query_string, iterable, threshold):
 
 
 def modmatch(query_string, match_string, threshold):
-	match_string = re.sub( ', ',  ' ', match_string)
-	query_string = re.sub( ', ',  ' ', query_string)
+	match_string = re.sub(',', ' ', match_string)
+	query_string = re.sub( ', ', ' ', query_string)
 
 	match_string_split = match_string.strip().upper().split( '  ')
 	query_string_split = query_string.strip().upper().split( '  ')
@@ -382,5 +382,5 @@ def add_sides(titles, main_title, save_to_file=False):
 
 
 if __name__ == '__main__':
-	# print(add_sides(sys.argv[1:len(sys.argv) - 1], sys.argv[-1], save_to_file=True))
-	print(split_title(sys.argv[1]))
+	print(add_sides(sys.argv[1:len(sys.argv) - 1], sys.argv[-1], save_to_file=True))
+	#print(split_title(sys.argv[1]))
