@@ -74,6 +74,8 @@ def total_weight(dish_nutrition):
 			numeric_value = 0
 			if len(number) > 0:
 				numeric_value = float(number[0])
+				if 'mg' in dish_nutrition[nutrient][0]:
+					numeric_value /= 100
 			totalweight += numeric_value
 
 	return totalweight
