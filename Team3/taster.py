@@ -24,7 +24,7 @@ def sweet(nutrition_data, SWEET_FACTOR_X=0.85, SWEET_FACTOR_Y=0.1):
 		sweet_score_x1 = abs(nutrition_data['Sugar'] - fibtg) / total_weight
 		sweet_score_y = nutrition_data['Sugar'] / nutrition_data['Carbs']
 		sweet_score_1 = (SWEET_FACTOR_X * sweet_score_x1) + (SWEET_FACTOR_Y * sweet_score_y)
-		#	print(sweet_score_1)
+
 	except Exception:
 		sweet_score_1 = 0
 	return round(sweet_score_1 / 0.998,3) * 10
@@ -49,15 +49,13 @@ def rich(nutrition_data, RICHNESS_FACTOR_X=0.5, RICHNESS_FACTOR_Y=0.7,RICHNESS_F
 		richness_score_1 = 0
 
 	return round((richness_score_1 / 0.992), 3) * 10
-	## Normalize to butter which has highest score
+	# Normalize to butter which has highest score
 
 
 def salt(dish_nutrition):
 	totalweight = dish_nutrition['Weight']
 	if totalweight == 0:
 		return 0
-	#return((dish_nutrition['sodium'] / dish_nutrition['metric_qty']))
-	#print((dish_nutrition['sodium'] / dish_nutrition['metric_qty']) / 38.758, end=' | ')
 	return ((1000 * dish_nutrition['Sodium'] / totalweight)) / 3.8758
 
 
@@ -71,24 +69,19 @@ def get_dishes():
 def total_weight(dish_nutrition):
 	totalweight = 0
 	for nutrient in dish_nutrition:
-		#print(dish_nutrition[nutrient])
 		if dish_nutrition[nutrient] is not None and 'g' in dish_nutrition[nutrient][0]:
-			#print(nutrient,dish_nutrition[nutrient])
 			number = re.findall('(\d+\.\d+|\d+)', dish_nutrition[nutrient][0])
-			#print(nutrient,dish_nutrition[nutrient][0],number)
-			#print(numpy)
 			numeric_value = 0
 			if len(number) > 0:
 				numeric_value = float(number[0])
 			totalweight += numeric_value
-			#print(totalweight)
+
 	return totalweight
 
 
 def get_nutrients(food):
 	nutrients = food['nutrients']
 	totalweight = total_weight(nutrients)
-	#print(total_weight)
 	for nutrient in nutrients:
 		if nutrients[nutrient] is not None:
 			number = re.findall('\d+\.\d+', nutrients[nutrient][0])
@@ -101,17 +94,15 @@ def get_nutrients(food):
 
 
 def taste(food):
-		taste_scores = dict()
 		nutrients = get_nutrients(food)
-		salt_score = salt(nutrients)
-		taste_scores['salt'] = salt_score
-		sweet_score = sweet(nutrients)
-		taste_scores['sweet'] = sweet_score
-		richness_score = rich(nutrients)
-		taste_scores['rich'] = richness_score
+		taste_scores = {
+		"sweet": round(sweet(nutrients), 2),
+		"salt": round(salt(nutrients), 2),
+		"rich": round(rich(nutrients), 2)
+		}
 		tags = get_cuisine_tags(food)
 		cuisine_multipliers = get_cuisine_multipliers(tags)
-		taste_scores = update_scores(taste_scores,cuisine_multipliers)
+		taste_scores = update_scores(taste_scores, cuisine_multipliers)
 		#taste_scores = cuisine_taste(taste_scores)
 		return taste_scores
 
@@ -126,11 +117,11 @@ def update_scores(taste_scores, cuisine_multipliers):
 def get_cuisine_multipliers(tags):
 	with open('cuisine_multipliers.json') as json_file:
 		cuisine_multipliers = json.load(json_file)
-	default =  {
+	default = {
 		"salt": 1.0,
 		"sweet": 1.0,
 		"rich": 1.0
-		}
+	}
 	if tags is not None:
 		if len(tags) == 0:
 			return default
@@ -145,7 +136,7 @@ def get_cuisine_multipliers(tags):
 def get_cuisine_tags(food):
 	with open('first_50_tags.json') as json_file:
 		tags = json.load(json_file)
-	closest_match = utilities.modmatchi(food['dish_name'],list(tags),threshold=0.5)
+	closest_match = utilities.modmatchi(food['dish_name'], list(tags), threshold=0.5)
 	#print(food['dish_name'],closest_match)
 	if closest_match[0] is not None:
 		return tags[closest_match[0]]
