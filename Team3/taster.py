@@ -108,7 +108,6 @@ def taste(food):
 
 
 def update_scores(taste_scores, cuisine_multipliers):
-	print(cuisine_multipliers)
 	for taste in taste_scores:
 		taste_scores[taste] = taste_scores[taste] * cuisine_multipliers[taste]
 	return taste_scores
@@ -160,7 +159,3 @@ if __name__ == '__main__':
 		for file in arguments.file:
 			with open(file) as inputfile:
 				print(json.dumps(taste(json.load(inputfile)), sort_keys=True))
-
-	if arguments.profile:
-		for jsonarg in arguments.profile:
-			print(json.dumps(taste(json.loads(jsonarg)), sort_keys=True))
