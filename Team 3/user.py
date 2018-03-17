@@ -6,40 +6,83 @@ import random
 import json
 import taster
 import copy
+from dish import Dish
+
+
 class Profile:
-  def __init__(self, dishlistfile='testset.json', history=20):
+  def __init__(self, dishlistfile='itemdetails.json', history=20):
     self.flavourlist = ["salt", "sweet", "rich"]
+    self.segpercs = [0.5, 0.3, 0.2]
+    self.history = history
+    self.items = list()
 
     with open(dishlistfile) as ifile:
-      self.items = json.load(ifile)
-    #print(json.dumps(self.items))
-    self.history = random.sample(self.items, k=history)
-    hist = copy.deepcopy(self.history)
-    self.taste = self.init_profile(hist)
-    #print(json.dumps(self.history))
+      for item in json.load(ifile):
+        self.items.append(Dish(item))
 
-  def init_profile(self,history):
-    _taste = dict()
+    # print(json.dumps(self.items))
+    self.historydata = random.sample(self.items, k=history)
+    hist = copy.deepcopy(self.historydata)
+    self.taste = self.init_profile(hist)
+    # print(json.dumps(self.history))
+
+  def init_profile(self, history):
+    self.taste = dict()
     for flavour in self.flavourlist:
-      _taste[flavour] = 0.0
+      self.taste[flavour] = 0.0
 
     for dish in history:
-      tastedict = taster.taste(dish)
-      #print(tastedict)
+      tastedict = taster.taste(dish.data)
+      # print(tastedict)
       for flavour in self.flavourlist:
-        _taste[flavour] += tastedict[flavour]
+        self.taste[flavour] += tastedict[flavour]
 
     for flavour in self.flavourlist:
-      _taste[flavour] /= len(history)
-
-    return _taste
+      self.taste[flavour] /= len(history)
 
   def dish_titles(self):
-    return [food["dish_name"] for food in self.history]
+    return [food["dish_name"] for food in self.historydata]
 
   def __str__(self):
-    return str(list(zip(self.dish_titles(), [taster.taste(food) for food in self.history])))
+    return str(
+        list(zip(self.dish_titles(),
+                 [taster.taste(food) for food in self.historydata])))
+
+  def get_delta(self):
+    segoneindex = 0.35 * self.history
+    seg_1 = self.historydata[0:segoneindex]
+    seg_2 = self.historydata[segoneindex:segoneindex * 2]
+    seg_3 = self.historydata[len(seg_1) + len(seg_2):]
+    delta = dict(zip(self.flavourlist, [0] * len(self.flavourlist)))
+    mappings = zip([seg_1, seg_2, seg_3], self.segpercs)
+    for mapping in mappings:
+      for dish in mapping[0]:
+        if dish.rating < 3:
+          delta[dish.most_significant_flavour] -= mapping[1] * \
+              dish.flavours[dish.most_significant_flavour]
+
+        else:
+          delta[dish.most_significant_flavour] += mapping[1] * \
+              dish.flavours[dish.most_significant_flavour]
+
+    return delta
+
+  def split(self):
+    self.split = {
+      "positives": list(),
+      "negatives": list()
+    }
+    self.positivepercent = 0
+    self.negativepercent = 0
+    weight_per_dish = round(100 / self.history, 2)
+    for dish in self.historydata:
+      if dish.rating < 3:
+        self.split["positives"].append(dish)
+        self.negativepercent += weight_per_dish
+      else:
+        self.split["negatives"].append(dish)
+        self.positivepercent += weight_per_dish
+
 
 if __name__ == "__main__":
-  #Profile()
   print(Profile())
