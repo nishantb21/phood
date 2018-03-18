@@ -10,7 +10,7 @@ from dish import Dish
 
 
 class Profile:
-  def __init__(self, dishlistfile='itemdetails.json', history=20):
+  def __init__(self, dishlistfile='testinp.json', history=20):
     self.flavourlist = ["salt", "sweet", "rich"]
     self.segpercs = [0.5, 0.3, 0.2]
     self.history = history
@@ -20,11 +20,9 @@ class Profile:
       for item in json.load(ifile):
         self.items.append(Dish(item))
 
-    # print(json.dumps(self.items))
     self.historydata = random.sample(self.items, k=history)
     hist = copy.deepcopy(self.historydata)
-    self.taste = self.init_profile(hist)
-    # print(json.dumps(self.history))
+    self.init_profile(hist)
 
   def init_profile(self, history):
     self.taste = dict()
@@ -39,6 +37,14 @@ class Profile:
 
     for flavour in self.flavourlist:
       self.taste[flavour] /= len(history)
+
+    print("Before adjustment: ", self.taste)
+    delta = self.get_delta()
+    print("delta: ", delta)
+    for flavour in self.flavourlist:
+      self.taste[flavour] += delta[flavour]
+
+    print("After adjustment: ", self.taste)
 
   def dish_titles(self):
     return [food["dish_name"] for food in self.historydata]
@@ -69,8 +75,8 @@ class Profile:
 
   def split(self):
     self.split = {
-      "positives": list(),
-      "negatives": list()
+        "positives": list(),
+        "negatives": list()
     }
     self.positivepercent = 0
     self.negativepercent = 0
@@ -82,6 +88,33 @@ class Profile:
       else:
         self.split["negatives"].append(dish)
         self.positivepercent += weight_per_dish
+
+  def map_dishid(self, dishid):
+    return self.items[dishid - 1]
+
+
+def read_from_csv(inputfile="review.csv", headers=True):
+  datalist = dict()
+  with open(inputfile) as ifile:
+    if headers:
+      next(ifile)
+    for line in ifile:
+      line = line.strip("\n").strip().split(",")
+      try:
+        datalist[int(line[1])].append(
+            {
+                "dishid": int(line[0]),
+                "rating": int(line[2])
+            }
+        )
+      except KeyError:
+        datalist[int(line[1])] = [{
+            "dishid": int(line[0]),
+            "rating": int(line[2])
+        }]
+  with open("reviews.json", "w") as outfile:
+    json.dump(datalist, outfile, indent='  ')
+    return datalist
 
 
 if __name__ == "__main__":
