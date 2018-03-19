@@ -7,10 +7,11 @@ import json
 import taster
 import copy
 from dish import Dish
+import sys
 
 
 class Profile:
-  def __init__(self, dishlistfile='testinp.json', history=20):
+  def __init__(self, dishlistfile='tasteinp.json', history=20):
     self.flavourlist = ["salt", "sweet", "rich"]
     self.segpercs = [0.5, 0.3, 0.2]
     self.history = history
@@ -19,43 +20,51 @@ class Profile:
     with open(dishlistfile) as ifile:
       for item in json.load(ifile):
         self.items.append(Dish(item))
-
-    self.historydata = random.sample(self.items, k=history)
-    hist = copy.deepcopy(self.historydata)
-    self.init_profile(hist)
+    # Uncomment for testing
+    # self.historydata = random.sample(self.items, k=history)
+    self.historydata = copy.deepcopy(self.items)
+    self.init_profile(self.historydata)
 
   def init_profile(self, history):
     self.taste = dict()
     for flavour in self.flavourlist:
       self.taste[flavour] = 0.0
 
-    for dish in history:
-      tastedict = taster.taste(dish.data)
-      # print(tastedict)
+    # for dish in history:
+      # tastedict = taster.taste(dish.data)
+    for tastedict in history:
       for flavour in self.flavourlist:
         self.taste[flavour] += tastedict[flavour]
 
     for flavour in self.flavourlist:
       self.taste[flavour] /= len(history)
 
-    print("Before adjustment: ", self.taste)
+    # sys.stdout.write("Before adjustment: ")
+    # sys.stdout.write(str(self.taste))
     delta = self.get_delta()
-    print("delta: ", delta)
+    # sys.stdout.write("\ndelta: ")
+    # sys.stdout.write(str(delta))
     for flavour in self.flavourlist:
       self.taste[flavour] += delta[flavour]
 
-    print("After adjustment: ", self.taste)
+    # sys.stdout.write("\nAfter adjustment: ")
+    # sys.stdout.write(str(self.taste))
+
+    ceiling = max(self.taste.values())
+    if ceiling > 10:
+      for key in self.taste:
+        self.taste[key] = self.taste[key] * 10 / ceiling
 
   def dish_titles(self):
     return [food["dish_name"] for food in self.historydata]
 
   def __str__(self):
-    return str(
-        list(zip(self.dish_titles(),
-                 [taster.taste(food) for food in self.historydata])))
+    for key in self.taste:
+      self.taste[key] = round(self.taste[key], 2)
+    return json.dumps(self.taste, sort_keys=True)
 
   def get_delta(self):
-    segoneindex = 0.35 * self.history
+    segoneindex = int(0.35 * self.history)
     seg_1 = self.historydata[0:segoneindex]
     seg_2 = self.historydata[segoneindex:segoneindex * 2]
     seg_3 = self.historydata[len(seg_1) + len(seg_2):]
@@ -63,55 +72,34 @@ class Profile:
     mappings = zip([seg_1, seg_2, seg_3], self.segpercs)
     for mapping in mappings:
       for dish in mapping[0]:
-        if dish.rating < 3:
-          delta[dish.most_significant_flavour] -= mapping[1] * \
-              dish.flavours[dish.most_significant_flavour]
+        for flavour in self.flavourlist:
+          if dish.overall_rating < 3:
+            delta[flavour] -= (mapping[1] *
+                               dish.flavours[flavour]) / 8.6
 
-        else:
-          delta[dish.most_significant_flavour] += mapping[1] * \
-              dish.flavours[dish.most_significant_flavour]
+          else:
+            delta[flavour] += (mapping[1] *
+                               dish.flavours[flavour]) / 8.6
 
+    for key in delta.keys():
+      delta[key] = round(delta[key], 2)
     return delta
-
-  def split(self):
-    self.split = {
-        "positives": list(),
-        "negatives": list()
-    }
-    self.positivepercent = 0
-    self.negativepercent = 0
-    weight_per_dish = round(100 / self.history, 2)
-    for dish in self.historydata:
-      if dish.rating < 3:
-        self.split["positives"].append(dish)
-        self.negativepercent += weight_per_dish
-      else:
-        self.split["negatives"].append(dish)
-        self.positivepercent += weight_per_dish
-
-  def map_dishid(self, dishid):
-    return self.items[dishid - 1]
 
 
 def read_from_csv(inputfile="review.csv", headers=True):
-  datalist = dict()
+  datalist = list()
   with open(inputfile) as ifile:
     if headers:
       next(ifile)
     for line in ifile:
       line = line.strip("\n").strip().split(",")
-      try:
-        datalist[int(line[1])].append(
-            {
-                "dishid": int(line[0]),
-                "rating": int(line[2])
-            }
-        )
-      except KeyError:
-        datalist[int(line[1])] = [{
-            "dishid": int(line[0]),
-            "rating": int(line[2])
-        }]
+      datalist.append(
+          {
+              "dishid": int(line[0]),
+              "userid": int(line[1]),
+              "rating": int(line[2])
+          }
+      )
   with open("reviews.json", "w") as outfile:
     json.dump(datalist, outfile, indent='  ')
     return datalist

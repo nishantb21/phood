@@ -1,0 +1,22 @@
+[
+  {"flavours": {"sweet": 7.0, "salt": 1.4, "rich": 2.7}, "dish_name": "dishnaem", "overall_rating": 4},
+  {"flavours": {"sweet": 6.5, "salt": 2.0, "rich": 3.1}, "dish_name": "dishnaem", "overall_rating": 3},
+  {"flavours": {"sweet": 7.4, "salt": 4.0, "rich": 5.4}, "dish_name": "dishnaem", "overall_rating": 4},
+  {"flavours": {"sweet": 6.4, "salt": 3.1, "rich": 4.7}, "dish_name": "dishnaem", "overall_rating": 3},
+  {"flavours": {"sweet": 6.1, "salt": 3.3, "rich": 5.1}, "dish_name": "dishnaem", "overall_rating": 5},
+  {"flavours": {"sweet": 6.6, "salt": 3.1, "rich": 6.0}, "dish_name": "dishnaem", "overall_rating": 5},
+  {"flavours": {"sweet": 8.4, "salt": 3.0, "rich": 5.0}, "dish_name": "dishnaem", "overall_rating": 1},
+  {"flavours": {"sweet": 9.0, "salt": 2.0, "rich": 5.0}, "dish_name": "dishnaem", "overall_rating": 2},
+  {"flavours": {"sweet": 7.1, "salt": 3.5, "rich": 4.0}, "dish_name": "dishnaem", "overall_rating": 3},
+  {"flavours": {"sweet": 6.9, "salt": 3.1, "rich": 4.5}, "dish_name": "dishnaem", "overall_rating": 2},
+  {"flavours": {"sweet": 8.4, "salt": 3.0, "rich": 5.5}, "dish_name": "dishnaem", "overall_rating": 4},
+  {"flavours": {"sweet": 6.5, "salt": 3.7, "rich": 6.5}, "dish_name": "dishnaem", "overall_rating": 5},
+  {"flavours": {"sweet": 7.7, "salt": 3.8, "rich": 5.6}, "dish_name": "dishnaem", "overall_rating": 4},
+  {"flavours": {"sweet": 8.7, "salt": 3.9, "rich": 5.4}, "dish_name": "dishnaem", "overall_rating": 3},
+  {"flavours": {"sweet": 7.8, "salt": 2.7, "rich": 5.1}, "dish_name": "dishnaem", "overall_rating": 2},
+  {"flavours": {"sweet": 9.8, "salt": 2.8, "rich": 5.7}, "dish_name": "dishnaem", "overall_rating": 1},
+  {"flavours": {"sweet": 9.9, "salt": 2.5, "rich": 5.8}, "dish_name": "dishnaem", "overall_rating": 1},
+  {"flavours": {"sweet": 9.8, "salt": 2.9, "rich": 5.1}, "dish_name": "dishnaem", "overall_rating": 4},
+  {"flavours": {"sweet": 9.7, "salt": 3.4, "rich": 4.1}, "dish_name": "dishnaem", "overall_rating": 4},
+  {"flavours": {"sweet": 9.9, "salt": 2.1, "rich": 3.1}, "dish_name": "dishnaem", "overall_rating": 3}
+]
